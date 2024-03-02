@@ -79,15 +79,12 @@
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="home.aspx" />
+    <Content Include="img\ciberseguranca.jpg" />
     <Content Include="img\cinel_logo_horizontal.png" />
     <Content Include="img\logo-cinel.JPG" />
     <Content Include="img\logo-cinel2.JPG" />
     <Content Include="img\logocinel.png" />
-    <Content Include="img\about.jpg" />
-    <Content Include="img\blog-1.jpg" />
-    <Content Include="img\blog-2.jpg" />
-    <Content Include="img\blog-3.jpg" />
-    <Content Include="img\blog-80x80.jpg" />
     <Content Include="img\carousel-1.jpg" />
     <Content Include="img\carousel-2.jpg" />
     <Content Include="img\carousel-3.jpg" />
@@ -99,14 +96,13 @@
     <Content Include="img\cat-6.jpg" />
     <Content Include="img\cat-7.jpg" />
     <Content Include="img\cat-8.jpg" />
-    <Content Include="img\course-1.jpg" />
-    <Content Include="img\course-2.jpg" />
-    <Content Include="img\course-3.jpg" />
-    <Content Include="img\course-4.jpg" />
-    <Content Include="img\course-5.jpg" />
-    <Content Include="img\course-6.jpg" />
+    <Content Include="img\multimedia.jpg" />
+    <Content Include="img\oferta-formativa.jpg" />
     <Content Include="img\page-header.jpg" />
+    <Content Include="img\programacao.png" />
+    <Content Include="img\redes.jpg" />
     <Content Include="img\registration.jpg" />
+    <Content Include="img\robotica.jpg" />
     <Content Include="img\team-1.jpg" />
     <Content Include="img\team-2.jpg" />
     <Content Include="img\team-3.jpg" />
@@ -129,11 +125,14 @@
     <Content Include="lib\owlcarousel\assets\owl.video.play.png" />
     <Content Include="lib\owlcarousel\owl.carousel.js" />
     <Content Include="lib\owlcarousel\owl.carousel.min.js" />
+    <Content Include="login.aspx" />
+    <Content Include="logout.aspx" />
     <Content Include="mail\contact.js" />
     <Content Include="mail\contact.php" />
     <Content Include="mail\jqBootstrapValidation.min.js" />
     <Content Include="portal.aspx" />
     <Content Include="portal_login.aspx" />
+    <Content Include="register.aspx" />
     <Content Include="style_portal_login.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -144,6 +143,27 @@
     </Compile>
     <Compile Include="Cinel.Master.designer.cs">
       <DependentUpon>Cinel.Master</DependentUpon>
+    </Compile>
+    <Compile Include="home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="logout.aspx.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="logout.aspx.designer.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="portal.aspx.cs">
       <DependentUpon>portal.aspx</DependentUpon>
@@ -160,9 +180,15 @@
       <DependentUpon>portal_login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="register.aspx.cs">
+      <DependentUpon>register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="register.aspx.designer.cs">
+      <DependentUpon>register.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Cinel.Master" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
@@ -197,6 +223,7 @@
     <Content Include="font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="font-awesome-4.7.0\scss\_variables.scss" />
     <Content Include="lib\owlcarousel\LICENSE" />
+    <Content Include="Cinel.Master" />
     <None Include="packages.config" />
     <Content Include="scss\bootstrap\scss\bootstrap-grid.scss" />
     <Content Include="scss\bootstrap\scss\bootstrap-reboot.scss" />
