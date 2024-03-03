@@ -25,7 +25,6 @@
                             <button type="button" class="btn btn-google btn-block">
                                 <i class="fab fa-google mr-2"></i>
                                 Sign in with Google
-                       
                             </button>
                         </div>
                     </div>

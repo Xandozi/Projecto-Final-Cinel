@@ -30,8 +30,24 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <% if (Session["logged"] == "yes")
+            { %>
         <!-- Topbar Start -->
-        <div class="container-fluid d-none d-lg-block">
+        <div class="container-fluid d-none d-lg-block" style="height: 50px;">
+            <div class="row align-items-center">
+                <div class="col-lg-3">
+                    <a href="home.aspx" class="text-decoration-none">
+                        <h1 class="m-0"><span class="text-primary"></span>CINEL</h1>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Topbar End -->
+        <% }
+            else
+            { %>
+        <!-- Rest of the Topbar content -->
+        <div class="container-fluid d-none d-lg-block" style="height: 100px;">
             <div class="row align-items-center py-4 px-xl-5">
                 <div class="col-lg-3">
                     <a href="home.aspx" class="text-decoration-none">
@@ -44,7 +60,7 @@
                         <div class="text-left">
                             <h6 class="font-weight-semi-bold mb-1">Morada</h6>
                             <small style="font-size: 9px;">Pólo de Educação e Formação D. João de Castro Rua Jau - Alto de Santo Amaro 1300-312 Lisboa 
-                            </small>
+                        </small>
                         </div>
                     </div>
                 </div>
@@ -53,7 +69,7 @@
                         <i class="fa fa-2x fa-envelope text-primary mr-3"></i>
                         <div class="text-left">
                             <h6 class="font-weight-semi-bold mb-1">E-Mail</h6>
-                            <small>cinel@cinel.pt</small>
+                            <small>cinel@cinel.pt</small><br />
                             <small>geral.porto@cinel.pt</small>
                         </div>
                     </div>
@@ -71,7 +87,8 @@
                 </div>
             </div>
         </div>
-        <!-- Topbar End -->
+        <% } %>
+
 
         <!-- Navbar Start -->
         <div class="container-fluid">
@@ -109,8 +126,8 @@
                             </div>
                             <% if (Session["logged"] == "yes")
                                 { %>
-                            <asp:Button ID="btn_user" runat="server" CssClass="btn btn-outline-light" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" />
-                            <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-outline-light" Text="Logout" CausesValidation="false" OnClick="btn_logout_Click" />
+                            <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" />
+                            <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" Text="Logout" CausesValidation="false" OnClick="btn_logout_Click" />
                             <% } %>
                             <% if (Session["logged"] != "yes" && Request.Url.AbsolutePath.ToLower() != "/register.aspx")
                                 { %>
