@@ -21,10 +21,6 @@
                             <asp:TextBox ID="tb_apelido" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <asp:Label ID="lbl_perfil" runat="server">Perfil:</asp:Label>
-                            <asp:DropDownList ID="ddl_perfil" runat="server" CssClass="form-control"></asp:DropDownList>
-                        </div>
-                        <div class="form-group">
                             <asp:Label ID="lbl_data_nascimento" runat="server">Data de Nascimento:</asp:Label>
                             <asp:TextBox ID="tb_data_nascimento" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
                         </div>
@@ -45,6 +41,9 @@
                             <asp:TextBox ID="tb_pw_rpt" runat="server" TextMode="Password" CssClass="form-control" />
                         </div>
                         <asp:Button ID="btn_registar" runat="server" Text="Registar" CssClass="btn btn-primary btn-block" OnClick="btn_registar_Click" />
+                        <asp:LinkButton ID="btn_register_google" runat="server" CssClass="btn btn-google btn-block" OnClick="Login" CausesValidation="false">
+                                        <i class="fab fa-google mr-2"></i> Sign up with Google
+                        </asp:LinkButton>
                     </div>
                 </div>
             </div>

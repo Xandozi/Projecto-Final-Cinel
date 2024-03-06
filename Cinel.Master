@@ -30,7 +30,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <% if (Session["logged"] == "yes")
+        <% if (Session["logged"] == "yes" || Request.Url.AbsolutePath.ToLower() == "/login.aspx" || Request.Url.AbsolutePath.ToLower() == "/register.aspx")
             { %>
         <!-- Topbar Start -->
         <div class="container-fluid d-none d-lg-block" style="height: 50px;">
@@ -47,8 +47,8 @@
             else
             { %>
         <!-- Rest of the Topbar content -->
-        <div class="container-fluid d-none d-lg-block" style="height: 100px;">
-            <div class="row align-items-center py-4 px-xl-5">
+        <div class="container-fluid d-none d-lg-block">
+            <div class="row align-items-center" style="padding: 5px;">
                 <div class="col-lg-3">
                     <a href="home.aspx" class="text-decoration-none">
                         <h1 class="m-0"><span class="text-primary"></span>CINEL</h1>
@@ -92,7 +92,7 @@
 
         <!-- Navbar Start -->
         <div class="container-fluid">
-            <div class="row border-top px-xl-5">
+            <div class="row border-top">
                 <div class="col-lg-3 d-none d-lg-block">
                     <a class="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none" data-toggle="collapse" href="#navbar-vertical" style="height: 67px; padding: 0 30px;">
                         <h5 class="text-primary m-0"><i class="fa fa-book-open mr-2"></i>Áreas</h5>
@@ -129,13 +129,18 @@
                             <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" />
                             <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" Text="Logout" CausesValidation="false" OnClick="btn_logout_Click" />
                             <% } %>
-                            <% if (Session["logged"] != "yes" && Request.Url.AbsolutePath.ToLower() != "/register.aspx")
+                            <% if (Session["logged"] != "yes" && Request.Url.AbsolutePath.ToLower() == "/login.aspx")
                                 { %>
                             <asp:Button ID="btn_registar" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" runat="server" Text="Registar-se" OnClick="btn_registar_Click" Style="outline: none;" />
                             <% } %>
                             <% if (Session["logged"] != "yes" && Request.Url.AbsolutePath.ToLower() == "/register.aspx")
                                 { %>
                             <asp:Button ID="btn_login" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" runat="server" Text="Login" OnClick="btn_login_Click" Style="outline: none;" />
+                            <% } %>
+                            <% if (Session["logged"] != "yes" && Request.Url.AbsolutePath.ToLower() != "/register.aspx" && Request.Url.AbsolutePath.ToLower() != "/login.aspx")
+                                { %>
+                            <asp:Button ID="btn_login2" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" runat="server" Text="Login" OnClick="btn_login_Click" Style="outline: none;" />
+                            <asp:Button ID="btn_registar2" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" runat="server" Text="Registar-se" OnClick="btn_registar_Click" Style="outline: none;" />
                             <% } %>
                         </div>
                     </nav>

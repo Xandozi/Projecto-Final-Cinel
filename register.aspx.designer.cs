@@ -51,24 +51,6 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.TextBox tb_apelido;
 
         /// <summary>
-        /// lbl_perfil control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_perfil;
-
-        /// <summary>
-        /// ddl_perfil control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_perfil;
-
-        /// <summary>
         /// lbl_data_nascimento control.
         /// </summary>
         /// <remarks>
@@ -166,5 +148,14 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_registar;
+
+        /// <summary>
+        /// btn_register_google control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btn_register_google;
     }
 }

@@ -195,7 +195,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                     </div>
                 </FooterTemplate>
             </asp:Repeater>
-            <%--<div class="row">
+            <div class="row">
                 <div class="col-md-6 col-lg-3 text-center team mb-4">
                     <div class="team-item rounded overflow-hidden mb-2">
                         <div class="team-img position-relative">
@@ -240,7 +240,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                         </div>
                     </div>
                 </div>
-            </div>--%>
+            </div>
         </div>
     </div>
     <!-- Team End -->
