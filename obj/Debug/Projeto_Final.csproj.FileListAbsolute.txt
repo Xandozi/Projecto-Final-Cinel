@@ -57,3 +57,4 @@ D:\Curso Cinel\Projeto Final\Projeto_Final\obj\Debug\Projeto_Final.csproj.CopyCo
 D:\Curso Cinel\Projeto Final\Projeto_Final\obj\Debug\Projeto_Final.dll
 D:\Curso Cinel\Projeto Final\Projeto_Final\obj\Debug\Projeto_Final.pdb
 D:\Curso Cinel\Projeto Final\Projeto_Final\obj\Debug\Projeto_Final.csproj.AssemblyReference.cache
+D:\Curso Cinel\Projeto Final\Projeto_Final\bin\ASPSnippets.GoogleAPI.dll

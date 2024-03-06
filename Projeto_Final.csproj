@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ASPSnippets.GoogleAPI">
+      <HintPath>..\..\..\Firefox Downloads\New folder\Bin\ASPSnippets.GoogleAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -144,6 +147,10 @@
     <Compile Include="Cinel.Master.designer.cs">
       <DependentUpon>Cinel.Master</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Email.cs" />
+    <Compile Include="Classes\Extract.cs" />
+    <Compile Include="Classes\Insercao.cs" />
+    <Compile Include="Classes\Validation.cs" />
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
