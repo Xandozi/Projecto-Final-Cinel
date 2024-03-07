@@ -64,7 +64,16 @@ namespace Projeto_Final
 
         protected void btn_logout_Click(object sender, EventArgs e)
         {
-            Response.Redirect("logout.aspx");
+            //Response.Redirect("logout.aspx");
+            // Variáveis de sessão limpas ao clicar em logout
+            Session.Clear();
+            Session.Abandon();
+            // Redirecionamento caso provenha de depois de mudar o email
+            if (Request.QueryString["msg"] == "yesemail")
+            {
+                Response.Redirect("login.aspx?msg=yesemail");
+            }
+            Response.Redirect("login.aspx");
         }
     }
 }
