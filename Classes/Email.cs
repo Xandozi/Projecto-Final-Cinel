@@ -22,7 +22,7 @@ namespace Projeto_Final.Classes
             email.Subject = $"CINEL - Account Activation for {username}";
 
             email.IsBodyHtml = true;
-            email.Body = $"<b>Thank you for your registration {username}. To activate your account please click <a href='https://localhost:44330/ativacao.aspx?user={EncryptString(username)}'>here</a></b>";
+            email.Body = $"<b>Thank you for your registration {username}. To activate your account please click <a href='https://localhost:44374/ativacao.aspx?user={EncryptString(username)}'>here</a></b>";
 
             servidor.Host = ConfigurationManager.AppSettings["SMTP_URL"];
             servidor.Port = int.Parse(ConfigurationManager.AppSettings["SMTP_PORT"]);

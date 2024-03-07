@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ativacao.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-reboot.css" />
@@ -100,6 +101,7 @@
     <Content Include="img\cat-7.jpg" />
     <Content Include="img\cat-8.jpg" />
     <Content Include="img\multimedia.jpg" />
+    <Content Include="img\noimage.png" />
     <Content Include="img\oferta-formativa.jpg" />
     <Content Include="img\page-header.jpg" />
     <Content Include="img\programacao.png" />
@@ -133,13 +135,19 @@
     <Content Include="mail\contact.js" />
     <Content Include="mail\contact.php" />
     <Content Include="mail\jqBootstrapValidation.min.js" />
-    <Content Include="portal.aspx" />
-    <Content Include="portal_login.aspx" />
+    <Content Include="personal_zone.aspx" />
     <Content Include="register.aspx" />
     <Content Include="style_portal_login.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ativacao.aspx.cs">
+      <DependentUpon>ativacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ativacao.aspx.designer.cs">
+      <DependentUpon>ativacao.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Cinel.Master.cs">
       <DependentUpon>Cinel.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -172,19 +180,12 @@
     <Compile Include="logout.aspx.designer.cs">
       <DependentUpon>logout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="portal.aspx.cs">
-      <DependentUpon>portal.aspx</DependentUpon>
+    <Compile Include="personal_zone.aspx.cs">
+      <DependentUpon>personal_zone.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="portal.aspx.designer.cs">
-      <DependentUpon>portal.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="portal_login.aspx.cs">
-      <DependentUpon>portal_login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="portal_login.aspx.designer.cs">
-      <DependentUpon>portal_login.aspx</DependentUpon>
+    <Compile Include="personal_zone.aspx.designer.cs">
+      <DependentUpon>personal_zone.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">
