@@ -7,14 +7,9 @@ using System.Web.UI.WebControls;
 
 namespace Projeto_Final
 {
-    public partial class portal : System.Web.UI.Page
+    public partial class personal_zone : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btn_login_Click(object sender, EventArgs e)
         {
 
         }

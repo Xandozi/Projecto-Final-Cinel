@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -12,8 +13,11 @@ namespace Projeto_Final.Classes
     public class Insercao
     {
         // Função para inserir o user na BD
-        public static void Inserir_User(string username, string password, string email)
+        public static void Inserir_User(string username, string password, string email, string nome_proprio, string apelido, DateTime data_nascimento)
         {
+            string imagePath = HttpContext.Current.Server.MapPath("~\\img\\noimage.png");
+            byte[] foto = File.ReadAllBytes(imagePath);
+
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
             using (SqlCommand myCommand = new SqlCommand())
@@ -21,6 +25,10 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.AddWithValue("@username", username);
                 myCommand.Parameters.AddWithValue("@password", EncryptString(password));
                 myCommand.Parameters.AddWithValue("@email", email);
+                myCommand.Parameters.AddWithValue("@nome_proprio", nome_proprio);
+                myCommand.Parameters.AddWithValue("@apelido", apelido);
+                myCommand.Parameters.AddWithValue("@data_nascimento", data_nascimento);
+                myCommand.Parameters.AddWithValue("@foto", foto);
 
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.CommandText = "Insert_User";
@@ -33,14 +41,20 @@ namespace Projeto_Final.Classes
         }
 
         // Função para inserir o user que faz registo/login através do Google
-        public static int Inserir_User_Google(string username, string email)
+        public static int Inserir_User_Google(string username, string email, string nome_proprio, string apelido)
         {
+            string imagePath = HttpContext.Current.Server.MapPath("~\\img\\noimage.png");
+            byte[] foto = File.ReadAllBytes(imagePath);
+
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
             using (SqlCommand myCommand = new SqlCommand())
             {
                 myCommand.Parameters.AddWithValue("@username", username);
                 myCommand.Parameters.AddWithValue("@email", email);
+                myCommand.Parameters.AddWithValue("@nome_proprio", nome_proprio);
+                myCommand.Parameters.AddWithValue("@apelido", apelido);
+                myCommand.Parameters.AddWithValue("@foto", foto);
 
                 SqlParameter valido = new SqlParameter();
                 valido.ParameterName = "@valido";

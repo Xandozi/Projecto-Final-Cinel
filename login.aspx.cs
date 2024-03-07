@@ -28,8 +28,13 @@ namespace Projeto_Final
                     string code = Request.QueryString["code"];
                     string json = GoogleConnect.Fetch("me", code);
                     GoogleProfile profile = new JavaScriptSerializer().Deserialize<GoogleProfile>(json); // Obtenção do json com a informação do utilizador
+                    
+                    // Extrair primeiro e ultimo nome
+                    string[] names = profile.Name.Split(' ');
+                    string firstName = names[0];
+                    string lastName = names.Length > 1 ? names[names.Length - 1] : string.Empty;
 
-                    int valido = Insercao.Inserir_User_Google(profile.Name, profile.Email); // Retorno da função. 1 para válido e ativo ou seja pode fazer login
+                    int valido = Insercao.Inserir_User_Google(profile.Name, profile.Email, firstName, lastName); // Retorno da função. 1 para válido e ativo ou seja pode fazer login
                     int cod_user = Extract.Code_Via_Email(profile.Email); // Extrair o código de utilizador através do email do utilizador fornecido pelo google
 
                     if (profile.Verified_Email == "True" && valido == 1)        // Caso autenticação dê certo e o utilizador esteja ativo
@@ -123,10 +128,12 @@ namespace Projeto_Final
             else if (Validation.Check_Login(tb_username.Text, tb_pw.Text) == 2)   // Utilizador não ativo
             {
                 lbl_mensagem.Text = "Your account is not activated. Please check your inbox for a link or just reset your password.";
+                lbl_mensagem.CssClass = "alert alert-danger";
             }
             else // Credenciais erradas
             {
                 lbl_mensagem.Text = "Inserted credentials are wrong.";
+                lbl_mensagem.CssClass = "alert alert-danger";
             }
         }
 

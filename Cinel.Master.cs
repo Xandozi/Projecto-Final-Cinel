@@ -11,7 +11,10 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!Page.IsPostBack)
+            {
+                this.DataBind();
+            }
         }
         protected string DetermineLoginButtonText()
         {
@@ -61,17 +64,7 @@ namespace Projeto_Final
 
         protected void btn_logout_Click(object sender, EventArgs e)
         {
-
-        }
-
-        protected void btn_registar_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("register.aspx");
-        }
-
-        protected void btn_login_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("login.aspx");
+            Response.Redirect("logout.aspx");
         }
     }
 }

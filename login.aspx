@@ -21,6 +21,7 @@
                                     </div>
                                     <div class="form-group">
                                         <asp:TextBox ID="tb_pw" class="form-control" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="rfv_pw" runat="server" ErrorMessage="Password obrigatória" Text="*" ControlToValidate="tb_pw"></asp:RequiredFieldValidator>
                                     </div>
                                     <asp:Button ID="btn_login" class="btn btn-primary btn-block" runat="server" Text="Login" OnClick="btn_login_Click" />
                                     <a data-toggle="modal" data-target="#resetPasswordModal" class="btn btn-link btn-block text-primary">Esqueci-me da Password</a>
@@ -30,7 +31,7 @@
                                     </asp:LinkButton>
                                 </div>
                             </div>
-                            <asp:Label ID="lbl_mensagem" runat="server" Text=""></asp:Label>
+                            <asp:Label ID="lbl_mensagem" runat="server" Text="" style="margin: 10px;"></asp:Label>
                         </div>
                     </div>
                 </div>

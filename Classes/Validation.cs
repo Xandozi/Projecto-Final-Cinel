@@ -158,7 +158,7 @@ namespace Projeto_Final.Classes
         {
             List<Validation> lst_perfil = new List<Validation>();
 
-            string query = $"select cod_perfil, perfil from Users_Perfis where cod_user = {cod_user}";
+            string query = $"select Users_Perfis.cod_perfil, Perfis.perfil from Users_Perfis join Perfis on Users_Perfis.cod_perfil=Perfis.cod_perfil where cod_user = {cod_user}";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
