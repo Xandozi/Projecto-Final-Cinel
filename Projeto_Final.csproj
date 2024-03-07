@@ -100,10 +100,12 @@
     <Content Include="img\cat-6.jpg" />
     <Content Include="img\cat-7.jpg" />
     <Content Include="img\cat-8.jpg" />
+    <Content Include="img\missao.JPG" />
     <Content Include="img\multimedia.jpg" />
     <Content Include="img\noimage.png" />
     <Content Include="img\oferta-formativa.jpg" />
     <Content Include="img\page-header.jpg" />
+    <Content Include="img\politicaqualidade.JPG" />
     <Content Include="img\programacao.png" />
     <Content Include="img\redes.jpg" />
     <Content Include="img\registration.jpg" />
@@ -117,6 +119,7 @@
     <Content Include="img\testimonial-3.jpg" />
     <Content Include="img\testimonial-4.jpg" />
     <Content Include="img\user.jpg" />
+    <Content Include="img\visao.JPG" />
     <Content Include="js\main.js" />
     <Content Include="lib\easing\easing.js" />
     <Content Include="lib\easing\easing.min.js" />
@@ -137,6 +140,7 @@
     <Content Include="mail\jqBootstrapValidation.min.js" />
     <Content Include="personal_zone.aspx" />
     <Content Include="register.aspx" />
+    <Content Include="sobre_nos.aspx" />
     <Content Include="style_portal_login.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -156,6 +160,7 @@
       <DependentUpon>Cinel.Master</DependentUpon>
     </Compile>
     <Compile Include="Classes\Email.cs" />
+    <Compile Include="Classes\ExportPDF.cs" />
     <Compile Include="Classes\Extract.cs" />
     <Compile Include="Classes\Insercao.cs" />
     <Compile Include="Classes\Validation.cs" />
@@ -194,6 +199,13 @@
     </Compile>
     <Compile Include="register.aspx.designer.cs">
       <DependentUpon>register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sobre_nos.aspx.cs">
+      <DependentUpon>sobre_nos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sobre_nos.aspx.designer.cs">
+      <DependentUpon>sobre_nos.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

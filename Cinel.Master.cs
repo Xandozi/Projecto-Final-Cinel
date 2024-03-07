@@ -11,6 +11,10 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(Session["logged"] == "yes")
+            {
+                btn_user.Text = Session["username"].ToString();
+            }
             if (!Page.IsPostBack)
             {
                 this.DataBind();
@@ -74,6 +78,24 @@ namespace Projeto_Final
                 Response.Redirect("login.aspx?msg=yesemail");
             }
             Response.Redirect("login.aspx");
+        }
+
+        protected string IsActivePage(string pageName)
+        {
+            // Get the current page URL
+            string currentPage = Request.Url.AbsolutePath.ToLower();
+
+            // Check if the current page URL matches the provided URL
+            if (currentPage.EndsWith(pageName.ToLower()))
+            {
+                // Return "active" if the current page matches the provided URL
+                return "active";
+            }
+            else
+            {
+                // Return an empty string if the current page doesn't match the provided URL
+                return "";
+            }
         }
     }
 }
