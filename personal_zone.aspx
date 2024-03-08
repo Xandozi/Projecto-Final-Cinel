@@ -14,14 +14,14 @@
                     <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changePasswordModal">Mudar a Password</a>
                     <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeEmailModal">Mudar o Email</a>
                     <% } %>
-                    <% if (Session["perfil"].ToString() == "Administrator")
+                    <% if (Session["perfil"].ToString() == "Staff" || Session["perfil"].ToString() == "Super Admin")
                         { %>
-                    <a href="dashboard.aspx" class="list-group-item list-group-item-action">Dados Estatísticos
+                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos
                     </a>
-                    <a href="management.aspx" class="list-group-item list-group-item-action">Gestão
+                    <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão
                     </a>
                     <% } %>
-                    <a href="myCollection.aspx?id=<%= Session["user_code"] %>" class="list-group-item list-group-item-action">Manage My Collection
+                    <a href="myCollection.aspx?id=<%= Session["cod_user"] %>" class="list-group-item list-group-item-action">Manage My Collection
                     </a>
                     <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="LOGOUT" OnClick="btn_logout2_Click" />
                 </div>
@@ -30,16 +30,28 @@
             <div class="col-md-9">
                 <div class="card" style="border-color: #333;">
                     <div class="card-header bg-dark text-white">
-                        <h2 class="display-4" style="font-size: 40px; color: white;">Welcome to your area, <%: Session["username"] %></h2>
+                        <h2 class="display-4" style="font-size: 40px; color: white;">Bem-vindo à sua zona pessoal, <%: Session["nome_proprio"] %></h2>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">User Details</h5>
-                        <p class="lead">Your User Code: <%# Session["user_code"].ToString() %></p>
-                        <p class="lead">Your profile: <%: Session["perfil"] %></p>
-                        <p class="lead">Your Email: <%: Session["email"].ToString() %></p>
-                        <div class="d-flex justify-content-lg-between">
-                            <asp:Button ID="btn_export_pdf" class="btn btn-outline-dark btn-lg" runat="server" Text="Export My Collection to PDF" CausesValidation="false" OnClick="btn_export_pdf_Click" />
-                            <a class="btn btn-outline-dark btn-lg" text="Delete my Account" data-toggle="modal" data-target="#deleteAccountModal">Delete My Account</a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="lead">Código de Utilizador: <asp:Label ID="lbl_cod_user" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Nome Completo: <asp:Label ID="lbl_nome_completo" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Morada: <asp:Label ID="lbl_morada" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Código Postal: <asp:Label ID="lbl_cod_postal" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Perfil/Perfis: <asp:Label ID="lbl_perfis" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Email: <asp:Label ID="lbl_email" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Data de Nascimento: <asp:Label ID="lbl_data_nascimento" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Número de Contacto: <asp:Label ID="lbl_num_contacto" runat="server" Text=""></asp:Label></p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-right mt-3">
+                                    <asp:Image ID="img_user" runat="server" class="rounded-circle" style="height: 150px; width: 150px;"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-lg-between mt-3">
+                            <asp:Button ID="btn_editar" class="btn btn-outline-dark btn-lg" runat="server" Text="Editar Informação" CausesValidation="false" OnClick="btn_editar_Click" />
                         </div>
                     </div>
                 </div>
@@ -51,55 +63,34 @@
     </div>
 
     <!-- Modals -->
-    <!-- Modal for deleting the account -->
-    <div class="modal" id="deleteAccountModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete Account</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btn_delete_account_confirm" class="btn btn-danger" runat="server" Text="Delete Account" CausesValidation="false" OnClick="btn_delete_account_confirm_Click" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal for changing the password -->
     <div class="modal" id="changePasswordModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Change Password</h4>
+                    <h4 class="modal-title">Mudar Password</h4>
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <div class="modal-body">
                     <div id="changePasswordForm" runat="server">
                         <div class="form-group">
-                            <label for="tb_pw">Current Password</label>
+                            <label for="tb_pw">Password atual</label>
                             <asp:TextBox ID="tb_pw" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
                         </div>
                         <div class="form-group">
-                            <label for="tb_new_pw">New Password</label>
+                            <label for="tb_new_pw">Nova Password</label>
                             <asp:TextBox ID="tb_new_pw" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
                             <asp:RegularExpressionValidator ID="rev_pw_nova" runat="server" ErrorMessage="Invalid Password" Text="*" ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,20}$" ControlToValidate="tb_new_pw"></asp:RegularExpressionValidator>
                         </div>
                         <div class="form-group">
-                            <label for="tb_new_pw_repeat">Confirm New Password</label>
+                            <label for="tb_new_pw_repeat">Confirmar Nova Password</label>
                             <asp:TextBox ID="tb_new_pw_repeat" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
                         </div>
-                        <a>
-                            <asp:Label ID="lbl_message2" runat="server" CssClass="mt-3" /></a>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btn_change_pw" class="btn btn-primary" runat="server" Text="Change Password" OnClick="btn_change_pw_Click" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btn_change_pw" class="btn btn-primary" runat="server" Text="Mudar Password" OnClick="btn_change_pw_Click" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -110,13 +101,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Change Username</h4>
+                    <h4 class="modal-title">Mudar Username</h4>
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <div class="modal-body">
                     <div id="Div1" runat="server">
                         <div class="form-group">
-                            <label for="tb_pw">New Username</label>
+                            <label for="tb_pw">Novo Username</label>
                             <asp:TextBox ID="tb_new_username" class="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="form-group">
@@ -126,8 +117,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btn_change_username" class="btn btn-primary" runat="server" Text="Change Password" OnClick="btn_change_username_Click" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btn_change_username" class="btn btn-primary" runat="server" Text="Mudar Password" OnClick="btn_change_username_Click" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -138,13 +129,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Change Email</h4>
+                    <h4 class="modal-title">Mudar Email</h4>
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <div class="modal-body">
                     <div id="Div2" runat="server">
                         <div class="form-group">
-                            <label for="tb_email">New Email</label>
+                            <label for="tb_email">Novo Email</label>
                             <asp:TextBox ID="tb_new_email" class="form-control" runat="server" TextMode="SingleLine"></asp:TextBox>
                             <asp:RegularExpressionValidator ID="rfv_new_email" runat="server" ErrorMessage="New email not inserted correctly" Text="*" ControlToValidate="tb_new_email" ValidationExpression="^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$"></asp:RegularExpressionValidator>
                         </div>
@@ -155,8 +146,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btn_change_email" class="btn btn-primary" runat="server" Text="Change Email" OnClick="btn_change_email_Click" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btn_change_email" class="btn btn-primary" runat="server" Text="Mudar Email" OnClick="btn_change_email_Click" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>

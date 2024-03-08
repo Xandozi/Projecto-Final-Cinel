@@ -40,7 +40,9 @@ namespace Projeto_Final
                     if (profile.Verified_Email == "True" && valido == 1)        // Caso autenticação dê certo e o utilizador esteja ativo
                     {
                         Session["username"] = Extract.Username(cod_user);
-                        Session["user_code"] = cod_user;
+                        Session["cod_user"] = cod_user;
+                        Session["nome_proprio"] = firstName;
+                        Session["apelido"] = lastName;
 
                         List<Validation> perfis = Validation.Check_Perfil(cod_user);
                         StringBuilder concatenatedPerfis = new StringBuilder();
@@ -105,7 +107,16 @@ namespace Projeto_Final
             if (Validation.Check_Login(tb_username.Text, tb_pw.Text) == 1)
             {
                 Session["username"] = tb_username.Text;
-                Session["user_code"] = Extract.Code(tb_username.Text);
+                Session["cod_user"] = Extract.Code(tb_username.Text);
+
+                string nome_completo = Extract.Nome_Completo(Extract.Code(tb_username.Text));
+
+                int firstSpaceIndex = nome_completo.IndexOf(' ');
+                string nome_proprio = nome_completo.Substring(0, firstSpaceIndex);
+                string apelido = nome_completo.Substring(firstSpaceIndex + 1);
+
+                Session["nome_proprio"] = nome_proprio;
+                Session["apelido"] = apelido;
 
                 List<Validation> perfis = Validation.Check_Perfil(Extract.Code(tb_username.Text));
                 StringBuilder concatenatedPerfis = new StringBuilder();

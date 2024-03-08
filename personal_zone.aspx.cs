@@ -17,13 +17,28 @@ namespace Projeto_Final
             {
                 Response.Redirect("login.aspx");
             }
+            else
+            {
+                List<Users> user = Users.Ler_Info_User(Convert.ToInt32(Session["cod_user"]));
+
+                if (user.Count > 0)
+                {
+                    lbl_cod_user.Text = user[0].cod_user.ToString();
+                    lbl_nome_completo.Text = user[0].nome_proprio.ToString() + " " + user[0].apelido.ToString();
+                    lbl_morada.Text = user[0].morada;
+                    lbl_cod_postal.Text = user[0].cod_postal;
+                    //lbl_perfis.Text = user[0].cunho;
+                    lbl_email.Text = user[0].email;
+                    lbl_data_nascimento.Text = user[0].data_nascimento.ToString();
+                    lbl_num_contacto.Text = user[0].num_contacto;
+                    img_user.ImageUrl = user[0].foto;
+                }
+            }
 
             if (Request.QueryString["msg"] == "yesuser")
             {
-                lblMessage.Text = "Username changed successfully!";
+                lblMessage.Text = "Username mudado com sucesso!";
                 lblMessage.CssClass = "alert alert-success";
-                lbl_message2.Text = "Username changed successfully!";
-                lbl_message2.CssClass = "alert alert-success";
             }
         }
 
@@ -63,17 +78,13 @@ namespace Projeto_Final
             if (Validation.Check_Login(Session["username"].ToString(), tb_pw.Text) == 1 && tb_new_pw.Text == tb_new_pw_repeat.Text && tb_new_pw.Text != tb_pw.Text && tb_new_pw_repeat.Text != tb_pw.Text)
             {
                 Insercao.Update_Password(Extract.Email(Session["username"].ToString()), Validation.EncryptString(tb_new_pw.Text));
-                lblMessage.Text = "Password changed successfully!";
+                lblMessage.Text = "Password mudada com sucesso!";
                 lblMessage.CssClass = "alert alert-success";
-                lbl_message2.Text = "Password changed successfully!";
-                lbl_message2.CssClass = "alert alert-success";
             }
             else
             {
-                lblMessage.Text = "Error changing password. Please try again.";
+                lblMessage.Text = "Erro ao mudar a password. Por favor tente novamente.";
                 lblMessage.CssClass = "alert alert-danger";
-                lbl_message2.Text = "Error changing password. Please try again.";
-                lbl_message2.CssClass = "alert alert-danger";
             }
         }
 
@@ -87,10 +98,8 @@ namespace Projeto_Final
             }
             else
             {
-                lblMessage.Text = "Error changing the username. Please try again.";
+                lblMessage.Text = "Erro ao mudar o username. Por favor tente novamente.";
                 lblMessage.CssClass = "alert alert-danger";
-                lbl_message2.Text = "Error changing the username. Please try again.";
-                lbl_message2.CssClass = "alert alert-danger";
             }
         }
 
@@ -105,10 +114,8 @@ namespace Projeto_Final
             }
             else
             {
-                lblMessage.Text = "Error changing the email. Please try again.";
+                lblMessage.Text = "Erro ao mudar o email. Por favor tente novamente.";
                 lblMessage.CssClass = "alert alert-danger";
-                lbl_message2.Text = "Error changing the email. Please try again.";
-                lbl_message2.CssClass = "alert alert-danger";
             }
         }
         public static string EncryptString(string Message)
@@ -159,16 +166,12 @@ namespace Projeto_Final
 
         protected void btn_logout2_Click(object sender, EventArgs e)
         {
-            //Response.Redirect("logout.aspx");
-            // Variáveis de sessão limpas ao clicar em logout
-            Session.Clear();
-            Session.Abandon();
-            // Redirecionamento caso provenha de depois de mudar o email
-            if (Request.QueryString["msg"] == "yesemail")
-            {
-                Response.Redirect("login.aspx?msg=yesemail");
-            }
-            Response.Redirect("login.aspx");
+            Response.Redirect("logout.aspx");
+        }
+
+        protected void btn_editar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

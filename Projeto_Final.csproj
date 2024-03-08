@@ -163,6 +163,7 @@
     <Compile Include="Classes\ExportPDF.cs" />
     <Compile Include="Classes\Extract.cs" />
     <Compile Include="Classes\Insercao.cs" />
+    <Compile Include="Classes\Users.cs" />
     <Compile Include="Classes\Validation.cs" />
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>

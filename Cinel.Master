@@ -27,6 +27,17 @@
     <link href="css/style.css" rel="stylesheet">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style>
+        .list-group-item-action {
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .list-group-item-action:hover {
+            background-color: #ff6a00;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">

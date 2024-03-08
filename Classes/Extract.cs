@@ -131,5 +131,42 @@ namespace Projeto_Final.Classes
                 return username;
             }
         }
+
+        public static string Nome_Completo(int cod_user)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_user", cod_user);
+
+                SqlParameter resposta_SP = new SqlParameter();
+                resposta_SP.ParameterName = "@nome_proprio";
+                resposta_SP.Direction = ParameterDirection.Output;
+                resposta_SP.SqlDbType = SqlDbType.VarChar;
+                resposta_SP.Size = 50;
+                myCommand.Parameters.Add(resposta_SP);
+
+                SqlParameter resposta_SP1 = new SqlParameter();
+                resposta_SP1.ParameterName = "@apelido";
+                resposta_SP1.Direction = ParameterDirection.Output;
+                resposta_SP1.SqlDbType = SqlDbType.VarChar;
+                resposta_SP1.Size = 50;
+                myCommand.Parameters.Add(resposta_SP1);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "User_Nome_Completo";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+
+                string nome = myCommand.Parameters["@nome_proprio"].Value.ToString() + " " + myCommand.Parameters["@apelido"].Value.ToString();
+
+                myConn.Close();
+
+                return nome;
+            }
+        }
     }
 }

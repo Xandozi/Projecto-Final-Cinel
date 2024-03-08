@@ -11,14 +11,12 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["logged"] == "yes")
-            {
-                btn_user.Text = Session["username"].ToString();
-            }
-            if (!Page.IsPostBack)
-            {
-                this.DataBind();
-            }
+            // Disable page caching
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.MinValue);
+
+            this.DataBind();
         }
         protected string DetermineLoginButtonText()
         {
@@ -68,16 +66,7 @@ namespace Projeto_Final
 
         protected void btn_logout_Click(object sender, EventArgs e)
         {
-            //Response.Redirect("logout.aspx");
-            // Variáveis de sessão limpas ao clicar em logout
-            Session.Clear();
-            Session.Abandon();
-            // Redirecionamento caso provenha de depois de mudar o email
-            if (Request.QueryString["msg"] == "yesemail")
-            {
-                Response.Redirect("login.aspx?msg=yesemail");
-            }
-            Response.Redirect("login.aspx");
+            Response.Redirect("logout.aspx");
         }
 
         protected string IsActivePage(string pageName)
