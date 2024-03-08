@@ -166,7 +166,15 @@ namespace Projeto_Final
 
         protected void btn_logout2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("logout.aspx");
+            Session.Clear();
+            Session.Abandon();
+            Session.Remove("logged");
+            Session.RemoveAll();
+            Session["logged"] = "logout";
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+            Response.Redirect("login.aspx");
         }
 
         protected void btn_editar_Click(object sender, EventArgs e)

@@ -16,6 +16,12 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["logged"] == "logout")
+            {
+                Session["logged"] = null;
+                Response.Redirect("login.aspx");
+            }
+                
             // Procedimento de sign in com a conta Google
             GoogleConnect.ClientId = ConfigurationManager.AppSettings["GoogleClientID"];
             GoogleConnect.ClientSecret = ConfigurationManager.AppSettings["GoogleSecret"];
@@ -70,9 +76,17 @@ namespace Projeto_Final
                     }
                     // Else será executado pela autenticação errada do google que virá abaixo
                 }
+
                 if (Request.QueryString["error"] == "access_denied")
                 {
                     ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "alert('Access denied.')", true);
+                }
+
+                // Caso haja uma mensagem passada pelo url, a lbl mensagem deverá mostrar isto
+                if (Request.QueryString["msg"] == "yesemail")
+                {
+                    lbl_mensagem.Text = "Email changed successfully! Please activate your account via email before logging in again";
+                    lbl_mensagem.CssClass = "alert alert-success";
                 }
             }
 
@@ -84,10 +98,12 @@ namespace Projeto_Final
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
         }
+
         protected void Login(object sender, EventArgs e)
         {
             GoogleConnect.Authorize("profile", "email");
         }
+
         protected void Clear(object sender, EventArgs e)
         {
             GoogleConnect.Clear(Request.QueryString["code"]);
@@ -106,6 +122,7 @@ namespace Projeto_Final
             // Validação do login bem sucedida
             if (Validation.Check_Login(tb_username.Text, tb_pw.Text) == 1)
             {
+                Response.Cache.SetCacheability(HttpCacheability.Private);
                 Session["username"] = tb_username.Text;
                 Session["cod_user"] = Extract.Code(tb_username.Text);
 

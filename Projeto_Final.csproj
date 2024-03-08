@@ -134,7 +134,6 @@
     <Content Include="lib\owlcarousel\owl.carousel.js" />
     <Content Include="lib\owlcarousel\owl.carousel.min.js" />
     <Content Include="login.aspx" />
-    <Content Include="logout.aspx" />
     <Content Include="mail\contact.js" />
     <Content Include="mail\contact.php" />
     <Content Include="mail\jqBootstrapValidation.min.js" />
@@ -178,13 +177,6 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="logout.aspx.cs">
-      <DependentUpon>logout.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="logout.aspx.designer.cs">
-      <DependentUpon>logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="personal_zone.aspx.cs">
       <DependentUpon>personal_zone.aspx</DependentUpon>
