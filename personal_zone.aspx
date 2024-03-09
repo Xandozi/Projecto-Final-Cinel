@@ -21,8 +21,6 @@
                     <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão
                     </a>
                     <% } %>
-                    <a href="myCollection.aspx?id=<%= Session["cod_user"] %>" class="list-group-item list-group-item-action">Manage My Collection
-                    </a>
                     <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="LOGOUT" OnClick="btn_logout2_Click" />
                 </div>
             </div>
@@ -36,6 +34,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <p class="lead">Código de Utilizador: <asp:Label ID="lbl_cod_user" runat="server" Text=""></asp:Label></p>
+                                <p class="lead">Username: <asp:Label ID="lbl_username" runat="server" Text=""></asp:Label></p>
                                 <p class="lead">Nome Completo: <asp:Label ID="lbl_nome_completo" runat="server" Text=""></asp:Label></p>
                                 <p class="lead">Morada: <asp:Label ID="lbl_morada" runat="server" Text=""></asp:Label></p>
                                 <p class="lead">Código Postal: <asp:Label ID="lbl_cod_postal" runat="server" Text=""></asp:Label></p>
