@@ -15,7 +15,7 @@ namespace Projeto_Final
     public partial class login : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {  
             // Procedimento de sign in com a conta Google
             GoogleConnect.ClientId = ConfigurationManager.AppSettings["GoogleClientID"];
             GoogleConnect.ClientSecret = ConfigurationManager.AppSettings["GoogleSecret"];
@@ -40,7 +40,9 @@ namespace Projeto_Final
                     if (profile.Verified_Email == "True" && valido == 1)        // Caso autenticação dê certo e o utilizador esteja ativo
                     {
                         Session["username"] = Extract.Username(cod_user);
-                        Session["user_code"] = cod_user;
+                        Session["cod_user"] = cod_user;
+                        Session["nome_proprio"] = firstName;
+                        Session["apelido"] = lastName;
 
                         List<Validation> perfis = Validation.Check_Perfil(cod_user);
                         StringBuilder concatenatedPerfis = new StringBuilder();
@@ -68,9 +70,17 @@ namespace Projeto_Final
                     }
                     // Else será executado pela autenticação errada do google que virá abaixo
                 }
+
                 if (Request.QueryString["error"] == "access_denied")
                 {
                     ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "alert('Access denied.')", true);
+                }
+
+                // Caso haja uma mensagem passada pelo url, a lbl mensagem deverá mostrar isto
+                if (Request.QueryString["msg"] == "yesemail")
+                {
+                    lbl_mensagem.Text = "Email changed successfully! Please activate your account via email before logging in again";
+                    lbl_mensagem.CssClass = "alert alert-success";
                 }
             }
 
@@ -82,10 +92,12 @@ namespace Projeto_Final
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
         }
+
         protected void Login(object sender, EventArgs e)
         {
             GoogleConnect.Authorize("profile", "email");
         }
+
         protected void Clear(object sender, EventArgs e)
         {
             GoogleConnect.Clear(Request.QueryString["code"]);
@@ -105,7 +117,16 @@ namespace Projeto_Final
             if (Validation.Check_Login(tb_username.Text, tb_pw.Text) == 1)
             {
                 Session["username"] = tb_username.Text;
-                Session["user_code"] = Extract.Code(tb_username.Text);
+                Session["cod_user"] = Extract.Code(tb_username.Text);
+
+                string nome_completo = Extract.Nome_Completo(Extract.Code(tb_username.Text));
+
+                int firstSpaceIndex = nome_completo.IndexOf(' ');
+                string nome_proprio = nome_completo.Substring(0, firstSpaceIndex);
+                string apelido = nome_completo.Substring(firstSpaceIndex + 1);
+
+                Session["nome_proprio"] = nome_proprio;
+                Session["apelido"] = apelido;
 
                 List<Validation> perfis = Validation.Check_Perfil(Extract.Code(tb_username.Text));
                 StringBuilder concatenatedPerfis = new StringBuilder();

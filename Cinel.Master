@@ -9,6 +9,11 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -27,6 +32,17 @@
     <link href="css/style.css" rel="stylesheet">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style>
+        .list-group-item-action {
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+            .list-group-item-action:hover {
+                background-color: #ff6a00;
+                color: white;
+            }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -118,17 +134,18 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav py-0">
-                                <a href="home.aspx" class="nav-item nav-link active">Home</a>
-                                <a href="about-us.aspx" class="nav-item nav-link">Sobre Nós</a>
-                                <a href="cursos.aspx" class="nav-item nav-link">Cursos</a>
-                                <a href="formadores.aspx" class="nav-item nav-link">Formadores</a>
-                                <a href="contactos.aspx" class="nav-item nav-link">Contactos</a>
+                                <a href="home.aspx" class="nav-item nav-link <%= IsActivePage("home.aspx") %>">Home</a>
+                                <a href="sobre_nos.aspx" class="nav-item nav-link <%= IsActivePage("sobre_nos.aspx") %>">Sobre Nós</a>
+                                <a href="cursos.aspx" class="nav-item nav-link <%= IsActivePage("cursos.aspx") %>">Cursos</a>
+                                <a href="formadores.aspx" class="nav-item nav-link <%= IsActivePage("formadores.aspx") %>">Formadores</a>
+                                <a href="contactos.aspx" class="nav-item nav-link <%= IsActivePage("contactos.aspx") %>">Contactos</a>
                             </div>
+
                             <div class="navbar-nav ml-auto">
                                 <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" />
                                 <% if (Session["logged"] == "yes")
                                     { %>
-                                <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" CausesValidation="false" OnClick="btn_logout_Click" />
+                                <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" OnClick="btn_logout_Click" />
                                 <% } %>
                             </div>
                         </div>
@@ -141,6 +158,8 @@
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
+        <% if (Session["logged"] != "yes")
+            { %>
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
             <div class="row pt-5">
@@ -173,6 +192,7 @@
                 </div>
             </div>
         </div>
+        <% } %>
         <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="row">
                 <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">

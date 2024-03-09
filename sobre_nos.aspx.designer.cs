@@ -10,7 +10,7 @@
 
 namespace Projeto_Final
 {
-    public partial class logout
+    public partial class sobre_nos
     {
     }
 }

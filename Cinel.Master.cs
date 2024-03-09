@@ -11,10 +11,11 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                this.DataBind();
-            }
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+
+            this.DataBind();
         }
         protected string DetermineLoginButtonText()
         {
@@ -64,16 +65,25 @@ namespace Projeto_Final
 
         protected void btn_logout_Click(object sender, EventArgs e)
         {
-            //Response.Redirect("logout.aspx");
-            // Variáveis de sessão limpas ao clicar em logout
-            Session.Clear();
-            Session.Abandon();
-            // Redirecionamento caso provenha de depois de mudar o email
-            if (Request.QueryString["msg"] == "yesemail")
+            Response.Redirect("logout.aspx", false);
+        }
+
+        protected string IsActivePage(string pageName)
+        {
+            // Get the current page URL
+            string currentPage = Request.Url.AbsolutePath.ToLower();
+
+            // Check if the current page URL matches the provided URL
+            if (currentPage.EndsWith(pageName.ToLower()))
             {
-                Response.Redirect("login.aspx?msg=yesemail");
+                // Return "active" if the current page matches the provided URL
+                return "active";
             }
-            Response.Redirect("login.aspx");
+            else
+            {
+                // Return an empty string if the current page doesn't match the provided URL
+                return "";
+            }
         }
     }
 }

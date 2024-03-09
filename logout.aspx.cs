@@ -11,14 +11,11 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Variáveis de sessão limpas ao clicar em logout
             Session.Clear();
             Session.Abandon();
-            // Redirecionamento caso provenha de depois de mudar o email
-            if (Request.QueryString["msg"] == "yesemail")
-            {
-                Response.Redirect("login.aspx?msg=yesemail");
-            }
+            Session.Remove("logged");
+            Session.RemoveAll();
+            Session["logged"] = "logout";
             Response.Redirect("login.aspx");
         }
     }

@@ -40,7 +40,7 @@ namespace Projeto_Final
                     if (profile.Verified_Email == "True" && valido == 1)
                     {
                         Session["username"] = Extract.Username(cod_user);
-                        Session["user_code"] = cod_user;
+                        Session["cod_user"] = cod_user;
 
                         List<Validation> perfis = Validation.Check_Perfil(cod_user);
                         StringBuilder concatenatedPerfis = new StringBuilder();
