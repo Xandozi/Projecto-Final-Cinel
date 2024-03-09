@@ -15,13 +15,7 @@ namespace Projeto_Final
     public partial class login : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-            if (Session["logged"] == "logout")
-            {
-                Session["logged"] = null;
-                Response.Redirect("login.aspx");
-            }
-                
+        {  
             // Procedimento de sign in com a conta Google
             GoogleConnect.ClientId = ConfigurationManager.AppSettings["GoogleClientID"];
             GoogleConnect.ClientSecret = ConfigurationManager.AppSettings["GoogleSecret"];
@@ -122,7 +116,6 @@ namespace Projeto_Final
             // Validação do login bem sucedida
             if (Validation.Check_Login(tb_username.Text, tb_pw.Text) == 1)
             {
-                Response.Cache.SetCacheability(HttpCacheability.Private);
                 Session["username"] = tb_username.Text;
                 Session["cod_user"] = Extract.Code(tb_username.Text);
 

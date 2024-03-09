@@ -145,7 +145,7 @@
                                 <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" />
                                 <% if (Session["logged"] == "yes")
                                     { %>
-                                <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" CausesValidation="false" OnClick="btn_logout_Click" />
+                                <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" OnClick="btn_logout_Click" />
                                 <% } %>
                             </div>
                         </div>

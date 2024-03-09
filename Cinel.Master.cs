@@ -11,9 +11,11 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            btn_user.Text = DetermineLoginButtonText();
-            if (!Page.IsPostBack)
-                this.DataBind();
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+
+            this.DataBind();
         }
         protected string DetermineLoginButtonText()
         {
@@ -63,15 +65,7 @@ namespace Projeto_Final
 
         protected void btn_logout_Click(object sender, EventArgs e)
         {
-            Session.Clear();
-            Session.Abandon();
-            Session.Remove("logged");
-            Session.RemoveAll();
-            Session["logged"] = "logout";
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
-            Response.Cache.SetNoStore();
-            Response.Redirect("login.aspx");
+            Response.Redirect("logout.aspx", false);
         }
 
         protected string IsActivePage(string pageName)
