@@ -34,7 +34,7 @@ namespace Projeto_Final
                     string firstName = names[0];
                     string lastName = names.Length > 1 ? names[names.Length - 1] : string.Empty;
 
-                    int valido = Insercao.Inserir_User_Google(profile.Name, profile.Email, firstName, lastName);
+                    int valido = Users.Inserir_User_Google(profile.Name, profile.Email, firstName, lastName);
                     int cod_user = Extract.Code_Via_Email(profile.Email);
 
                     if (profile.Verified_Email == "True" && valido == 1)
@@ -88,7 +88,7 @@ namespace Projeto_Final
                 {
                     if (DateTime.TryParse(tb_data_nascimento.Text, out DateTime data_nascimento))
                     {
-                        Insercao.Inserir_User(tb_username.Text, tb_pw.Text, tb_email.Text, tb_primeiro_nome.Text, tb_apelido.Text, data_nascimento);
+                        Users.Inserir_User(tb_username.Text, tb_pw.Text, tb_email.Text, tb_primeiro_nome.Text, tb_apelido.Text, data_nascimento);
                         Email.Send(tb_email.Text, tb_username.Text);
                         lbl_mensagem.Text = "Utilizador registado com sucesso. Veja a sua caixa de correio, precisa de ativar a sua conta.";
                         lbl_mensagem.CssClass = "alert alert-success";

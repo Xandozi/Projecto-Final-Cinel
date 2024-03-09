@@ -16,10 +16,8 @@
                     <% } %>
                     <% if (Session["perfil"].ToString() == "Staff" || Session["perfil"].ToString() == "Super Admin")
                         { %>
-                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos
-                    </a>
-                    <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão
-                    </a>
+                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos</a>
+                    <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão</a>
                     <% } %>
                     <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="LOGOUT" OnClick="btn_logout2_Click" />
                 </div>
