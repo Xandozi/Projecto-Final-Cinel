@@ -55,6 +55,7 @@ namespace Projeto_Final
                             concatenatedPerfis.Length -= 2;
                         }
 
+                        Session["google_foto"] = profile.Picture;
                         Session["perfil"] = concatenatedPerfis.ToString();
                         Session["email"] = profile.Email;
                         Session["logged"] = "yes";
@@ -63,7 +64,7 @@ namespace Projeto_Final
                     else if (profile.Verified_Email == "True" && valido != 1)
                     {
                         Email.Send(profile.Email, Extract.Username(cod_user));
-                        Response.Redirect("login.aspx?message=Activate%20your%20account%20via%20email", false);
+                        Response.Redirect("login.aspx?message=Active%20a%20sua%20conta%20via%20email%20porfavor", false);
                     }
                 }
                 if (Request.QueryString["error"] == "access_denied")

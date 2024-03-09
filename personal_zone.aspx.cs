@@ -24,14 +24,40 @@ namespace Projeto_Final
                 if (user.Count > 0)
                 {
                     lbl_cod_user.Text = user[0].cod_user.ToString();
+                    lbl_cod_user.Font.Bold = true;
+
+                    lbl_username.Text = Session["username"].ToString();
+                    lbl_username.Font.Bold = true;
+
                     lbl_nome_completo.Text = user[0].nome_proprio.ToString() + " " + user[0].apelido.ToString();
+                    lbl_nome_completo.Font.Bold = true;
+
                     lbl_morada.Text = user[0].morada;
+                    lbl_morada.Font.Bold = true;
+
                     lbl_cod_postal.Text = user[0].cod_postal;
-                    //lbl_perfis.Text = user[0].cunho;
+                    lbl_cod_postal.Font.Bold = true;
+
+                    lbl_perfis.Text = user[0].perfis;
+                    lbl_perfis.Font.Bold = true;
+
                     lbl_email.Text = user[0].email;
+                    lbl_email.Font.Bold = true;
+
                     lbl_data_nascimento.Text = user[0].data_nascimento.ToString();
+                    lbl_data_nascimento.Font.Bold = true;
+
                     lbl_num_contacto.Text = user[0].num_contacto;
-                    img_user.ImageUrl = user[0].foto;
+                    lbl_num_contacto.Font.Bold = true;
+
+                    if (Session["googlefb_log"] == "yes")
+                    {
+                        img_user.ImageUrl = Session["google_foto"].ToString();
+                    }
+                    else
+                    {
+                        img_user.ImageUrl = user[0].foto;
+                    }
                 }
             }
 

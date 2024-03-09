@@ -57,6 +57,7 @@ namespace Projeto_Final
                             concatenatedPerfis.Length -= 2;
                         }
 
+                        Session["google_foto"] = profile.Picture;
                         Session["perfil"] = concatenatedPerfis.ToString();
                         Session["email"] = profile.Email;
                         Session["logged"] = "yes";
@@ -66,7 +67,7 @@ namespace Projeto_Final
                     else if (profile.Verified_Email == "True" && valido != 1)   // Caso autenticação seja correta mas o utilizador não esteja ativo
                     {
                         Email.Send(profile.Email, Extract.Username(cod_user));  // Enviar email de ativação novamente
-                        Response.Redirect("login.aspx?message=Activate%20your%20account%20via%20email", false);     // Redirecionamento para a página com uma mensagem no url
+                        Response.Redirect("login.aspx?message=Active%20a%20sua%20conta%20via%20email%20porfavor", false);     // Redirecionamento para a página com uma mensagem no url
                     }
                     // Else será executado pela autenticação errada do google que virá abaixo
                 }
@@ -79,7 +80,7 @@ namespace Projeto_Final
                 // Caso haja uma mensagem passada pelo url, a lbl mensagem deverá mostrar isto
                 if (Request.QueryString["msg"] == "yesemail")
                 {
-                    lbl_mensagem.Text = "Email changed successfully! Please activate your account via email before logging in again";
+                    lbl_mensagem.Text = "Email mudado com sucesso!! Por favor verifique a sua caixa de entrada pois receberá um email de ativação.";
                     lbl_mensagem.CssClass = "alert alert-success";
                 }
             }
@@ -148,12 +149,12 @@ namespace Projeto_Final
             }
             else if (Validation.Check_Login(tb_username.Text, tb_pw.Text) == 2)   // Utilizador não ativo
             {
-                lbl_mensagem.Text = "Your account is not activated. Please check your inbox for a link or just reset your password.";
+                lbl_mensagem.Text = "A sua conta não está ativada. Por favor veja a sua caixa de correio.";
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
             else // Credenciais erradas
             {
-                lbl_mensagem.Text = "Inserted credentials are wrong.";
+                lbl_mensagem.Text = "Credenciais inseridas estão erradas.";
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
         }
@@ -166,7 +167,7 @@ namespace Projeto_Final
             }
             else
             {
-                lbl_mensagem.Text = "Email was not found on our database!";
+                lbl_mensagem.Text = "Email não existe na nossa base de dados!";
             }
         }
     }
