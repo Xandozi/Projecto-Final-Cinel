@@ -46,7 +46,7 @@ namespace Projeto_Final.Classes
             }
         }
         // UNFINISHEDDDDDDDDDDDDDDDDDDDDDDDDDD
-        public static List<Modulos> Ler_ModulosAll(string search_designacao, int search_duracao, DateTime data_inicio, DateTime data_fim, int search_cod_ufcd, string sort_order)
+        public static List<Modulos> Ler_ModulosAll(string search_designacao, int search_duracao, string data_inicio, string data_fim, int search_cod_ufcd, string sort_order)
         {
             List<Modulos> lst_modulos = new List<Modulos>();
 
@@ -65,7 +65,7 @@ namespace Projeto_Final.Classes
             }
             if (data_inicio != null && data_fim != null)
             {
-                conditions.Add($"data_criacao >= {data_inicio} and data_criacao <= {data_fim}");
+                conditions.Add($"data_criacao >= '{data_inicio}' and data_criacao <= '{data_fim}'");
             }
             if (search_cod_ufcd != 0)
             {
@@ -77,7 +77,7 @@ namespace Projeto_Final.Classes
             }
             if (!string.IsNullOrEmpty(sort_order))
             {
-                query += " ORDER BY moeda_estado.valor_atual " + sort_order;
+                query += " ORDER BY cod_ufcd " + sort_order;
             }
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
@@ -105,11 +105,11 @@ namespace Projeto_Final.Classes
             return lst_modulos;
         }
 
-        public static List<Modulos> Ler_Modulo(int cod_ufcd)
+        public static List<Modulos> Ler_Modulo(int cod_modulo)
         {
             List<Modulos> lst_modulo = new List<Modulos>();
 
-            string query = $"select cod_modulo, nome_modulo, duracao, data_criacao, cod_ufcd from Modulos where cod_ufcd = {cod_ufcd}";
+            string query = $"select cod_modulo, nome_modulo, duracao, data_criacao, cod_ufcd from Modulos where cod_modulo = {cod_modulo}";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 

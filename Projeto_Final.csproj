@@ -141,6 +141,7 @@
     <Content Include="mail\contact.php" />
     <Content Include="mail\jqBootstrapValidation.min.js" />
     <Content Include="modulos.aspx" />
+    <Content Include="modulos_detalhe.aspx" />
     <Content Include="personal_zone.aspx" />
     <Content Include="register.aspx" />
     <Content Include="sobre_nos.aspx" />
@@ -214,6 +215,13 @@
     </Compile>
     <Compile Include="modulos.aspx.designer.cs">
       <DependentUpon>modulos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos_detalhe.aspx.cs">
+      <DependentUpon>modulos_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos_detalhe.aspx.designer.cs">
+      <DependentUpon>modulos_detalhe.aspx</DependentUpon>
     </Compile>
     <Compile Include="personal_zone.aspx.cs">
       <DependentUpon>personal_zone.aspx</DependentUpon>

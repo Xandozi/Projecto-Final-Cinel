@@ -5,8 +5,9 @@
     <div class="container-fluid">
         <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
             <!-- Sidebar -->
-            <div class="col-md-3 bg-light">
+            <div class="col-md-2 bg-light">
                 <div class="list-group">
+                    <a href="gestao.aspx" class="list-group-item list-group-item-action active">Gestão</a>
                     <a href="cursos.aspx" class="list-group-item list-group-item-action">Cursos</a>
                     <a href="formadores_gestao.aspx" class="list-group-item list-group-item-action">Formadores</a>
                     <a href="formandos.aspx" class="list-group-item list-group-item-action">Formandos</a>

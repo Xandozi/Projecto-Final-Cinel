@@ -7,9 +7,9 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
+                <div class="row" style="margin-top: 30px;">
                     <!-- Sidebar -->
-                    <div class="col-md-3 bg-light">
+                    <div class="col-md-3 bg-light" style="margin-bottom:10px;">
                         <div class="list-group">
                             <a href="criar_modulo.aspx" class="list-group-item list-group-item-action active">Criar Módulo</a>
                             <a href="editar_modulo.aspx" class="list-group-item list-group-item-action">Editar Módulo</a>
@@ -24,32 +24,45 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <p class="font-weight-bold">
-                                                Código UFCD:
-                                                <asp:TextBox ID="tb_cod_ufcd" runat="server" TextMode="Number" MaxLength="9"></asp:TextBox>
-                                            </p>
-                                            <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório" Text="*" ControlToValidate="tb_cod_ufcd"></asp:RequiredFieldValidator>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <p class="font-weight-bold">Código UFCD</p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <asp:TextBox ID="tb_cod_ufcd" runat="server" TextMode="Number" MaxLength="9" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório" Text="*" ControlToValidate="tb_cod_ufcd"></asp:RequiredFieldValidator>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            <p class="font-weight-bold">
-                                                Designação da UFCD:
-                                                <asp:TextBox ID="tb_designacao" runat="server" MaxLength="100"></asp:TextBox>
-                                            </p>
-                                            <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação da UFCD obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <p class="font-weight-bold">Designação da UFCD</p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <asp:TextBox ID="tb_designacao" runat="server" MaxLength="100" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação da UFCD obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            <p class="font-weight-bold">
-                                                Duração:
-                                                <asp:TextBox ID="tb_duracao" runat="server" TextMode="Number" MaxLength="2"></asp:TextBox>
-                                            </p>
-                                            <asp:RequiredFieldValidator ID="rfv_duracao" runat="server" ErrorMessage="Duração é obrigatória." Text="*" ControlToValidate="tb_duracao"></asp:RequiredFieldValidator>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <p class="font-weight-bold">Duração</p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <asp:TextBox ID="tb_duracao" runat="server" TextMode="Number" MaxLength="2" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfv_duracao" runat="server" ErrorMessage="Duração é obrigatória." Text="*" ControlToValidate="tb_duracao"></asp:RequiredFieldValidator>
+                                                </div>
+                                            </div>
                                         </div>
                                         <asp:Button ID="btn_criar" CssClass="btn btn-primary py-2 px-4 ml-2" runat="server" Text="Criar Módulo" OnClick="btn_criar_Click" />
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4" style="margin-left: 10px; margin-top: 12px;">
