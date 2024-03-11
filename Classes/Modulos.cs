@@ -139,6 +139,62 @@ namespace Projeto_Final.Classes
             return lst_modulo;
         }
 
+        public static bool Check_ifExists_Modulo(int cod_ufcd)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_ufcd", cod_ufcd);
+
+                SqlParameter valido = new SqlParameter();
+                valido.ParameterName = "@valido";
+                valido.Direction = ParameterDirection.Output;
+                valido.SqlDbType = SqlDbType.Bit;
+                myCommand.Parameters.Add(valido);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Check_ifExists_Modulo";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                bool resposta_sp = Convert.ToBoolean(myCommand.Parameters["@valido"].Value);
+                myConn.Close();
+
+                return resposta_sp;
+            }
+        }
+
+        public static int Extract_Cod_Modulo_Via_Cod_UFCD(int cod_ufcd)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_ufcd", cod_ufcd);
+
+                SqlParameter cod_modulo = new SqlParameter();
+                cod_modulo.ParameterName = "@cod_modulo";
+                cod_modulo.Direction = ParameterDirection.Output;
+                cod_modulo.SqlDbType = SqlDbType.Int;
+                myCommand.Parameters.Add(cod_modulo);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Extract_Cod_Modulo_Via_Cod_UFCD";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                int resposta_sp = Convert.ToInt32(myCommand.Parameters["@cod_modulo"].Value);
+                myConn.Close();
+
+                myCommand.Parameters.Clear();
+
+                return resposta_sp;
+            }
+        }
+
         public static int Editar_Modulo(int cod_modulo, string nome_modulo, int duracao, int cod_ufcd, string ultimo_update)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
