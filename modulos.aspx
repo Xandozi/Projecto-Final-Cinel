@@ -82,6 +82,10 @@
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4" style="font-size: 30px; color: white;">Consulta de Módulos</h2>
                             </div>
+                            <div class="d-flex justify-content-center" causesvalidation="true">
+                                <asp:Button ID="btn_previous_top" runat="server" Text="Previous" CssClass="btn btn-primary m-2" OnClick="btn_previous_Click" />
+                                <asp:Button ID="btn_next_top" runat="server" Text="Next" CssClass="btn btn-primary m-2" OnClick="btn_next_Click" />
+                            </div>
                             <div class="card-body">
                                 <div class="row">
                                     <asp:Repeater ID="rpt_modulos" runat="server">
@@ -94,6 +98,7 @@
                                                             <p class="card-text">Duração: <%# Eval("duracao") %> horas</p>
                                                             <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
                                                             <p class="card-text">Código UFCD: <%# Eval("cod_ufcd") %></p>
+                                                            <p class="card-text">Último Update: <%# Eval("ultimo_update") %></p>
                                                         </div>
                                                     </a>
                                                 </div>

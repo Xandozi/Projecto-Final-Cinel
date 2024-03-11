@@ -11,7 +11,7 @@ namespace Projeto_Final
 {
 
 
-    public partial class modulos_detalhe
+    public partial class editar_modulo
     {
 
         /// <summary>
@@ -33,31 +33,58 @@ namespace Projeto_Final
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// lbl_cod_ufcd control.
+        /// tb_cod_ufcd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_cod_ufcd;
+        protected global::System.Web.UI.WebControls.TextBox tb_cod_ufcd;
 
         /// <summary>
-        /// lbl_nome_modulo control.
+        /// rfv_cod_ufcd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_nome_modulo;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_cod_ufcd;
 
         /// <summary>
-        /// lbl_duracao control.
+        /// tb_designacao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_duracao;
+        protected global::System.Web.UI.WebControls.TextBox tb_designacao;
+
+        /// <summary>
+        /// rfv_designacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_designacao;
+
+        /// <summary>
+        /// tb_duracao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_duracao;
+
+        /// <summary>
+        /// rfv_duracao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_duracao;
 
         /// <summary>
         /// lbl_data_criacao control.
@@ -87,15 +114,6 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Button btn_editar;
 
         /// <summary>
-        /// btn_apagar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_apagar;
-
-        /// <summary>
         /// lbl_mensagem control.
         /// </summary>
         /// <remarks>
@@ -103,5 +121,14 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_mensagem;
+
+        /// <summary>
+        /// ValidationSummary1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
     }
 }

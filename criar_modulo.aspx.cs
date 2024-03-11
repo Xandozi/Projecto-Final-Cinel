@@ -31,12 +31,17 @@ namespace Projeto_Final
             {
                 lbl_mensagem.Text = "Módulo criado com sucesso!";
                 lbl_mensagem.CssClass = "alert alert-success";
+                tb_cod_ufcd.Text = "";
+                tb_designacao.Text = "";
+                tb_duracao.Text = "";
             }
             else
             {
                 lbl_mensagem.Text = "Módulo já existe!";
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
         }
     }
 }

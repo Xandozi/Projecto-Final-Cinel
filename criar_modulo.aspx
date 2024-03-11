@@ -12,8 +12,7 @@
                     <div class="col-md-3 bg-light" style="margin-bottom:10px;">
                         <div class="list-group">
                             <a href="criar_modulo.aspx" class="list-group-item list-group-item-action active">Criar Módulo</a>
-                            <a href="editar_modulo.aspx" class="list-group-item list-group-item-action">Editar Módulo</a>
-                            <a href="eliminar_modulo.aspx" class="list-group-item list-group-item-action">Eliminar Módulo</a>
+                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
                             <a href="modulos.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
                     </div>

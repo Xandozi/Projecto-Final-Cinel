@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="modulos_detalhe.aspx.cs" Inherits="Projeto_Final.modulos_detalhe" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="editar_modulo.aspx.cs" Inherits="Projeto_Final.editar_modulo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -11,7 +11,7 @@
                     <!-- Sidebar -->
                     <div class="col-md-3 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action active">Módulo <%= lbl_cod_ufcd.Text %> - <%= lbl_nome_modulo.Text %></a>
+                            <a href="#" class="list-group-item list-group-item-action active">Editar Módulo <%= tb_cod_ufcd.Text %> - <%= tb_designacao.Text %></a>
                             <a href="criar_modulo.aspx" class="list-group-item list-group-item-action">Criar Módulo</a>
                             <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
                             <a href="modulos.aspx" class="list-group-item list-group-item-action">Voltar</a>
@@ -20,7 +20,7 @@
                     <div class="col-md-9 col-lg-5 col-xl-4">
                         <div class="card" style="border-color: #333;">
                             <div class="card-header bg-dark text-white">
-                                <h2 class="display-4" style="font-size: 40px; color: white;">Módulo <%= lbl_cod_ufcd.Text %></h2>
+                                <h2 class="display-4" style="font-size: 40px; color: white;">Módulo <%= tb_cod_ufcd.Text %></h2>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -28,19 +28,22 @@
                                         <div class="form-group">
                                             <p class="lead">
                                                 Código UFCD:
-                                                <asp:Label ID="lbl_cod_ufcd" runat="server" Text=""></asp:Label>
+                                                <asp:TextBox ID="tb_cod_ufcd" runat="server"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório" Text="*" ControlToValidate="tb_cod_ufcd"></asp:RequiredFieldValidator>
                                             </p>
                                         </div>
                                         <div class="form-group">
                                             <p class="lead">
                                                 Designação da UFCD:
-                                                <asp:Label ID="lbl_nome_modulo" runat="server" Text=""></asp:Label>
+                                                <asp:TextBox ID="tb_designacao" runat="server" MaxLength="100"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação da UFCD obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
                                             </p>
                                         </div>
                                         <div class="form-group">
                                             <p class="lead">
                                                 Duração (Horas):
-                                                <asp:Label ID="lbl_duracao" runat="server" Text=""></asp:Label>
+                                                <asp:TextBox ID="tb_duracao" runat="server" TextMode="Number" MaxLength="2"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfv_duracao" runat="server" ErrorMessage="Duração é obrigatória." Text="*" ControlToValidate="tb_duracao"></asp:RequiredFieldValidator>
                                             </p>
                                         </div>
                                         <div class="form-group">
@@ -61,18 +64,19 @@
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4" style="margin-left: 10px; margin-top: 12px;">
-                        <asp:Button ID="btn_editar" CssClass="btn btn-info py-2 px-4 ml-2" runat="server" Text="Editar Módulo" OnClick="btn_editar_Click" />
-                        <asp:Button ID="btn_apagar" CssClass="btn btn-danger py-2 px-4 ml-2" runat="server" Text="Apagar Módulo" OnClick="btn_apagar_Click" />
+                        <asp:Button ID="btn_editar" CssClass="btn btn-info py-2 px-4 ml-2" runat="server" Text="Gravar Alterações" OnClick="btn_editar_Click" />
                     </div>
-                </div>
-                <div class="row" style="margin-top: 30px;">
-                    <div class="col">
-                        <div class="message-container" style="max-width: 100%; margin-top: 15px;">
+                    <div class="col-md-9 col-lg-5 col-xl-4" style="margin-left: 10px; margin-top: 12px;">
+                        <div style="margin-bottom: 30px;">
                             <asp:Label ID="lbl_mensagem" CssClass="mt-3" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
+                    <div class="col-md-9 col-lg-5 col-xl-4" style="margin-left: 10px; margin-top: 12px;">
+                        <div>
+                            <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger" />
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

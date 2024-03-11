@@ -76,14 +76,16 @@ namespace Projeto_Final
             PagedDataSource pagedData = new PagedDataSource();
             pagedData.DataSource = Modulos.Ler_ModulosAll(tb_designacao.Text, duracao_modulo, inicio_formatado, fim_formatado, cod_ufcd, sort_cod_ufcd);
             pagedData.AllowPaging = true;
-            pagedData.PageSize = 6;
+            pagedData.PageSize = 24;
             pagedData.CurrentPageIndex = PageNumber;
 
             rpt_modulos.DataSource = pagedData;
             rpt_modulos.DataBind();
 
             btn_previous.Enabled = !pagedData.IsFirstPage;
+            btn_previous_top.Enabled = !pagedData.IsFirstPage;
             btn_next.Enabled = !pagedData.IsLastPage;
+            btn_next_top.Enabled = !pagedData.IsLastPage;
         }
 
         public int PageNumber
