@@ -34,7 +34,7 @@ namespace Projeto_Final
                     string firstName = names[0];
                     string lastName = names.Length > 1 ? names[names.Length - 1] : string.Empty;
 
-                    int valido = Insercao.Inserir_User_Google(profile.Name, profile.Email, firstName, lastName); // Retorno da função. 1 para válido e ativo ou seja pode fazer login
+                    int valido = Users.Inserir_User_Google(profile.Name, profile.Email, firstName, lastName); // Retorno da função. 1 para válido e ativo ou seja pode fazer login
                     int cod_user = Extract.Code_Via_Email(profile.Email); // Extrair o código de utilizador através do email do utilizador fornecido pelo google
 
                     if (profile.Verified_Email == "True" && valido == 1)        // Caso autenticação dê certo e o utilizador esteja ativo

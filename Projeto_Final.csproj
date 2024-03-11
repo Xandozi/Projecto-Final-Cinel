@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ativacao.aspx" />
+    <Content Include="criar_modulo.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-reboot.css" />
@@ -79,10 +80,12 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="css\style.min.css" />
+    <Content Include="editar_modulo.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="gestao.aspx" />
     <Content Include="home.aspx" />
     <Content Include="img\ciberseguranca.jpg" />
     <Content Include="img\cinel_logo_horizontal.png" />
@@ -138,10 +141,11 @@
     <Content Include="mail\contact.js" />
     <Content Include="mail\contact.php" />
     <Content Include="mail\jqBootstrapValidation.min.js" />
+    <Content Include="modulos.aspx" />
+    <Content Include="modulos_detalhe.aspx" />
     <Content Include="personal_zone.aspx" />
     <Content Include="register.aspx" />
     <Content Include="sobre_nos.aspx" />
-    <Content Include="style_portal_login.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -159,12 +163,39 @@
     <Compile Include="Cinel.Master.designer.cs">
       <DependentUpon>Cinel.Master</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Cursos.cs" />
     <Compile Include="Classes\Email.cs" />
     <Compile Include="Classes\ExportPDF.cs" />
     <Compile Include="Classes\Extract.cs" />
-    <Compile Include="Classes\Insercao.cs" />
+    <Compile Include="Classes\Formadores.cs" />
+    <Compile Include="Classes\Formandos.cs" />
+    <Compile Include="Classes\Horarios.cs" />
+    <Compile Include="Classes\Modulos.cs" />
+    <Compile Include="Classes\Salas.cs" />
+    <Compile Include="Classes\Turmas.cs" />
     <Compile Include="Classes\Users.cs" />
     <Compile Include="Classes\Validation.cs" />
+    <Compile Include="criar_modulo.aspx.cs">
+      <DependentUpon>criar_modulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="criar_modulo.aspx.designer.cs">
+      <DependentUpon>criar_modulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_modulo.aspx.cs">
+      <DependentUpon>editar_modulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_modulo.aspx.designer.cs">
+      <DependentUpon>editar_modulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gestao.aspx.cs">
+      <DependentUpon>gestao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gestao.aspx.designer.cs">
+      <DependentUpon>gestao.aspx</DependentUpon>
+    </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -185,6 +216,20 @@
     </Compile>
     <Compile Include="logout.aspx.designer.cs">
       <DependentUpon>logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos.aspx.cs">
+      <DependentUpon>modulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos.aspx.designer.cs">
+      <DependentUpon>modulos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos_detalhe.aspx.cs">
+      <DependentUpon>modulos_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos_detalhe.aspx.designer.cs">
+      <DependentUpon>modulos_detalhe.aspx</DependentUpon>
     </Compile>
     <Compile Include="personal_zone.aspx.cs">
       <DependentUpon>personal_zone.aspx</DependentUpon>

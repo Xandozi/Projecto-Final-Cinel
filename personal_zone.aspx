@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
             <!-- Sidebar -->
-            <div class="col-md-3 bg-light">
+            <div class="col-md-2 bg-light">
                 <div class="list-group">
                     <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeUsernameModal">Mudar o Username</a>
                     <% if (Session["googlefb_log"] != "yes")
@@ -16,16 +16,14 @@
                     <% } %>
                     <% if (Session["perfil"].ToString() == "Staff" || Session["perfil"].ToString() == "Super Admin")
                         { %>
-                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos
-                    </a>
-                    <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão
-                    </a>
+                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos</a>
+                    <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão</a>
                     <% } %>
-                    <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="LOGOUT" OnClick="btn_logout2_Click" />
+                    <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="Terminar Sessão" OnClick="btn_logout2_Click" />
                 </div>
             </div>
             <!-- Main Content -->
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="card" style="border-color: #333;">
                     <div class="card-header bg-dark text-white">
                         <h2 class="display-4" style="font-size: 40px; color: white;">Bem-vindo à sua zona pessoal, <%: Session["nome_proprio"] %></h2>

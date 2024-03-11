@@ -17,6 +17,17 @@ namespace Projeto_Final
 
             this.DataBind();
         }
+        protected string DetermineColumnClass()
+        {
+            if (Session["logged"] == "yes")
+            {
+                return "col-lg-12";
+            }
+            else
+            {
+                return "col-lg-9";
+            }
+        }
         protected string DetermineLoginButtonText()
         {
             if (Request.Url.AbsolutePath.ToLower() == "/login.aspx" && Session["logged"] != "yes")

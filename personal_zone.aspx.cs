@@ -103,7 +103,7 @@ namespace Projeto_Final
             // Condição para mudar a password do utilizador
             if (Validation.Check_Login(Session["username"].ToString(), tb_pw.Text) == 1 && tb_new_pw.Text == tb_new_pw_repeat.Text && tb_new_pw.Text != tb_pw.Text && tb_new_pw_repeat.Text != tb_pw.Text)
             {
-                Insercao.Update_Password(Extract.Email(Session["username"].ToString()), Validation.EncryptString(tb_new_pw.Text));
+                Users.Update_Password(Extract.Email(Session["username"].ToString()), Validation.EncryptString(tb_new_pw.Text));
                 lblMessage.Text = "Password mudada com sucesso!";
                 lblMessage.CssClass = "alert alert-success";
             }
@@ -118,7 +118,7 @@ namespace Projeto_Final
         {
             if (Validation.Check_Login(Session["username"].ToString(), tb_pw_username.Text) == 1 && Session["username"].ToString() != tb_new_username.Text)
             {
-                Insercao.Update_Username(Session["username"].ToString(), tb_new_username.Text);
+                Users.Update_Username(Session["username"].ToString(), tb_new_username.Text);
                 Session["username"] = tb_new_username.Text;
                 Response.Redirect("personal_zone.aspx?msg=yesuser", false);
             }
@@ -133,7 +133,7 @@ namespace Projeto_Final
         {
             if (Validation.Check_Login(Session["username"].ToString(), tb_pw_email.Text) == 1 && Session["email"].ToString() != tb_new_email.Text)
             {
-                Insercao.Update_Email(Session["email"].ToString(), tb_new_email.Text);
+                Users.Update_Email(Session["email"].ToString(), tb_new_email.Text);
                 Session["email"] = tb_new_email.Text;
                 Email.Send(tb_new_email.Text, Session["username"].ToString());
                 Response.Redirect("logout.aspx?msg=yesemail", false);

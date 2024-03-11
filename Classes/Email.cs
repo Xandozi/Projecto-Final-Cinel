@@ -41,7 +41,7 @@ namespace Projeto_Final.Classes
         {
             string password_encrypted = EncryptString(PasswordGen());
             string password = DecryptString(password_encrypted);
-            Insercao.Update_Password(email_destino, password_encrypted);
+            Users.Update_Password(email_destino, password_encrypted);
 
             SmtpClient servidor = new SmtpClient();
             MailMessage email = new MailMessage();
