@@ -65,7 +65,7 @@ namespace Projeto_Final
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow', function() { window.location.href = 'modulos.aspx'; });", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(2000).fadeOut('slow', function() { window.location.href = 'modulos.aspx'; });", true);
         }
     }
 }

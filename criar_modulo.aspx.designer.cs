@@ -51,6 +51,15 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_cod_ufcd;
 
         /// <summary>
+        /// rev_cod_ufcd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_cod_ufcd;
+
+        /// <summary>
         /// tb_designacao control.
         /// </summary>
         /// <remarks>
@@ -69,6 +78,15 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_designacao;
 
         /// <summary>
+        /// rev_designacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_designacao;
+
+        /// <summary>
         /// tb_duracao control.
         /// </summary>
         /// <remarks>
@@ -85,6 +103,15 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_duracao;
+
+        /// <summary>
+        /// rev_duracao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_duracao;
 
         /// <summary>
         /// btn_criar control.

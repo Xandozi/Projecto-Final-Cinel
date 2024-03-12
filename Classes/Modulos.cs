@@ -139,6 +139,36 @@ namespace Projeto_Final.Classes
             return lst_modulo;
         }
 
+        public static string Extract_CodUFCD_Nome_Modulo(int cod_ufcd)
+        {
+            List<Modulos> lst_info_modulo = new List<Modulos>();
+
+            string query = $"select cod_ufcd, nome_modulo from Modulos where cod_ufcd = {cod_ufcd}";
+
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            SqlCommand myCommand = new SqlCommand(query, myConn);
+
+            myConn.Open();
+
+            SqlDataReader dr = myCommand.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Modulos informacao = new Modulos();
+                informacao.cod_ufcd = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
+                informacao.nome_modulo = !dr.IsDBNull(1) ? dr.GetString(1) : null;
+
+                lst_info_modulo.Add(informacao);
+            }
+
+            string info_modulo = lst_info_modulo[0].cod_ufcd + " - " + lst_info_modulo[0].nome_modulo;
+
+            myConn.Close();
+
+            return info_modulo;
+        }
+
         public static bool Check_ifExists_Modulo(int cod_ufcd)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);

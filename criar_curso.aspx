@@ -31,7 +31,8 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <asp:TextBox ID="tb_cod_qualificacao" runat="server" TextMode="Number" MaxLength="9" Style="width: 90%;"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ID="rfv_cod_qualificacao" runat="server" ErrorMessage="Código qualificação obrigatório" Text="*" ControlToValidate="tb_cod_qualificacao"></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ID="rfv_cod_qualificacao" runat="server" ErrorMessage="Código qualificação obrigatório" Text="*" ControlToValidate="tb_cod_qualificacao" ValidationGroup="criar_curso"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="rev_cod_qualificacao" runat="server" ErrorMessage="Código Qualificação inválido" ValidationExpression="^[0-9]{1,10}$" ControlToValidate="tb_cod_qualificacao" Text="*" ValidationGroup="criar_curso"></asp:RegularExpressionValidator>
                                                 </div>
                                             </div>
                                         </div>
@@ -42,7 +43,8 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <asp:TextBox ID="tb_designacao" runat="server" MaxLength="100" Style="width: 90%;"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação do curso obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação do curso obrigatória." Text="*" ControlToValidate="tb_designacao" ValidationGroup="criar_curso"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="rev_designacao" runat="server" ErrorMessage="Designação do curso inválida" ControlToValidate="tb_designacao" Text="*" ValidationExpression="^.{1,100}$" ValidationGroup="criar_curso"></asp:RegularExpressionValidator>
                                                 </div>
                                             </div>
                                         </div>
@@ -53,18 +55,18 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <asp:TextBox ID="tb_cod_ufcd" runat="server" Style="width: 90%;" TextMode="Number"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório." ControlToValidate="tb_cod_ufcd" Text="*"></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório." ControlToValidate="tb_cod_ufcd" Text="*" ValidationGroup="insert_ufcd"></asp:RequiredFieldValidator>
                                                 </div>
                                                 <div class="col-md-12" style="margin-top: 5px;">
-                                                    <asp:Button ID="btn_add_ufcd" CssClass="btn btn-primary" runat="server" Text="Adicionar ao Curso" OnClick="btn_add_ufcd_Click" />
-                                                    <asp:Button ID="btn_remove_ufcd" CssClass="btn btn-danger" runat="server" Text="Remover do Curso" OnClick="btn_remove_ufcd_Click" />
+                                                    <asp:Button ID="btn_add_ufcd" CssClass="btn btn-primary" runat="server" Text="Adicionar ao Curso" OnClick="btn_add_ufcd_Click" ValidationGroup="insert_ufcd" />
+                                                    <asp:Button ID="btn_remove_ufcd" CssClass="btn btn-danger" runat="server" Text="Remover do Curso" OnClick="btn_remove_ufcd_Click" ValidationGroup="remove_ufcd" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <asp:ListBox ID="lb_selected_ufcds" runat="server" CssClass="form-control" SelectionMode="Multiple" Style="width: 90%;"></asp:ListBox>
+                                                    <asp:ListBox ID="lb_selected_ufcds" runat="server" CssClass="form-control" SelectionMode="Single" Style="width: 90%;"></asp:ListBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -75,11 +77,12 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <asp:TextBox ID="tb_duracao_estagio" runat="server" TextMode="Number" MaxLength="3" Style="width: 90%;"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ID="rfv_duracao_estagio" runat="server" ErrorMessage="Duração do estágio é obrigatória." Text="*" ControlToValidate="tb_duracao_estagio"></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ID="rfv_duracao_estagio" runat="server" ErrorMessage="Duração do estágio é obrigatória." Text="*" ControlToValidate="tb_duracao_estagio" ValidationGroup="criar_curso"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="rev_duracao_estagio" runat="server" ErrorMessage="Duração estágio  inválida" ValidationExpression="^[0-9]{1,10}$" ControlToValidate="tb_duracao_estagio" Text="*" ValidationGroup="criar_curso"></asp:RegularExpressionValidator>
                                                 </div>
                                             </div>
                                         </div>
-                                        <asp:Button ID="btn_criar" CssClass="btn btn-primary py-2 px-4 ml-2" runat="server" Text="Criar Curso" OnClick="btn_criar_Click" />
+                                        <asp:Button ID="btn_criar" CssClass="btn btn-primary py-2 px-4 ml-2" runat="server" Text="Criar Curso" OnClick="btn_criar_Click" ValidationGroup="criar_curso" />
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +93,8 @@
                             <asp:Label ID="lbl_mensagem" CssClass="mt-3" runat="server" Text=""></asp:Label>
                         </div>
                         <div>
-                            <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger" />
+                            <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger" ValidationGroup="criar_curso" />
+                            <asp:ValidationSummary ID="ValidationSummary2" runat="server" CssClass="alert alert-danger" ValidationGroup="insert_ufcd" />
                         </div>
                     </div>
                 </div>

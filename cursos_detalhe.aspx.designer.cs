@@ -11,7 +11,7 @@ namespace Projeto_Final
 {
 
 
-    public partial class modulos_detalhe
+    public partial class cursos_detalhe
     {
 
         /// <summary>
@@ -33,31 +33,49 @@ namespace Projeto_Final
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// lbl_cod_ufcd control.
+        /// lbl_cod_qualificacao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_cod_ufcd;
+        protected global::System.Web.UI.WebControls.Label lbl_cod_qualificacao;
 
         /// <summary>
-        /// lbl_nome_modulo control.
+        /// lbl_nome_curso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_nome_modulo;
+        protected global::System.Web.UI.WebControls.Label lbl_nome_curso;
 
         /// <summary>
-        /// lbl_duracao control.
+        /// lbl_duracao_curso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_duracao;
+        protected global::System.Web.UI.WebControls.Label lbl_duracao_curso;
+
+        /// <summary>
+        /// lb_ufcd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lb_ufcd;
+
+        /// <summary>
+        /// lbl_duracao_estagio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_duracao_estagio;
 
         /// <summary>
         /// lbl_data_criacao control.

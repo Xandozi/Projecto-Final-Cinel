@@ -42,6 +42,11 @@
                 background-color: #ff6a00;
                 color: white;
             }
+
+        .listbox-container {
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+        }
     </style>
 </head>
 <body>

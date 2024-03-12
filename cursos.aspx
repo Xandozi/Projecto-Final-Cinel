@@ -7,7 +7,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div id="filterForm" runat="server" style="margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
+                <div id="filterForm" runat="server" style="display: none; margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -76,6 +76,17 @@
                             <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
                             <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
+                        <asp:Button ID="btn_filtros" runat="server" Text="Filtros" CssClass="btn btn-primary" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;" />
+                        <script type="text/javascript">
+                            function toggleFilters() {
+                                var filterForm = document.getElementById('<%= filterForm.ClientID %>');
+                                if (filterForm.style.display === 'none') {
+                                    filterForm.style.display = 'block';
+                                } else {
+                                    filterForm.style.display = 'none';
+                                }
+                            }
+                        </script>
                     </div>
                     <div class="col-md-10">
                         <div class="card" style="border-color: #333;">

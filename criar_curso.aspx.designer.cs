@@ -51,6 +51,15 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_cod_qualificacao;
 
         /// <summary>
+        /// rev_cod_qualificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_cod_qualificacao;
+
+        /// <summary>
         /// tb_designacao control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_designacao;
+
+        /// <summary>
+        /// rev_designacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_designacao;
 
         /// <summary>
         /// tb_cod_ufcd control.
@@ -132,6 +150,15 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_duracao_estagio;
 
         /// <summary>
+        /// rev_duracao_estagio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_duracao_estagio;
+
+        /// <summary>
         /// btn_criar control.
         /// </summary>
         /// <remarks>
@@ -157,5 +184,14 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
+
+        /// <summary>
+        /// ValidationSummary2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary2;
     }
 }

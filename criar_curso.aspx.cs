@@ -27,12 +27,12 @@ namespace Projeto_Final
 
         protected void btn_add_ufcd_Click(object sender, EventArgs e)
         {
-            string novo_item = tb_cod_ufcd.Text;
+            string modulo = Modulos.Extract_CodUFCD_Nome_Modulo(Convert.ToInt32(tb_cod_ufcd.Text));
             bool existe = false;
 
             foreach (ListItem item in lb_selected_ufcds.Items)
             {
-                if (item.Value == novo_item)
+                if (item.Value == modulo)
                 {
                     existe = true;
                     break;
@@ -41,7 +41,7 @@ namespace Projeto_Final
 
             if (!existe && Modulos.Check_ifExists_Modulo(Convert.ToInt32(tb_cod_ufcd.Text)))
             {
-                lb_selected_ufcds.Items.Add(novo_item);
+                lb_selected_ufcds.Items.Add(modulo);
                 lbl_mensagem.Text = "Módulo inserido na lista com sucesso.";
                 lbl_mensagem.CssClass = "alert alert-success";
             }
@@ -85,29 +85,40 @@ namespace Projeto_Final
 
             foreach (ListItem item in lb_selected_ufcds.Items)
             {
-                int value;
-                if (int.TryParse(item.Value, out value))
-                    ufcds.Add(value);
+                string[] parts = item.Text.Split('-');
+
+                if (parts.Length >= 2 && int.TryParse(parts[0].Trim(), out int cod_ufcd))
+                {
+                    ufcds.Add(cod_ufcd);
+                }
             }
 
-            if (Cursos.Inserir_Curso(Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 1)
+            if (ufcds.Count > 0)
             {
-                lbl_mensagem.Text = "Curso criado com sucesso!";
-                lbl_mensagem.CssClass = "alert alert-success";
-                tb_cod_qualificacao.Text = "";
-                tb_cod_ufcd.Text = "";
-                tb_designacao.Text = "";
-                tb_duracao_estagio.Text = "";
-                lb_selected_ufcds.Items.Clear();
-            }
-            else if (Cursos.Inserir_Curso(Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 2)
-            {
-                lbl_mensagem.Text = "Código de qualificação já existe na base de dados!";
-                lbl_mensagem.CssClass = "alert alert-danger";
+                if (Cursos.Inserir_Curso(Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 1)
+                {
+                    lbl_mensagem.Text = "Curso criado com sucesso!";
+                    lbl_mensagem.CssClass = "alert alert-success";
+                    tb_cod_qualificacao.Text = "";
+                    tb_cod_ufcd.Text = "";
+                    tb_designacao.Text = "";
+                    tb_duracao_estagio.Text = "";
+                    lb_selected_ufcds.Items.Clear();
+                }
+                else if (Cursos.Inserir_Curso(Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 2)
+                {
+                    lbl_mensagem.Text = "Código de qualificação já existe na base de dados!";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+                else
+                {
+                    lbl_mensagem.Text = "Designação do curso já existe na base de dados!";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
             }
             else
             {
-                lbl_mensagem.Text = "Designação do curso já existe na base de dados!";
+                lbl_mensagem.Text = "Tem de selecionar pelo menos 1 UFCD.";
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
 
