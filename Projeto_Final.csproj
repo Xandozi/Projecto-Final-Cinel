@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ativacao.aspx" />
+    <Content Include="criar_curso.aspx" />
     <Content Include="criar_modulo.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
@@ -80,6 +81,9 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="css\style.min.css" />
+    <Content Include="cursos.aspx" />
+    <Content Include="cursos_detalhe.aspx" />
+    <Content Include="editar_curso.aspx" />
     <Content Include="editar_modulo.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -175,12 +179,40 @@
     <Compile Include="Classes\Turmas.cs" />
     <Compile Include="Classes\Users.cs" />
     <Compile Include="Classes\Validation.cs" />
+    <Compile Include="criar_curso.aspx.cs">
+      <DependentUpon>criar_curso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="criar_curso.aspx.designer.cs">
+      <DependentUpon>criar_curso.aspx</DependentUpon>
+    </Compile>
     <Compile Include="criar_modulo.aspx.cs">
       <DependentUpon>criar_modulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="criar_modulo.aspx.designer.cs">
       <DependentUpon>criar_modulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cursos.aspx.cs">
+      <DependentUpon>cursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos.aspx.designer.cs">
+      <DependentUpon>cursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cursos_detalhe.aspx.cs">
+      <DependentUpon>cursos_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos_detalhe.aspx.designer.cs">
+      <DependentUpon>cursos_detalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_curso.aspx.cs">
+      <DependentUpon>editar_curso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_curso.aspx.designer.cs">
+      <DependentUpon>editar_curso.aspx</DependentUpon>
     </Compile>
     <Compile Include="editar_modulo.aspx.cs">
       <DependentUpon>editar_modulo.aspx</DependentUpon>

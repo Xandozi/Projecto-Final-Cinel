@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="modulos.aspx.cs" Inherits="Projeto_Final.modulos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="cursos.aspx.cs" Inherits="Projeto_Final.cursos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -11,20 +11,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Designação UFCD:</label>
+                                <label>Designação Curso:</label>
                                 <asp:TextBox ID="tb_designacao" CssClass="form-control" runat="server" Style="margin-left: 5px;" MaxLength="100"></asp:TextBox>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Duração Módulo:</label>
+                                <label>Duração Curso:</label>
                                 <asp:TextBox ID="tb_duracao" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Number"></asp:TextBox>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Código UFCD:</label>
-                                <asp:TextBox ID="tb_cod_ufcd" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Number"></asp:TextBox>
+                                <label>Código da Qualificação:</label>
+                                <asp:TextBox ID="tb_cod_qualificacao" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Number"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Ordenação Código UFCD:</label>
+                                        <label>Ordenação Código Qualificação:</label>
                                         <asp:DropDownList ID="ddl_cod_ufcd" CssClass="form-control" runat="server" Style="margin-left: 5px;">
                                             <asp:ListItem>Nenhuma</asp:ListItem>
                                             <asp:ListItem Value="asc">Ascendente</asp:ListItem>
@@ -71,8 +71,8 @@
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="modulos.aspx" class="list-group-item list-group-item-action active">Módulos</a>
-                            <a href="criar_modulo.aspx" class="list-group-item list-group-item-action">Criar Módulo</a>
+                            <a href="cursos.aspx" class="list-group-item list-group-item-action active">Cursos</a>
+                            <a href="criar_curso.aspx" class="list-group-item list-group-item-action">Criar Curso</a>
                             <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
                             <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
@@ -91,7 +91,7 @@
                     <div class="col-md-10">
                         <div class="card" style="border-color: #333;">
                             <div class="card-header bg-dark text-white">
-                                <h2 class="display-4" style="font-size: 30px; color: white;">Consulta de Módulos</h2>
+                                <h2 class="display-4" style="font-size: 30px; color: white;">Consulta de Cursos</h2>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
                                 <asp:Button ID="btn_previous_top" runat="server" Text="Previous" CssClass="btn btn-primary m-2" OnClick="btn_previous_Click" />
@@ -99,16 +99,16 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <asp:Repeater ID="rpt_modulos" runat="server">
+                                    <asp:Repeater ID="rpt_cursos" runat="server">
                                         <ItemTemplate>
                                             <div class="col-md-4">
                                                 <div class="card" style="margin: 5px;">
-                                                    <a href="modulos_detalhe.aspx?cod_modulo=<%# Eval("cod_modulo") %>" style="text-decoration: none;">
+                                                    <a href="cursos_detalhe.aspx?cod_curso=<%# Eval("cod_curso") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><%# Eval("nome_modulo") %></h5>
-                                                            <p class="card-text">Duração: <%# Eval("duracao") %> horas</p>
+                                                            <h5 class="card-title"><%# Eval("nome_curso") %></h5>
+                                                            <p class="card-text">Duração: <%# Eval("duracao_curso") %> horas</p>
                                                             <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Código UFCD: <%# Eval("cod_ufcd") %></p>
+                                                            <p class="card-text">Código Qualificação: <%# Eval("cod_qualificacao") %></p>
                                                             <p class="card-text">Último Update: <%# Eval("ultimo_update") %></p>
                                                         </div>
                                                     </a>

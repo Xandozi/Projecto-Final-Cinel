@@ -139,6 +139,92 @@ namespace Projeto_Final.Classes
             return lst_modulo;
         }
 
+        public static string Extract_CodUFCD_Nome_Modulo(int cod_ufcd)
+        {
+            List<Modulos> lst_info_modulo = new List<Modulos>();
+
+            string query = $"select cod_ufcd, nome_modulo from Modulos where cod_ufcd = {cod_ufcd}";
+
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            SqlCommand myCommand = new SqlCommand(query, myConn);
+
+            myConn.Open();
+
+            SqlDataReader dr = myCommand.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Modulos informacao = new Modulos();
+                informacao.cod_ufcd = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
+                informacao.nome_modulo = !dr.IsDBNull(1) ? dr.GetString(1) : null;
+
+                lst_info_modulo.Add(informacao);
+            }
+
+            string info_modulo = lst_info_modulo[0].cod_ufcd + " - " + lst_info_modulo[0].nome_modulo;
+
+            myConn.Close();
+
+            return info_modulo;
+        }
+
+        public static bool Check_ifExists_Modulo(int cod_ufcd)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_ufcd", cod_ufcd);
+
+                SqlParameter valido = new SqlParameter();
+                valido.ParameterName = "@valido";
+                valido.Direction = ParameterDirection.Output;
+                valido.SqlDbType = SqlDbType.Bit;
+                myCommand.Parameters.Add(valido);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Check_ifExists_Modulo";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                bool resposta_sp = Convert.ToBoolean(myCommand.Parameters["@valido"].Value);
+                myConn.Close();
+
+                return resposta_sp;
+            }
+        }
+
+        public static int Extract_Cod_Modulo_Via_Cod_UFCD(int cod_ufcd)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_ufcd", cod_ufcd);
+
+                SqlParameter cod_modulo = new SqlParameter();
+                cod_modulo.ParameterName = "@cod_modulo";
+                cod_modulo.Direction = ParameterDirection.Output;
+                cod_modulo.SqlDbType = SqlDbType.Int;
+                myCommand.Parameters.Add(cod_modulo);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Extract_Cod_Modulo_Via_Cod_UFCD";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                int resposta_sp = Convert.ToInt32(myCommand.Parameters["@cod_modulo"].Value);
+                myConn.Close();
+
+                myCommand.Parameters.Clear();
+
+                return resposta_sp;
+            }
+        }
+
         public static int Editar_Modulo(int cod_modulo, string nome_modulo, int duracao, int cod_ufcd, string ultimo_update)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
