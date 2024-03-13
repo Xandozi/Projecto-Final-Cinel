@@ -123,11 +123,11 @@
                     </a>
                     <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 9;">
                         <div class="navbar-nav w-100">
-                            <a href="cursos.aspx?curso=programacao" class="nav-item nav-link">Programação</a>
-                            <a href="cursos.aspx?curso=multimedia" class="nav-item nav-link">Multimédia</a>
-                            <a href="cursos.aspx?curso=robotica" class="nav-item nav-link">Robótica</a>
-                            <a href="cursos.aspx?curso=redes" class="nav-item nav-link">Redes</a>
-                            <a href="cursos.aspx?curso=ciberseguranca" class="nav-item nav-link">Cibersegurança</a>
+                            <a href="cursos_lista.aspx?curso=programacao" class="nav-item nav-link">Programação</a>
+                            <a href="cursos_lista.aspx?curso=multimedia" class="nav-item nav-link">Multimédia</a>
+                            <a href="cursos_lista.aspx?curso=robotica" class="nav-item nav-link">Robótica</a>
+                            <a href="cursos_lista.aspx?curso=redes" class="nav-item nav-link">Redes</a>
+                            <a href="cursos_lista.aspx?curso=ciberseguranca" class="nav-item nav-link">Cibersegurança</a>
                         </div>
                     </nav>
                 </div>
@@ -146,7 +146,7 @@
                                 <div class="navbar-nav mr-auto">
                                     <a href="home.aspx" class="nav-item nav-link <%= IsActivePage("home.aspx") %>">Home</a>
                                     <a href="sobre_nos.aspx" class="nav-item nav-link <%= IsActivePage("sobre_nos.aspx") %>">Sobre Nós</a>
-                                    <a href="cursos.aspx" class="nav-item nav-link <%= IsActivePage("cursos.aspx") %>">Cursos</a>
+                                    <a href="cursos_lista.aspx" class="nav-item nav-link <%= IsActivePage("cursos_lista.aspx") %>">Cursos</a>
                                     <a href="formadores.aspx" class="nav-item nav-link <%= IsActivePage("formadores.aspx") %>">Formadores</a>
                                     <a href="contactos.aspx" class="nav-item nav-link <%= IsActivePage("contactos.aspx") %>">Contactos</a>
                                 </div>
@@ -193,11 +193,11 @@
                         <div class="col-md-6 mb-5">
                             <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Os Nossos Cursos</h5>
                             <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="cursos.aspx?curso=programacao"><i class="fa fa-angle-right mr-2"></i>Programação</a>
-                                <a class="text-white mb-2" href="cursos.aspx?curso=multimedia"><i class="fa fa-angle-right mr-2"></i>Multimédia</a>
-                                <a class="text-white mb-2" href="cursos.aspx?curso=robotica"><i class="fa fa-angle-right mr-2"></i>Robótica</a>
-                                <a class="text-white mb-2" href="cursos.aspx?curso=redes"><i class="fa fa-angle-right mr-2"></i>Redes</a>
-                                <a class="text-white" href="cursos.aspx?curso=ciberseguranca"><i class="fa fa-angle-right mr-2"></i>Cibersegurança</a>
+                                <a class="text-white mb-2" href="cursos_lista.aspx?curso=programacao"><i class="fa fa-angle-right mr-2"></i>Programação</a>
+                                <a class="text-white mb-2" href="cursos_lista.aspx?curso=multimedia"><i class="fa fa-angle-right mr-2"></i>Multimédia</a>
+                                <a class="text-white mb-2" href="cursos_lista.aspx?curso=robotica"><i class="fa fa-angle-right mr-2"></i>Robótica</a>
+                                <a class="text-white mb-2" href="cursos_lista.aspx?curso=redes"><i class="fa fa-angle-right mr-2"></i>Redes</a>
+                                <a class="text-white mb-2" href="cursos_lista.aspx?curso=ciberseguranca"><i class="fa fa-angle-right mr-2"></i>Cibersegurança</a>
                             </div>
                         </div>
                     </div>

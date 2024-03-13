@@ -84,6 +84,8 @@
     <Content Include="css\style.min.css" />
     <Content Include="cursos.aspx" />
     <Content Include="cursos_detalhe.aspx" />
+    <Content Include="cursos_lista.aspx" />
+    <Content Include="cursos_lista_detalhe.aspx" />
     <Content Include="editar_curso.aspx" />
     <Content Include="editar_modulo.aspx" />
     <Content Include="editar_sala.aspx" />
@@ -91,6 +93,7 @@
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="formandos.aspx" />
     <Content Include="gestao.aspx" />
     <Content Include="home.aspx" />
     <Content Include="img\ciberseguranca.jpg" />
@@ -178,6 +181,7 @@
     <Compile Include="Classes\Formadores.cs" />
     <Compile Include="Classes\Formandos.cs" />
     <Compile Include="Classes\Horarios.cs" />
+    <Compile Include="Classes\Inscricoes.cs" />
     <Compile Include="Classes\Modulos.cs" />
     <Compile Include="Classes\Salas.cs" />
     <Compile Include="Classes\Turmas.cs" />
@@ -218,6 +222,20 @@
     <Compile Include="cursos_detalhe.aspx.designer.cs">
       <DependentUpon>cursos_detalhe.aspx</DependentUpon>
     </Compile>
+    <Compile Include="cursos_lista.aspx.cs">
+      <DependentUpon>cursos_lista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos_lista.aspx.designer.cs">
+      <DependentUpon>cursos_lista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cursos_lista_detalhe.aspx.cs">
+      <DependentUpon>cursos_lista_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos_lista_detalhe.aspx.designer.cs">
+      <DependentUpon>cursos_lista_detalhe.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_curso.aspx.cs">
       <DependentUpon>editar_curso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -238,6 +256,13 @@
     </Compile>
     <Compile Include="editar_sala.aspx.designer.cs">
       <DependentUpon>editar_sala.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="formandos.aspx.cs">
+      <DependentUpon>formandos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="formandos.aspx.designer.cs">
+      <DependentUpon>formandos.aspx</DependentUpon>
     </Compile>
     <Compile Include="gestao.aspx.cs">
       <DependentUpon>gestao.aspx</DependentUpon>

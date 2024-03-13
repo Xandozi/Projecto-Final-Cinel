@@ -238,6 +238,33 @@ namespace Projeto_Final.Classes
             return string_perfis;
         }
 
+        public static bool Check_IsUserInformationComplete(int cod_user)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_user", cod_user);
+
+                SqlParameter valido = new SqlParameter();
+                valido.ParameterName = "@valido";
+                valido.Direction = ParameterDirection.Output;
+                valido.SqlDbType = SqlDbType.Bit;
+                myCommand.Parameters.Add(valido);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Check_User_Information";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                bool resposta_sp = Convert.ToBoolean(myCommand.Parameters["@valido"].Value);
+                myConn.Close();
+
+                return resposta_sp;
+            }
+        }
+
         public static string EncryptString(string Message)
         {
             string Passphrase = "batatascomarroz";
