@@ -133,16 +133,16 @@ namespace Projeto_Final
                         ufcds.Add(value);
                 }
 
-                if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now.ToString(), ufcds) == 1)
+                if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds) == 1)
                 {
                     Response.Redirect($"cursos_detalhe.aspx?cod_curso={Convert.ToInt32(Request.QueryString["cod_curso"])}");
                 }
-                else if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now.ToString(), ufcds) == 2)
+                else if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds) == 2)
                 {
                     lbl_mensagem.Text = "Designação do curso já existe!";
                     lbl_mensagem.CssClass = "alert alert-danger";
                 }
-                else if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now.ToString(), ufcds) == 3)
+                else if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds) == 3)
                 {
                     lbl_mensagem.Text = "Código Qualificação do curso já existe!";
                     lbl_mensagem.CssClass = "alert alert-danger";

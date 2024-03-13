@@ -15,7 +15,7 @@ namespace Projeto_Final
         {
             if (string.IsNullOrEmpty(Request.QueryString["user"]))
             {
-                Response.Redirect("login.aspx", false);
+                Response.Redirect("home.aspx", false);
                 return;
             }
 
@@ -25,6 +25,10 @@ namespace Projeto_Final
             if (!Validation.Check_Username(utilizador) && Validation.Check_Active(utilizador))
             {
                 Validation.Ativacao(utilizador);
+            }
+            else
+            {
+                Response.Redirect("personal_zone.aspx", false);
             }
         }
 

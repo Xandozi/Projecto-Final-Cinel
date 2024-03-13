@@ -73,6 +73,7 @@
     <Content Include="ativacao.aspx" />
     <Content Include="criar_curso.aspx" />
     <Content Include="criar_modulo.aspx" />
+    <Content Include="criar_sala.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-reboot.css" />
@@ -85,6 +86,7 @@
     <Content Include="cursos_detalhe.aspx" />
     <Content Include="editar_curso.aspx" />
     <Content Include="editar_modulo.aspx" />
+    <Content Include="editar_sala.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -149,6 +151,8 @@
     <Content Include="modulos_detalhe.aspx" />
     <Content Include="personal_zone.aspx" />
     <Content Include="register.aspx" />
+    <Content Include="salas.aspx" />
+    <Content Include="salas_detalhe.aspx" />
     <Content Include="sobre_nos.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -193,6 +197,13 @@
     <Compile Include="criar_modulo.aspx.designer.cs">
       <DependentUpon>criar_modulo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="criar_sala.aspx.cs">
+      <DependentUpon>criar_sala.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="criar_sala.aspx.designer.cs">
+      <DependentUpon>criar_sala.aspx</DependentUpon>
+    </Compile>
     <Compile Include="cursos.aspx.cs">
       <DependentUpon>cursos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -220,6 +231,13 @@
     </Compile>
     <Compile Include="editar_modulo.aspx.designer.cs">
       <DependentUpon>editar_modulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_sala.aspx.cs">
+      <DependentUpon>editar_sala.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_sala.aspx.designer.cs">
+      <DependentUpon>editar_sala.aspx</DependentUpon>
     </Compile>
     <Compile Include="gestao.aspx.cs">
       <DependentUpon>gestao.aspx</DependentUpon>
@@ -277,6 +295,20 @@
     </Compile>
     <Compile Include="register.aspx.designer.cs">
       <DependentUpon>register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="salas.aspx.cs">
+      <DependentUpon>salas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="salas.aspx.designer.cs">
+      <DependentUpon>salas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="salas_detalhe.aspx.cs">
+      <DependentUpon>salas_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="salas_detalhe.aspx.designer.cs">
+      <DependentUpon>salas_detalhe.aspx</DependentUpon>
     </Compile>
     <Compile Include="sobre_nos.aspx.cs">
       <DependentUpon>sobre_nos.aspx</DependentUpon>
