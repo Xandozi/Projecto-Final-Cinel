@@ -14,6 +14,7 @@
                     <a href="horarios.aspx" class="list-group-item list-group-item-action">Horários</a>
                     <a href="modulos.aspx" class="list-group-item list-group-item-action">Módulos</a>
                     <a href="salas.aspx" class="list-group-item list-group-item-action">Salas</a>
+                    <a href="turmas.aspx" class="list-group-item list-group-item-action">Turmas</a>
                     <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Voltar</a>
                 </div>
             </div>
