@@ -225,7 +225,7 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static int Editar_Modulo(int cod_modulo, string nome_modulo, int duracao, int cod_ufcd, string ultimo_update)
+        public static int Editar_Modulo(int cod_modulo, string nome_modulo, int duracao, int cod_ufcd, DateTime ultimo_update)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 

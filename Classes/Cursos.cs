@@ -217,7 +217,7 @@ namespace Projeto_Final.Classes
             return lst_modulos_curso_tostring;
         }
 
-        public static int Editar_Curso(int cod_curso, string nome_curso, int duracao_estagio, int cod_qualificacao, string ultimo_update, List<int> ufcds)
+        public static int Editar_Curso(int cod_curso, string nome_curso, int duracao_estagio, int cod_qualificacao, DateTime ultimo_update, List<int> ufcds)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
