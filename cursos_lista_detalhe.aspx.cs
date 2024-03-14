@@ -54,6 +54,41 @@ namespace Projeto_Final
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(10000).fadeOut('slow', function() { window.location.href = 'personal_zone.aspx'; });", true);
             }
+            else
+            {
+                if (Inscricoes.Insert_Inscricao(2, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 1)
+                {
+                    lbl_mensagem.Text = "Obrigado pela sua inscrição! Agora apenas tem de aguardar que a sua inscrição seja validada.";
+                    lbl_mensagem.CssClass = "alert alert-success";
+                }
+                else if (Inscricoes.Insert_Inscricao(2, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 2)
+                {
+                    lbl_mensagem.Text = "Já tem uma inscrição a aguardar validação neste curso. Aguarde por favor.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+                else if (Inscricoes.Insert_Inscricao(2, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 3)
+                {
+                    lbl_mensagem.Text = "Já tem uma inscrição feita neste curso. Quando começar o curso será notificado.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+                else if (Inscricoes.Insert_Inscricao(2, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 0)
+                {
+                    lbl_mensagem.Text = "Está neste momento inscrito num curso idêntico que está a decorrer. Não pode inscrever-se noutro.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+                else if (Inscricoes.Insert_Inscricao(2, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 4)
+                {
+                    lbl_mensagem.Text = "Já está inscrito neste curso como formador! Não pode inscrever-se como formando.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+                else
+                {
+                    lbl_mensagem.Text = "Erro ao inscrever-se.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(10000).fadeOut('slow');", true);
+            }
         }
 
         protected void btn_inscrever_formador_Click(object sender, EventArgs e)
@@ -71,6 +106,31 @@ namespace Projeto_Final
                 lbl_mensagem.CssClass = "alert alert-danger";
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(10000).fadeOut('slow', function() { window.location.href = 'personal_zone.aspx'; });", true);
+            }
+            else
+            {
+                if (Inscricoes.Insert_Inscricao(1, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 1)
+                {
+                    lbl_mensagem.Text = "Obrigado pela sua inscrição! Agora apenas tem de aguardar que a sua inscrição como formador seja validada pelo staff.";
+                    lbl_mensagem.CssClass = "alert alert-success";
+                }
+                else if (Inscricoes.Insert_Inscricao(1, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 2)
+                {
+                    lbl_mensagem.Text = "Está inscrito como formando neste curso. Não pode fazer inscrição como formador.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+                else if (Inscricoes.Insert_Inscricao(1, Extract.Code(Session["username"].ToString()), Convert.ToInt32(Request.QueryString["cod_curso"]), DateTime.Today) == 0)
+                {
+                    lbl_mensagem.Text = "Já está inscrito como formador neste curso.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+                else
+                {
+                    lbl_mensagem.Text = "Erro ao inscrever-se.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+                }
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(10000).fadeOut('slow');", true);
             }
         }
     }
