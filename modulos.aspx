@@ -53,11 +53,21 @@
                                         </asp:DropDownList>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Estado:</label>
+                                        <asp:DropDownList ID="ddl_estado" CssClass="form-control" runat="server" Style="margin-left: 5px;">
+                                            <asp:ListItem Value="2">Todos</asp:ListItem>
+                                            <asp:ListItem Value="1">Ativo</asp:ListItem>
+                                            <asp:ListItem Value="0">Inativo</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-1 d-flex justify-content-end align-items-end">
                             <div class="form-group justify-content-around">
-                                <asp:Button ID="btn_aplicar_filtros" runat="server" Text="Aplicar" CssClass="btn btn-primary" />
+                                <asp:Button ID="btn_aplicar_filtros" runat="server" Text="Aplicar" CssClass="btn btn-primary" OnClick="btn_aplicar_filtros_Click" />
                             </div>
                         </div>
                     </div>
@@ -110,6 +120,11 @@
                                                             <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
                                                             <p class="card-text">Código UFCD: <%# Eval("cod_ufcd") %></p>
                                                             <p class="card-text">Último Update: <%# Eval("ultimo_update") %></p>
+                                                            <p class="card-text">Estado: 
+                                                                <span class='<%# Convert.ToBoolean(Eval("ativo")) ? "ativo" : "inativo" %>'>
+                                                                    <%# Convert.ToBoolean(Eval("ativo")) ? "Ativo" : "Inativo" %>
+                                                                </span>
+                                                            </p>
                                                         </div>
                                                     </a>
                                                 </div>

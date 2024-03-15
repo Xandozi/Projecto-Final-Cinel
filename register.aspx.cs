@@ -61,10 +61,14 @@ namespace Projeto_Final
                         Session["logged"] = "yes";
                         Response.Redirect("home.aspx", false);
                     }
-                    else if (profile.Verified_Email == "True" && valido != 1)
+                    else if (profile.Verified_Email == "True" && valido == 0)
                     {
                         Email.Send(profile.Email, Extract.Username(cod_user));
                         Response.Redirect("login.aspx?message=Active%20a%20sua%20conta%20via%20email%20porfavor", false);
+                    }
+                    else if (profile.Verified_Email == "True" && valido == 2)   // Caso autenticação seja correta mas o utilizador não esteja ativo
+                    {
+                        Response.Redirect("login.aspx?message=A%20sua%20conta%20foi%20apagada.%20Fale%20com%20o%20suporte%20porfavor", false);     // Redirecionamento para a página com uma mensagem no url
                     }
                 }
                 if (Request.QueryString["error"] == "access_denied")

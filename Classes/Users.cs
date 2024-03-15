@@ -73,7 +73,7 @@ namespace Projeto_Final.Classes
                 SqlParameter valido = new SqlParameter();
                 valido.ParameterName = "@valido";
                 valido.Direction = ParameterDirection.Output;
-                valido.SqlDbType = SqlDbType.Bit;
+                valido.SqlDbType = SqlDbType.Int;
                 myCommand.Parameters.Add(valido);
 
                 myCommand.CommandType = CommandType.StoredProcedure;

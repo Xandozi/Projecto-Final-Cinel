@@ -88,6 +88,12 @@
                                                 <asp:Label ID="lbl_ultimo_update" runat="server" Text=""></asp:Label>
                                             </p>
                                         </div>
+                                        <div class="form-group">
+                                            <p class="lead">
+                                                Ativo:
+                                                <asp:CheckBox ID="cb_ativo" runat="server" />
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

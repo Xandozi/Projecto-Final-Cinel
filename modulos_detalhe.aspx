@@ -55,6 +55,12 @@
                                                 <asp:Label ID="lbl_ultimo_update" runat="server" Text=""></asp:Label>
                                             </p>
                                         </div>
+                                        <div class="form-group">
+                                            <p class="lead">
+                                                Estado:
+                                                <asp:Label ID="lbl_estado" runat="server" Text=""></asp:Label>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

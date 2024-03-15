@@ -47,6 +47,16 @@
             overflow-x: auto; /* Enable horizontal scrolling */
             white-space: nowrap; /* Prevent line breaks */
         }
+
+        .ativo {
+            color: green;
+            font-weight: bold;
+        }
+
+        .inativo {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -152,10 +162,10 @@
                                 </div>
 
                                 <div class="navbar-nav ml-auto">
-                                    <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" style="margin-bottom: 5px;"/>
+                                    <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" Style="margin-bottom: 5px;" />
                                     <% if (Session["logged"] == "yes")
                                         { %>
-                                    <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" OnClick="btn_logout_Click" style="margin-bottom: 5px;"/>
+                                    <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" OnClick="btn_logout_Click" Style="margin-bottom: 5px;" />
                                     <% } %>
                                 </div>
                             </div>

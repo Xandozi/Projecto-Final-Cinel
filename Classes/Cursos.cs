@@ -17,6 +17,7 @@ namespace Projeto_Final.Classes
         public DateTime data_criacao { get; set; }
         public DateTime ultimo_update { get; set; }
         public int duracao_curso { get; set; }
+        public bool ativo { get; set; }
         public List<string> modulos_curso { get; set; }
         public int cod_curso_modulo { get; set; }
         public int cod_modulo { get; set; }
@@ -86,13 +87,13 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static List<Cursos> Ler_CursosAll(string search_designacao, int search_duracao, string data_inicio, string data_fim, int search_cod_qualificacao, string sort_order)
+        public static List<Cursos> Ler_CursosAll(string search_designacao, int search_duracao, string data_inicio, string data_fim, int search_cod_qualificacao, string sort_order, int estado)
         {
             List<Cursos> lst_cursos = new List<Cursos>();
 
             List<string> conditions = new List<string>();
 
-            string query = $@"select Cursos.cod_curso, Cursos.nome_curso, Cursos.duracao_estagio, Cursos.data_criacao, Cursos.cod_qualificacao, Cursos.ultimo_update, Cursos.duracao_estagio + (select SUM(Modulos.duracao) from Modulos join Cursos_Modulos on Modulos.cod_modulo = Cursos_Modulos.cod_modulo where Cursos_Modulos.cod_curso = Cursos.cod_curso) as total_duracao from Cursos";
+            string query = $@"select Cursos.cod_curso, Cursos.nome_curso, Cursos.duracao_estagio, Cursos.data_criacao, Cursos.cod_qualificacao, Cursos.ultimo_update, Cursos.duracao_estagio + (select SUM(Modulos.duracao) from Modulos join Cursos_Modulos on Modulos.cod_modulo = Cursos_Modulos.cod_modulo where Cursos_Modulos.cod_curso = Cursos.cod_curso) as total_duracao, Cursos.ativo from Cursos";
 
             // Decisões para colocar ou não os filtros dentro da string query
             if (!string.IsNullOrEmpty(search_designacao))
@@ -110,6 +111,14 @@ namespace Projeto_Final.Classes
             if (search_cod_qualificacao != 0)
             {
                 conditions.Add($"Cursos.cod_qualificacao = {search_cod_qualificacao}");
+            }
+            if (estado == 0)
+            {
+                conditions.Add($"Cursos.ativo = {estado}");
+            }
+            else if (estado == 1)
+            {
+                conditions.Add($"Cursos.ativo = {estado}");
             }
             if (conditions.Count > 0)
             {
@@ -138,6 +147,7 @@ namespace Projeto_Final.Classes
                 informacao.cod_qualificacao = !dr.IsDBNull(4) ? dr.GetInt32(4) : 000;
                 informacao.ultimo_update = !dr.IsDBNull(5) ? dr.GetDateTime(5) : default(DateTime);
                 informacao.duracao_curso = !dr.IsDBNull(6) ? dr.GetInt32(6) : 000;
+                informacao.ativo = !dr.IsDBNull(7) ? dr.GetBoolean(7) : default(Boolean);
 
                 lst_cursos.Add(informacao);
             }
@@ -151,7 +161,7 @@ namespace Projeto_Final.Classes
         {
             List<Cursos> lst_curso = new List<Cursos>();
 
-            string query = $"select Cursos.cod_curso, Cursos.nome_curso, Cursos.duracao_estagio + (select SUM(Modulos.duracao) from Modulos join Cursos_Modulos on Modulos.cod_modulo = Cursos_Modulos.cod_modulo where Cursos_Modulos.cod_curso = Cursos.cod_curso) as total_duracao, Cursos.duracao_estagio, Cursos.data_criacao, Cursos.cod_qualificacao, Cursos.ultimo_update from Cursos where Cursos.cod_curso = {cod_curso}";
+            string query = $"select Cursos.cod_curso, Cursos.nome_curso, Cursos.duracao_estagio + (select SUM(Modulos.duracao) from Modulos join Cursos_Modulos on Modulos.cod_modulo = Cursos_Modulos.cod_modulo where Cursos_Modulos.cod_curso = Cursos.cod_curso) as total_duracao, Cursos.duracao_estagio, Cursos.data_criacao, Cursos.cod_qualificacao, Cursos.ultimo_update, Cursos.ativo from Cursos where Cursos.cod_curso = {cod_curso}";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -172,6 +182,7 @@ namespace Projeto_Final.Classes
                 informacao.cod_qualificacao = !dr.IsDBNull(5) ? dr.GetInt32(5) : 000;
                 informacao.ultimo_update = !dr.IsDBNull(6) ? dr.GetDateTime(6) : default(DateTime);
                 informacao.modulos_curso = Cursos.Ler_Curso_UFCD(dr.GetInt32(0));
+                informacao.ativo = !dr.IsDBNull(7) ? dr.GetBoolean(7) : default(Boolean);
 
                 lst_curso.Add(informacao);
             }
@@ -217,7 +228,7 @@ namespace Projeto_Final.Classes
             return lst_modulos_curso_tostring;
         }
 
-        public static int Editar_Curso(int cod_curso, string nome_curso, int duracao_estagio, int cod_qualificacao, DateTime ultimo_update, List<int> ufcds)
+        public static int Editar_Curso(int cod_curso, string nome_curso, int duracao_estagio, int cod_qualificacao, DateTime ultimo_update, List<int> ufcds, bool ativo)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -228,6 +239,7 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.AddWithValue("@duracao_estagio", duracao_estagio);
                 myCommand.Parameters.AddWithValue("@cod_qualificacao", cod_qualificacao);
                 myCommand.Parameters.AddWithValue("@ultimo_update", ultimo_update);
+                myCommand.Parameters.AddWithValue("@ativo", ativo);
 
                 SqlParameter valido = new SqlParameter();
                 valido.ParameterName = "@valido";

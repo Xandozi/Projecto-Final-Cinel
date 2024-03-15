@@ -36,18 +36,24 @@ namespace Projeto_Final
                 }
             }
 
-            if (!existe && Modulos.Check_ifExists_Modulo(Convert.ToInt32(tb_cod_ufcd.Text)))
+            if (!existe && Modulos.Check_ifExists_Modulo(Convert.ToInt32(tb_cod_ufcd.Text)) == 1)
             {
                 lb_selected_ufcds.Items.Add(modulo);
                 lbl_mensagem.Text = "Módulo inserido na lista com sucesso.";
                 lbl_mensagem.CssClass = "alert alert-success";
             }
-            else if (existe)
+            else if (!existe && Modulos.Check_ifExists_Modulo(Convert.ToInt32(tb_cod_ufcd.Text)) == 2)
             {
-                lbl_mensagem.Text = "Módulo já foi inserido no curso.";
+                lb_selected_ufcds.Items.Add(modulo);
+                lbl_mensagem.Text = "Módulo está inativo. Por favor escolha apenas módulos ativos.";
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
-            else if (!Modulos.Check_ifExists_Modulo(Convert.ToInt32(tb_cod_ufcd.Text)))
+            else if (existe)
+            {
+                lbl_mensagem.Text = "Módulo já foi inserido na lista.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+            }
+            else if (Modulos.Check_ifExists_Modulo(Convert.ToInt32(tb_cod_ufcd.Text)) == 0)
             {
                 lbl_mensagem.Text = "Módulo não existe na base de dados.";
                 lbl_mensagem.CssClass = "alert alert-danger";
