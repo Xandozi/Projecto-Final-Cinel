@@ -44,27 +44,29 @@ namespace Projeto_Final
                     lbl_email.Text = user[0].email;
                     lbl_email.Font.Bold = true;
 
-                    lbl_data_nascimento.Text = user[0].data_nascimento.ToString();
+                    lbl_data_nascimento.Text = user[0].data_nascimento.ToShortDateString();
                     lbl_data_nascimento.Font.Bold = true;
 
                     lbl_num_contacto.Text = user[0].num_contacto;
                     lbl_num_contacto.Font.Bold = true;
 
-                    if (Session["googlefb_log"] == "yes")
-                    {
-                        img_user.ImageUrl = Session["google_foto"].ToString();
-                    }
-                    else
-                    {
-                        img_user.ImageUrl = user[0].foto;
-                    }
+                    img_user.ImageUrl = user[0].foto;
                 }
             }
 
             if (Request.QueryString["msg"] == "yesuser")
             {
-                lblMessage.Text = "Username mudado com sucesso!";
-                lblMessage.CssClass = "alert alert-success";
+                lbl_mensagem.Text = "Username mudado com sucesso!";
+                lbl_mensagem.CssClass = "alert alert-success";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+            }
+            if (Request.QueryString["msg"] == "yesedit")
+            {
+                lbl_mensagem.Text = "Informações alteradas com sucesso!";
+                lbl_mensagem.CssClass = "alert alert-success";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
 
@@ -104,13 +106,17 @@ namespace Projeto_Final
             if (Validation.Check_Login(Session["username"].ToString(), tb_pw.Text) == 1 && tb_new_pw.Text == tb_new_pw_repeat.Text && tb_new_pw.Text != tb_pw.Text && tb_new_pw_repeat.Text != tb_pw.Text)
             {
                 Users.Update_Password(Extract.Email(Session["username"].ToString()), Validation.EncryptString(tb_new_pw.Text));
-                lblMessage.Text = "Password mudada com sucesso!";
-                lblMessage.CssClass = "alert alert-success";
+                lbl_mensagem.Text = "Password mudada com sucesso!";
+                lbl_mensagem.CssClass = "alert alert-success";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
             else
             {
-                lblMessage.Text = "Erro ao mudar a password. Por favor tente novamente.";
-                lblMessage.CssClass = "alert alert-danger";
+                lbl_mensagem.Text = "Erro ao mudar a password. Por favor tente novamente.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
 
@@ -124,8 +130,10 @@ namespace Projeto_Final
             }
             else
             {
-                lblMessage.Text = "Erro ao mudar o username. Por favor tente novamente.";
-                lblMessage.CssClass = "alert alert-danger";
+                lbl_mensagem.Text = "Erro ao mudar o username. Por favor tente novamente.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
 
@@ -140,8 +148,10 @@ namespace Projeto_Final
             }
             else
             {
-                lblMessage.Text = "Erro ao mudar o email. Por favor tente novamente.";
-                lblMessage.CssClass = "alert alert-danger";
+                lbl_mensagem.Text = "Erro ao mudar o email. Por favor tente novamente.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
         public static string EncryptString(string Message)
@@ -197,7 +207,7 @@ namespace Projeto_Final
 
         protected void btn_editar_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect($"personal_zone_editar.aspx?cod_user={Session["cod_user"]}");
         }
     }
 }

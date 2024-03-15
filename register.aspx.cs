@@ -88,14 +88,40 @@ namespace Projeto_Final
                 {
                     if (DateTime.TryParse(tb_data_nascimento.Text, out DateTime data_nascimento))
                     {
-                        Users.Inserir_User(tb_username.Text, tb_pw.Text, tb_email.Text, tb_primeiro_nome.Text, tb_apelido.Text, data_nascimento);
-                        Email.Send(tb_email.Text, tb_username.Text);
-                        lbl_mensagem.Text = "Utilizador registado com sucesso. Veja a sua caixa de correio, precisa de ativar a sua conta.";
-                        lbl_mensagem.CssClass = "alert alert-success";
+                        TimeSpan ageSpan = DateTime.Today - data_nascimento;
+                        int years = DateTime.Today.Year - data_nascimento.Year;
+                        if (data_nascimento > DateTime.Today.AddYears(-years))
+                            years--;
+                        int months = DateTime.Today.Month - data_nascimento.Month;
+                        if (DateTime.Today.Month < data_nascimento.Month || (DateTime.Today.Month == data_nascimento.Month && DateTime.Today.Day < data_nascimento.Day))
+                        {
+                            years--;
+                            months += 12;
+                        }
+                        int days = ageSpan.Days;
+
+                        if (years >= 18 && years <= 121 || (years == 18 && (months > 0 || (months == 0 && days >= 0))))
+                        {
+                            Users.Inserir_User(tb_username.Text, tb_pw.Text, tb_email.Text, tb_primeiro_nome.Text, tb_apelido.Text, data_nascimento);
+                            Email.Send(tb_email.Text, tb_username.Text);
+                            lbl_mensagem.Text = "Utilizador registado com sucesso. Veja a sua caixa de correio, precisa de ativar a sua conta.";
+                            lbl_mensagem.CssClass = "alert alert-success";
+                        }
+                        else if (years > 121)
+                        {
+                            lbl_mensagem.Text = "Introduza uma idade válida até 121 anos, por favor.";
+                            lbl_mensagem.CssClass = "alert alert-danger";
+                        }
+                        else
+                        {
+                            lbl_mensagem.Text = "É necessário ter pelo menos 18 anos para se registar.";
+                            lbl_mensagem.CssClass = "alert alert-danger";
+                        }
                     }
                     else
                     {
                         lbl_mensagem.Text = "Formato de data inválido! Por favor tente novamente.";
+                        lbl_mensagem.CssClass = "alert alert-danger";
                     }
                 }
                 else if (!Validation.Check_Username(tb_username.Text))
@@ -118,6 +144,8 @@ namespace Projeto_Final
                 }
             }
         }
+
+
         protected void Login(object sender, EventArgs e)
         {
             GoogleConnect.Authorize("profile", "email");

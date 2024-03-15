@@ -147,15 +147,15 @@
                                     <a href="home.aspx" class="nav-item nav-link <%= IsActivePage("home.aspx") %>">Home</a>
                                     <a href="sobre_nos.aspx" class="nav-item nav-link <%= IsActivePage("sobre_nos.aspx") %>">Sobre Nós</a>
                                     <a href="cursos_lista.aspx" class="nav-item nav-link <%= IsActivePage("cursos_lista.aspx") %>">Cursos</a>
-                                    <a href="formadores.aspx" class="nav-item nav-link <%= IsActivePage("formadores.aspx") %>">Formadores</a>
+                                    <a href="formadores_lista.aspx" class="nav-item nav-link <%= IsActivePage("formadores.aspx") %>">Formadores</a>
                                     <a href="contactos.aspx" class="nav-item nav-link <%= IsActivePage("contactos.aspx") %>">Contactos</a>
                                 </div>
 
                                 <div class="navbar-nav ml-auto">
-                                    <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" />
+                                    <asp:Button ID="btn_user" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="<%# DetermineLoginButtonText() %>" CausesValidation="false" OnClick="btn_user_Click" style="margin-bottom: 5px;"/>
                                     <% if (Session["logged"] == "yes")
                                         { %>
-                                    <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" OnClick="btn_logout_Click" />
+                                    <asp:Button ID="btn_logout" runat="server" CssClass="btn btn-primary py-2 px-4 ml-2" Text="Logout" OnClick="btn_logout_Click" style="margin-bottom: 5px;"/>
                                     <% } %>
                                 </div>
                             </div>

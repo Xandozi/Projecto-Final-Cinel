@@ -89,6 +89,49 @@ namespace Projeto_Final.Classes
             }
         }
 
+        public static void Editar_User(int cod_user, string nome_proprio, string apelido, string morada, string cod_postal, DateTime data_nascimento, string num_contacto)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_user", cod_user);
+                myCommand.Parameters.AddWithValue("@nome_proprio", nome_proprio);
+                myCommand.Parameters.AddWithValue("@apelido", apelido);
+                myCommand.Parameters.AddWithValue("@morada", morada);
+                myCommand.Parameters.AddWithValue("@cod_postal", cod_postal);
+                myCommand.Parameters.AddWithValue("@data_nascimento", data_nascimento);
+                myCommand.Parameters.AddWithValue("@num_contacto", num_contacto);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Editar_User";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                myConn.Close();
+            }
+        }
+
+        public static void Editar_User_Foto(int cod_user, byte[] foto)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_user", cod_user);
+                myCommand.Parameters.AddWithValue("@foto", foto);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Editar_User_Foto";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                myConn.Close();
+            }
+        }
+
         public static void Update_Username(string old_username, string new_username)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);

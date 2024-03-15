@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projeto_Final.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,14 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["logged"] != "yes")
+            {
+                Response.Redirect("login.aspx");
+            }
+            else if (!Validation.Check_IsStaff(Session["username"].ToString()))
+            {
+                Response.Redirect("personal_zone.aspx");
+            }
         }
     }
 }

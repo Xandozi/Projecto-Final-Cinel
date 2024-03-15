@@ -11,7 +11,7 @@ namespace Projeto_Final
 {
 
 
-    public partial class personal_zone
+    public partial class personal_zone_editar
     {
 
         /// <summary>
@@ -51,31 +51,112 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Label lbl_username;
 
         /// <summary>
-        /// lbl_nome_completo control.
+        /// tb_nome_proprio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_nome_completo;
+        protected global::System.Web.UI.WebControls.TextBox tb_nome_proprio;
 
         /// <summary>
-        /// lbl_morada control.
+        /// rfv_nome_proprio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_morada;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_nome_proprio;
 
         /// <summary>
-        /// lbl_cod_postal control.
+        /// rev_nome_proprio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_cod_postal;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_nome_proprio;
+
+        /// <summary>
+        /// tb_apelido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_apelido;
+
+        /// <summary>
+        /// rfv_apelido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_apelido;
+
+        /// <summary>
+        /// rev_apelido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_apelido;
+
+        /// <summary>
+        /// tb_morada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_morada;
+
+        /// <summary>
+        /// rfv_morada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_morada;
+
+        /// <summary>
+        /// rev_morada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_morada;
+
+        /// <summary>
+        /// tb_cod_postal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_cod_postal;
+
+        /// <summary>
+        /// rfv_cod_postal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_cod_postal;
+
+        /// <summary>
+        /// rev_cod_postal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_cod_postal;
 
         /// <summary>
         /// lbl_perfis control.
@@ -96,22 +177,58 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Label lbl_email;
 
         /// <summary>
-        /// lbl_data_nascimento control.
+        /// tb_data_nascimento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_data_nascimento;
+        protected global::System.Web.UI.WebControls.TextBox tb_data_nascimento;
 
         /// <summary>
-        /// lbl_num_contacto control.
+        /// rfv_data_nascimento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_num_contacto;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_data_nascimento;
+
+        /// <summary>
+        /// tb_num_contacto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_num_contacto;
+
+        /// <summary>
+        /// rfv_num_contacto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_num_contacto;
+
+        /// <summary>
+        /// rev_num_contacto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_num_contacto;
+
+        /// <summary>
+        /// fu_foto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fu_foto;
 
         /// <summary>
         /// img_user control.

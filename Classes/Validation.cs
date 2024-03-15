@@ -224,6 +224,21 @@ namespace Projeto_Final.Classes
             return false;
         }
 
+        public static bool Check_IsUser(string username)
+        {
+            List<Validation> lst_perfil = Validation.Check_Perfil(Extract.Code(username));
+
+            foreach (Validation perfil in lst_perfil)
+            {
+                if (perfil.perfil == "User")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static bool Check_IsSuperAdmin(string username)
         {
             List<Validation> lst_perfil = Validation.Check_Perfil(Extract.Code(username));

@@ -168,6 +168,7 @@ namespace Projeto_Final
             else
             {
                 lbl_mensagem.Text = "Email não existe na nossa base de dados!";
+                lbl_mensagem.CssClass = "alert alert-danger";
             }
         }
     }

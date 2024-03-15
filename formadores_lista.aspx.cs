@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Projeto_Final
 {
-    public partial class home : System.Web.UI.Page
+    public partial class formadores_lista : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //rpt_formadores.DataSource = Formadores.Ler_FormadoresAll();
+
         }
     }
 }

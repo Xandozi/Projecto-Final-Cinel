@@ -93,6 +93,7 @@
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="formadores_lista.aspx" />
     <Content Include="formandos.aspx" />
     <Content Include="gestao.aspx" />
     <Content Include="home.aspx" />
@@ -153,6 +154,7 @@
     <Content Include="modulos.aspx" />
     <Content Include="modulos_detalhe.aspx" />
     <Content Include="personal_zone.aspx" />
+    <Content Include="personal_zone_editar.aspx" />
     <Content Include="register.aspx" />
     <Content Include="salas.aspx" />
     <Content Include="salas_detalhe.aspx" />
@@ -257,6 +259,13 @@
     <Compile Include="editar_sala.aspx.designer.cs">
       <DependentUpon>editar_sala.aspx</DependentUpon>
     </Compile>
+    <Compile Include="formadores_lista.aspx.cs">
+      <DependentUpon>formadores_lista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="formadores_lista.aspx.designer.cs">
+      <DependentUpon>formadores_lista.aspx</DependentUpon>
+    </Compile>
     <Compile Include="formandos.aspx.cs">
       <DependentUpon>formandos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -312,6 +321,13 @@
     </Compile>
     <Compile Include="personal_zone.aspx.designer.cs">
       <DependentUpon>personal_zone.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="personal_zone_editar.aspx.cs">
+      <DependentUpon>personal_zone_editar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="personal_zone_editar.aspx.designer.cs">
+      <DependentUpon>personal_zone_editar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">
