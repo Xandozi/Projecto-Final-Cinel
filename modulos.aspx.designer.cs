@@ -105,6 +105,15 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Button btn_aplicar_filtros;
 
         /// <summary>
+        /// btn_filtros control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_filtros;
+
+        /// <summary>
         /// btn_previous_top control.
         /// </summary>
         /// <remarks>

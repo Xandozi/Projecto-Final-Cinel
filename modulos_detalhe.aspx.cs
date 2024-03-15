@@ -16,12 +16,9 @@ namespace Projeto_Final
             {
                 Response.Redirect("login.aspx");
             }
-            else if (!Validation.Check_IsSuperAdmin(Session["username"].ToString()))
+            else if (!Validation.Check_IsStaff(Session["username"].ToString()))
             {
-                if (!Validation.Check_IsStaff(Session["username"].ToString()))
-                {
-                    Response.Redirect("personal_zone.aspx");
-                }
+                Response.Redirect("personal_zone.aspx");
             }
             else
             {
@@ -65,7 +62,7 @@ namespace Projeto_Final
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow', function() { window.location.href = 'modulos.aspx'; });", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(2000).fadeOut('slow', function() { window.location.href = 'modulos.aspx'; });", true);
         }
     }
 }

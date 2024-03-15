@@ -16,12 +16,9 @@ namespace Projeto_Final
             {
                 Response.Redirect("login.aspx");
             }
-            else if (!Validation.Check_IsSuperAdmin(Session["username"].ToString()))
+            else if (!Validation.Check_IsStaff(Session["username"].ToString()))
             {
-                if (!Validation.Check_IsStaff(Session["username"].ToString()))
-                {
-                    Response.Redirect("personal_zone.aspx");
-                }
+                Response.Redirect("personal_zone.aspx");
             }
             else
             {
@@ -53,16 +50,16 @@ namespace Projeto_Final
 
         protected void btn_editar_Click(object sender, EventArgs e)
         {
-            if (Modulos.Editar_Modulo(Convert.ToInt32(Request.QueryString["cod_modulo"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_ufcd.Text), DateTime.Now.ToString()) == 1)
+            if (Modulos.Editar_Modulo(Convert.ToInt32(Request.QueryString["cod_modulo"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_ufcd.Text), DateTime.Now) == 1)
             {
                 Response.Redirect($"modulos_detalhe.aspx?cod_modulo={Convert.ToInt32(Request.QueryString["cod_modulo"])}");
             }
-            else if (Modulos.Editar_Modulo(Convert.ToInt32(Request.QueryString["cod_modulo"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_ufcd.Text), DateTime.Now.ToString()) == 2)
+            else if (Modulos.Editar_Modulo(Convert.ToInt32(Request.QueryString["cod_modulo"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_ufcd.Text), DateTime.Now) == 2)
             {
                 lbl_mensagem.Text = "Designação do Módulo já existe!";
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
-            else if (Modulos.Editar_Modulo(Convert.ToInt32(Request.QueryString["cod_modulo"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_ufcd.Text), DateTime.Now.ToString()) == 3)
+            else if (Modulos.Editar_Modulo(Convert.ToInt32(Request.QueryString["cod_modulo"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_ufcd.Text), DateTime.Now) == 3)
             {
                 lbl_mensagem.Text = "Código UFCD do Módulo já existe!";
                 lbl_mensagem.CssClass = "alert alert-danger";

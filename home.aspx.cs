@@ -11,7 +11,7 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            rpt_formadores.DataBind();
+            //rpt_formadores.DataSource = Formadores.Ler_FormadoresAll();
         }
     }
 }

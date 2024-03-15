@@ -3,18 +3,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="container-fluid">
         <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
             <!-- Sidebar -->
-            <div class="col-md-2 bg-light">
+            <div class="col-md-2 bg-light" style=" margin-top: 10px;">
                 <div class="list-group">
+                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action active">Área Pessoal</a>
                     <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeUsernameModal">Mudar o Username</a>
                     <% if (Session["googlefb_log"] != "yes")
                         { %>
                     <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changePasswordModal">Mudar a Password</a>
                     <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeEmailModal">Mudar o Email</a>
                     <% } %>
-                    <% if (Session["perfil"].ToString() == "Staff" || Session["perfil"].ToString() == "Super Admin")
+                    <% if (Session["perfil"].ToString().Contains("Staff") || Session["perfil"].ToString().Contains("Super Admin"))
                         { %>
                     <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos</a>
                     <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão</a>
@@ -23,10 +25,10 @@
                 </div>
             </div>
             <!-- Main Content -->
-            <div class="col-md-10">
+            <div class="col-md-10" style=" margin-top: 10px;">
                 <div class="card" style="border-color: #333;">
                     <div class="card-header bg-dark text-white">
-                        <h2 class="display-4" style="font-size: 40px; color: white;">Bem-vindo à sua zona pessoal, <%: Session["nome_proprio"] %></h2>
+                        <h2 class="display-4" style="font-size: 40px; color: white;">Bem-vindo à sua zona pessoal, <%= lbl_nome_completo.Text %></h2>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -43,19 +45,21 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="text-right mt-3">
-                                    <asp:Image ID="img_user" runat="server" class="rounded-circle" style="height: 150px; width: 150px;"/>
+                                    <asp:Image ID="img_user" runat="server" class="rounded-circle" style="height: 200px; width: 200px; border:5px solid orange;"/>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-lg-between mt-3">
-                            <asp:Button ID="btn_editar" class="btn btn-outline-dark btn-lg" runat="server" Text="Editar Informação" CausesValidation="false" OnClick="btn_editar_Click" />
+                            <asp:Button ID="btn_editar" class="btn btn-primary btn-lg" runat="server" Text="Editar Informação" CausesValidation="false" OnClick="btn_editar_Click" />
                         </div>
                     </div>
                 </div>
             </div>
-            <a>
-                <asp:Label ID="lblMessage" runat="server" CssClass="mt-3" Style="margin-top: 40px;" />
-            </a>
+            <div class="row" style="margin-bottom: 30px; margin-top: 30px; margin-left: 10px;">
+                <div>
+                    <asp:Label ID="lbl_mensagem" CssClass="mt-3" runat="server" Text=""></asp:Label>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -114,7 +118,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btn_change_username" class="btn btn-primary" runat="server" Text="Mudar Password" OnClick="btn_change_username_Click" />
+                    <asp:Button ID="btn_change_username" class="btn btn-primary" runat="server" Text="Mudar Username" OnClick="btn_change_username_Click" />
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>

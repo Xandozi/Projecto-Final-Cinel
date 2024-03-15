@@ -7,8 +7,8 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <!-- Login Form -->
-            <div class="container mt-5">
-                <div class="row justify-content-center">
+            <div class="container mt-5 justify-content-center">
+                <div class="row justify-content-center" style=" margin-bottom: 20px;">
                     <div class="col-md-6">
                         <div class="card border-primary">
                             <div class="card-header bg-primary text-white text-center">
@@ -33,6 +33,11 @@
                             </div>
                             <asp:Label ID="lbl_mensagem" runat="server" Text="" style="margin: 10px;"></asp:Label>
                         </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <asp:ValidationSummary ID="ValidationSummary1" CssClass="alert alert-danger" runat="server" />
                     </div>
                 </div>
             </div>

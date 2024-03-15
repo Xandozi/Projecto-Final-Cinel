@@ -71,7 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ativacao.aspx" />
+    <Content Include="criar_curso.aspx" />
     <Content Include="criar_modulo.aspx" />
+    <Content Include="criar_sala.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-reboot.css" />
@@ -80,11 +82,19 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="css\style.min.css" />
+    <Content Include="cursos.aspx" />
+    <Content Include="cursos_detalhe.aspx" />
+    <Content Include="cursos_lista.aspx" />
+    <Content Include="cursos_lista_detalhe.aspx" />
+    <Content Include="editar_curso.aspx" />
     <Content Include="editar_modulo.aspx" />
+    <Content Include="editar_sala.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="formadores_lista.aspx" />
+    <Content Include="formandos.aspx" />
     <Content Include="gestao.aspx" />
     <Content Include="home.aspx" />
     <Content Include="img\ciberseguranca.jpg" />
@@ -144,7 +154,10 @@
     <Content Include="modulos.aspx" />
     <Content Include="modulos_detalhe.aspx" />
     <Content Include="personal_zone.aspx" />
+    <Content Include="personal_zone_editar.aspx" />
     <Content Include="register.aspx" />
+    <Content Include="salas.aspx" />
+    <Content Include="salas_detalhe.aspx" />
     <Content Include="sobre_nos.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -170,11 +183,19 @@
     <Compile Include="Classes\Formadores.cs" />
     <Compile Include="Classes\Formandos.cs" />
     <Compile Include="Classes\Horarios.cs" />
+    <Compile Include="Classes\Inscricoes.cs" />
     <Compile Include="Classes\Modulos.cs" />
     <Compile Include="Classes\Salas.cs" />
     <Compile Include="Classes\Turmas.cs" />
     <Compile Include="Classes\Users.cs" />
     <Compile Include="Classes\Validation.cs" />
+    <Compile Include="criar_curso.aspx.cs">
+      <DependentUpon>criar_curso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="criar_curso.aspx.designer.cs">
+      <DependentUpon>criar_curso.aspx</DependentUpon>
+    </Compile>
     <Compile Include="criar_modulo.aspx.cs">
       <DependentUpon>criar_modulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -182,12 +203,75 @@
     <Compile Include="criar_modulo.aspx.designer.cs">
       <DependentUpon>criar_modulo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="criar_sala.aspx.cs">
+      <DependentUpon>criar_sala.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="criar_sala.aspx.designer.cs">
+      <DependentUpon>criar_sala.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cursos.aspx.cs">
+      <DependentUpon>cursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos.aspx.designer.cs">
+      <DependentUpon>cursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cursos_detalhe.aspx.cs">
+      <DependentUpon>cursos_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos_detalhe.aspx.designer.cs">
+      <DependentUpon>cursos_detalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cursos_lista.aspx.cs">
+      <DependentUpon>cursos_lista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos_lista.aspx.designer.cs">
+      <DependentUpon>cursos_lista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cursos_lista_detalhe.aspx.cs">
+      <DependentUpon>cursos_lista_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cursos_lista_detalhe.aspx.designer.cs">
+      <DependentUpon>cursos_lista_detalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_curso.aspx.cs">
+      <DependentUpon>editar_curso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_curso.aspx.designer.cs">
+      <DependentUpon>editar_curso.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_modulo.aspx.cs">
       <DependentUpon>editar_modulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="editar_modulo.aspx.designer.cs">
       <DependentUpon>editar_modulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_sala.aspx.cs">
+      <DependentUpon>editar_sala.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_sala.aspx.designer.cs">
+      <DependentUpon>editar_sala.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="formadores_lista.aspx.cs">
+      <DependentUpon>formadores_lista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="formadores_lista.aspx.designer.cs">
+      <DependentUpon>formadores_lista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="formandos.aspx.cs">
+      <DependentUpon>formandos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="formandos.aspx.designer.cs">
+      <DependentUpon>formandos.aspx</DependentUpon>
     </Compile>
     <Compile Include="gestao.aspx.cs">
       <DependentUpon>gestao.aspx</DependentUpon>
@@ -238,6 +322,13 @@
     <Compile Include="personal_zone.aspx.designer.cs">
       <DependentUpon>personal_zone.aspx</DependentUpon>
     </Compile>
+    <Compile Include="personal_zone_editar.aspx.cs">
+      <DependentUpon>personal_zone_editar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="personal_zone_editar.aspx.designer.cs">
+      <DependentUpon>personal_zone_editar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">
       <DependentUpon>register.aspx</DependentUpon>
@@ -245,6 +336,20 @@
     </Compile>
     <Compile Include="register.aspx.designer.cs">
       <DependentUpon>register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="salas.aspx.cs">
+      <DependentUpon>salas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="salas.aspx.designer.cs">
+      <DependentUpon>salas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="salas_detalhe.aspx.cs">
+      <DependentUpon>salas_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="salas_detalhe.aspx.designer.cs">
+      <DependentUpon>salas_detalhe.aspx</DependentUpon>
     </Compile>
     <Compile Include="sobre_nos.aspx.cs">
       <DependentUpon>sobre_nos.aspx</DependentUpon>

@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4" style="margin-left: 10px; margin-top: 12px;">
                         <asp:Button ID="btn_editar" CssClass="btn btn-info py-2 px-4 ml-2" runat="server" Text="Editar Módulo" OnClick="btn_editar_Click" />
-                        <asp:Button ID="btn_apagar" CssClass="btn btn-danger py-2 px-4 ml-2" runat="server" Text="Apagar Módulo" OnClick="btn_apagar_Click" />
+                        <asp:Button ID="btn_apagar" CssClass="btn btn-danger py-2 px-4 ml-2" runat="server" Text="Apagar Módulo" data-toggle="modal" data-target="#deleteModal" />
                     </div>
                 </div>
                 <div class="row" style="margin-top: 30px;">
@@ -76,4 +76,24 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem a certeza que deseja apagar este módulo?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <asp:Button ID="btn_confirm_delete" runat="server" Text="Apagar" CssClass="btn btn-danger" OnClick="btn_apagar_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
