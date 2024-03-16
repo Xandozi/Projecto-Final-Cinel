@@ -117,60 +117,53 @@ namespace Projeto_Final
 
         protected void btn_editar_Click(object sender, EventArgs e)
         {
-            if (!fu_foto.HasFile)
-            {
-                lbl_mensagem.Text = "É necessário inserir uma fotografia sua.";
-                lbl_mensagem.CssClass = "alert alert-danger";
-            }
-            else
-            {
-                Stream imgStream = fu_foto.PostedFile.InputStream;
-                int tamanho_ficheiro = fu_foto.PostedFile.ContentLength;
-                byte[] imgBinaryData = new byte[tamanho_ficheiro];
-                imgStream.Read(imgBinaryData, 0, tamanho_ficheiro);
+            Stream imgStream = fu_foto.PostedFile.InputStream;
+            int tamanho_ficheiro = fu_foto.PostedFile.ContentLength;
+            byte[] imgBinaryData = new byte[tamanho_ficheiro];
+            imgStream.Read(imgBinaryData, 0, tamanho_ficheiro);
 
-                if (DateTime.TryParse(tb_data_nascimento.Text, out DateTime data_nascimento))
+            if (DateTime.TryParse(tb_data_nascimento.Text, out DateTime data_nascimento))
+            {
+                TimeSpan ageSpan = DateTime.Today - data_nascimento;
+                int years = DateTime.Today.Year - data_nascimento.Year;
+                if (data_nascimento > DateTime.Today.AddYears(-years))
+                    years--;
+                int months = DateTime.Today.Month - data_nascimento.Month;
+                if (DateTime.Today.Month < data_nascimento.Month || (DateTime.Today.Month == data_nascimento.Month && DateTime.Today.Day < data_nascimento.Day))
                 {
-                    TimeSpan ageSpan = DateTime.Today - data_nascimento;
-                    int years = DateTime.Today.Year - data_nascimento.Year;
-                    if (data_nascimento > DateTime.Today.AddYears(-years))
-                        years--;
-                    int months = DateTime.Today.Month - data_nascimento.Month;
-                    if (DateTime.Today.Month < data_nascimento.Month || (DateTime.Today.Month == data_nascimento.Month && DateTime.Today.Day < data_nascimento.Day))
-                    {
-                        years--;
-                        months += 12;
-                    }
-                    int days = ageSpan.Days;
-
-                    if (years >= 18 && years <= 121 || (years == 18 && (months > 0 || (months == 0 && days >= 0))))
-                    {
-                        Users.Editar_User(Convert.ToInt32(lbl_cod_user.Text), tb_nome_proprio.Text, tb_apelido.Text, tb_morada.Text, tb_cod_postal.Text, data_nascimento, tb_num_contacto.Text);
-                        Users.Editar_User_Foto(Convert.ToInt32(lbl_cod_user.Text), imgBinaryData);
-                        Response.Redirect("personal_zone.aspx?msg=yesedit", false);
-                    }
-                    else if (years > 121)
-                    {
-                        lbl_mensagem.Text = "Introduza uma idade válida até 121 anos, por favor.";
-                        lbl_mensagem.CssClass = "alert alert-danger";
-
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
-                    }
-                    else
-                    {
-                        lbl_mensagem.Text = "É necessário ter pelo menos 18 anos.";
-                        lbl_mensagem.CssClass = "alert alert-danger";
-
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
-                    }
+                    years--;
+                    months += 12;
                 }
-                else
+                int days = ageSpan.Days;
+
+                if (years >= 18 && years <= 121 || (years == 18 && (months > 0 || (months == 0 && days >= 0))))
                 {
-                    lbl_mensagem.Text = "Formato de data inválido! Por favor tente novamente.";
+                    Users.Editar_User(Convert.ToInt32(lbl_cod_user.Text), tb_nome_proprio.Text, tb_apelido.Text, tb_morada.Text, tb_cod_postal.Text, data_nascimento, tb_num_contacto.Text, true);
+                    if (fu_foto.HasFile)
+                        Users.Editar_User_Foto(Convert.ToInt32(lbl_cod_user.Text), imgBinaryData);
+                    Response.Redirect("personal_zone.aspx?msg=yesedit", false);
+                }
+                else if (years > 121)
+                {
+                    lbl_mensagem.Text = "Introduza uma idade válida até 121 anos, por favor.";
                     lbl_mensagem.CssClass = "alert alert-danger";
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                 }
+                else
+                {
+                    lbl_mensagem.Text = "É necessário ter pelo menos 18 anos.";
+                    lbl_mensagem.CssClass = "alert alert-danger";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+                }
+            }
+            else
+            {
+                lbl_mensagem.Text = "Formato de data inválido! Por favor tente novamente.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
 

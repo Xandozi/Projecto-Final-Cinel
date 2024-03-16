@@ -89,7 +89,7 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static void Editar_User(int cod_user, string nome_proprio, string apelido, string morada, string cod_postal, DateTime data_nascimento, string num_contacto)
+        public static void Editar_User(int cod_user, string nome_proprio, string apelido, string morada, string cod_postal, DateTime data_nascimento, string num_contacto, bool ativo)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -102,6 +102,7 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.AddWithValue("@cod_postal", cod_postal);
                 myCommand.Parameters.AddWithValue("@data_nascimento", data_nascimento);
                 myCommand.Parameters.AddWithValue("@num_contacto", num_contacto);
+                myCommand.Parameters.AddWithValue("@ativo", ativo);
 
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.CommandText = "Editar_User";
@@ -218,12 +219,53 @@ namespace Projeto_Final.Classes
             }
         }
 
-        // Função para ler a informação de um certo utilizador
-        public static List<Users> Ler_Info_User(int cod_user)
+        public static List<Users> Ler_UsersAll(string search_designacao, int search_perfil, string search_email, string data_inicio, string data_fim, int search_cod_user, string sort_order, int estado)
         {
-            List<Users> lst_user = new List<Users>();
+            List<Users> lst_users = new List<Users>();
 
-            string query = $"select users.cod_user, users.username, users.email, users.nome_proprio, users.apelido, users.morada, users.cod_postal, users.data_nascimento, users.num_contacto, users.foto from users where cod_user = {cod_user}";
+            List<string> conditions = new List<string>();
+
+            string query = $"select users.cod_user, users.username, users.email, users.nome_proprio, users.apelido, users.morada, users.cod_postal, users.data_nascimento, users.num_contacto, users.foto, Users.ativo from users";
+
+            if (search_perfil != 0)
+            {
+                query = $"select users.cod_user, users.username, users.email, users.nome_proprio, users.apelido, users.morada, users.cod_postal, users.data_nascimento, users.num_contacto, users.foto, Perfis.perfil, Users.ativo from users join Users_Perfis on Users_Perfis.cod_user = Users.cod_user join Perfis on Perfis.cod_perfil = Users_Perfis.cod_perfil";
+                conditions.Add($"Perfis.cod_perfil = {search_perfil}");
+            }
+
+            // Decisões para colocar ou não os filtros dentro da string query
+            if (!string.IsNullOrEmpty(search_designacao))
+            {
+                conditions.Add($"Users.username LIKE '%{search_designacao}%'");
+            }
+            if (data_inicio != null && data_fim != null)
+            {
+                conditions.Add($"Users.data_nascimento >= '{data_inicio}' and Users.data_nascimento <= '{data_fim}'");
+            }
+            if (search_cod_user != 0)
+            {
+                conditions.Add($"Users.cod_user = {search_cod_user}");
+            }
+            if (estado == 0)
+            {
+                conditions.Add($"Users.ativo = {estado}");
+            }
+            else if (estado == 1)
+            {
+                conditions.Add($"Users.ativo = {estado}");
+            }
+            if (!string.IsNullOrEmpty(search_email))
+            {
+                conditions.Add($"Users.email LIKE '%{search_email}%'");
+            }
+            if (conditions.Count > 0)
+            {
+                query += " WHERE " + string.Join(" AND ", conditions);
+            }
+            if (!string.IsNullOrEmpty(sort_order))
+            {
+                query += " ORDER BY Users.username " + sort_order;
+            }
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -247,6 +289,48 @@ namespace Projeto_Final.Classes
                 informacao.num_contacto = !dr.IsDBNull(8) ? dr.GetString(8) : null;
                 informacao.foto = !dr.IsDBNull(9) ? "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]) : null;
                 informacao.perfis = Users.Get_Perfis(dr.GetInt32(0));
+                if (search_perfil == 0)
+                    informacao.ativo = !dr.IsDBNull(10) ? dr.GetBoolean(10) : default(Boolean);
+                else
+                    informacao.ativo = !dr.IsDBNull(11) ? dr.GetBoolean(11) : default(Boolean);
+
+                lst_users.Add(informacao);
+            }
+
+            myConn.Close();
+
+            return lst_users;
+        }
+        // Função para ler a informação de um certo utilizador
+        public static List<Users> Ler_Info_User(int cod_user)
+        {
+            List<Users> lst_user = new List<Users>();
+
+            string query = $"select users.cod_user, users.username, users.email, users.nome_proprio, users.apelido, users.morada, users.cod_postal, users.data_nascimento, users.num_contacto, users.foto, Users.ativo from users where cod_user = {cod_user}";
+
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            SqlCommand myCommand = new SqlCommand(query, myConn);
+
+            myConn.Open();
+
+            SqlDataReader dr = myCommand.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Users informacao = new Users();
+                informacao.cod_user = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
+                informacao.username = !dr.IsDBNull(1) ? dr.GetString(1) : null;
+                informacao.email = !dr.IsDBNull(2) ? dr.GetString(2) : null;
+                informacao.nome_proprio = !dr.IsDBNull(3) ? dr.GetString(3) : null;
+                informacao.apelido = !dr.IsDBNull(4) ? dr.GetString(4) : null;
+                informacao.morada = !dr.IsDBNull(5) ? dr.GetString(5) : null;
+                informacao.cod_postal = !dr.IsDBNull(6) ? dr.GetString(6) : null;
+                informacao.data_nascimento = !dr.IsDBNull(7) ? dr.GetDateTime(7) : default(DateTime);
+                informacao.num_contacto = !dr.IsDBNull(8) ? dr.GetString(8) : null;
+                informacao.foto = !dr.IsDBNull(9) ? "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]) : null;
+                informacao.perfis = Users.Get_Perfis(dr.GetInt32(0));
+                informacao.ativo = !dr.IsDBNull(10) ? dr.GetBoolean(10) : default(Boolean);
 
                 lst_user.Add(informacao);
             }

@@ -89,6 +89,7 @@
     <Content Include="editar_curso.aspx" />
     <Content Include="editar_modulo.aspx" />
     <Content Include="editar_sala.aspx" />
+    <Content Include="editar_utilizador.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -159,6 +160,8 @@
     <Content Include="salas.aspx" />
     <Content Include="salas_detalhe.aspx" />
     <Content Include="sobre_nos.aspx" />
+    <Content Include="utilizadores.aspx" />
+    <Content Include="utilizadores_detalhe.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +262,13 @@
     <Compile Include="editar_sala.aspx.designer.cs">
       <DependentUpon>editar_sala.aspx</DependentUpon>
     </Compile>
+    <Compile Include="editar_utilizador.aspx.cs">
+      <DependentUpon>editar_utilizador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_utilizador.aspx.designer.cs">
+      <DependentUpon>editar_utilizador.aspx</DependentUpon>
+    </Compile>
     <Compile Include="formadores_lista.aspx.cs">
       <DependentUpon>formadores_lista.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -357,6 +367,20 @@
     </Compile>
     <Compile Include="sobre_nos.aspx.designer.cs">
       <DependentUpon>sobre_nos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="utilizadores.aspx.cs">
+      <DependentUpon>utilizadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="utilizadores.aspx.designer.cs">
+      <DependentUpon>utilizadores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="utilizadores_detalhe.aspx.cs">
+      <DependentUpon>utilizadores_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="utilizadores_detalhe.aspx.designer.cs">
+      <DependentUpon>utilizadores_detalhe.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
