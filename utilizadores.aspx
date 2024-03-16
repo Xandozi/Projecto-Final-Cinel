@@ -94,7 +94,7 @@
                             <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
                         <asp:LinkButton ID="btn_filtros" runat="server" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;">
-                                <i class="fas fa-filter"></i> 
+                                <i class="fas fa-filter">Filtros</i> 
                         </asp:LinkButton>
                         <script type="text/javascript">
                             function toggleFilters() {

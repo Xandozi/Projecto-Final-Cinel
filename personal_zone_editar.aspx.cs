@@ -210,8 +210,10 @@ namespace Projeto_Final
             {
                 Users.Update_Email(Session["email"].ToString(), tb_new_email.Text);
                 Session["email"] = tb_new_email.Text;
-                Email.Send(tb_new_email.Text, Session["username"].ToString());
-                Response.Redirect("logout.aspx?msg=yesemail", false);
+                if (Email.Send(tb_new_email.Text, Session["username"].ToString()))
+                    Response.Redirect("logout.aspx?msg=yesemail", false);
+                else
+                    Response.Redirect("logout.aspx?msg=erroemail", false);
             }
             else
             {

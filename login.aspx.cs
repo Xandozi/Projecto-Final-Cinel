@@ -66,8 +66,10 @@ namespace Projeto_Final
                     }
                     else if (profile.Verified_Email == "True" && valido == 0)   // Caso autenticação seja correta mas o utilizador não esteja ativo
                     {
-                        Email.Send(profile.Email, Extract.Username(cod_user));  // Enviar email de ativação novamente
-                        Response.Redirect("login.aspx?message=Ative%20a%20sua%20conta%20via%20email%20porfavor", false);     // Redirecionamento para a página com uma mensagem no url
+                        if (Email.Send(profile.Email, Extract.Username(cod_user)))  // Enviar email de ativação novamente
+                            Response.Redirect("login.aspx?message=Ative%20a%20sua%20conta%20via%20email%20porfavor", false);     // Redirecionamento para a página com uma mensagem no url
+                        else
+                            Response.Redirect("login.aspx?message=Erro%20ao%20enviar%20email.%20Fale%20com%20o%20suporte%20por%20favor", false);
                     }
                     else if (profile.Verified_Email == "True" && valido == 2)   // Caso autenticação seja correta mas o utilizador não esteja ativo
                     {
@@ -86,6 +88,15 @@ namespace Projeto_Final
                 {
                     lbl_mensagem.Text = "Email mudado com sucesso!! Por favor verifique a sua caixa de entrada pois receberá um email de ativação.";
                     lbl_mensagem.CssClass = "alert alert-success";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(10000).fadeOut('slow');", true);
+                }
+                else if (Request.QueryString["msg"] == "erroemail")
+                {
+                    lbl_mensagem.Text = "Email mudado com sucesso. Porém houve um erro ao enviar o seu email de ativação, por favor tente novamente mais tarde.";
+                    lbl_mensagem.CssClass = "alert alert-info";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(10000).fadeOut('slow');", true);
                 }
             }
 
@@ -95,6 +106,8 @@ namespace Projeto_Final
 
                 lbl_mensagem.Text = message;
                 lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
 
@@ -155,11 +168,15 @@ namespace Projeto_Final
             {
                 lbl_mensagem.Text = "A sua conta não está ativada. Por favor veja a sua caixa de correio.";
                 lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
             else // Credenciais erradas
             {
                 lbl_mensagem.Text = "Credenciais inseridas estão erradas.";
                 lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
 
@@ -167,12 +184,27 @@ namespace Projeto_Final
         {
             if (!Validation.Check_Email(tb_email.Text))
             {
-                Email.Send_Forgot_PW(tb_email.Text);
+                if (Email.Send_Forgot_PW(tb_email.Text))
+                {
+                    lbl_mensagem.Text = "Foi enviado um email para a sua caixa de correio com a sua nova password.";
+                    lbl_mensagem.CssClass = "alert alert-success";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+                }
+                else
+                {
+                    lbl_mensagem.Text = "A sua nova password foi enviada para si por email, porém houve um erro da parte do provider por isso por favor tente mais tarde ou contacte o suporte.";
+                    lbl_mensagem.CssClass = "alert alert-info";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+                }
             }
             else
             {
                 lbl_mensagem.Text = "Email não existe na nossa base de dados!";
                 lbl_mensagem.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Projeto_Final
                         lbl_cod_user.Text = user[0].cod_user.ToString();
                         lbl_cod_user.Font.Bold = true;
 
-                        lbl_username.Text = Session["username"].ToString();
+                        lbl_username.Text = user[0].username.ToString();
                         lbl_username.Font.Bold = true;
 
                         tb_nome_proprio.Text = user[0].nome_proprio.ToString();
@@ -96,10 +96,7 @@ namespace Projeto_Final
                         Users.Editar_User_Foto(Convert.ToInt32(lbl_cod_user.Text), imgBinaryData);
                     }
 
-                    lbl_mensagem.Text = "Informações alteradas com sucesso!";
-                    lbl_mensagem.CssClass = "alert alert-success";
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(2000).fadeOut('slow', function() { window.location.href = 'utilizadores.aspx'; });", true);
+                    Response.Redirect($"utilizadores_detalhe.aspx?cod_user={Extract.Code(lbl_username.Text)}&msg=yesedit", false);
                 }
                 else if (years > 121)
                 {

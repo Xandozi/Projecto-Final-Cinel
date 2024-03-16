@@ -27,7 +27,7 @@ namespace Projeto_Final
                         lbl_cod_user.Text = user[0].cod_user.ToString();
                         lbl_cod_user.Font.Bold = true;
 
-                        lbl_username.Text = Session["username"].ToString();
+                        lbl_username.Text = user[0].username.ToString();
                         lbl_username.Font.Bold = true;
 
                         lbl_nome_completo.Text = user[0].nome_proprio.ToString() + " " + user[0].apelido.ToString();
@@ -52,6 +52,13 @@ namespace Projeto_Final
                         lbl_num_contacto.Font.Bold = true;
 
                         img_user.ImageUrl = user[0].foto;
+                    }
+                    if (Request.QueryString["msg"] == "yesedit")
+                    {
+                        lbl_mensagem.Text = "Informações alteradas com sucesso!";
+                        lbl_mensagem.CssClass = "alert alert-success";
+
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                     }
                 }
             }

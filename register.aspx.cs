@@ -63,8 +63,10 @@ namespace Projeto_Final
                     }
                     else if (profile.Verified_Email == "True" && valido == 0)
                     {
-                        Email.Send(profile.Email, Extract.Username(cod_user));
-                        Response.Redirect("login.aspx?message=Active%20a%20sua%20conta%20via%20email%20porfavor", false);
+                        if (Email.Send(profile.Email, Extract.Username(cod_user)))  // Enviar email de ativação novamente
+                            Response.Redirect("login.aspx?message=Ative%20a%20sua%20conta%20via%20email%20porfavor", false);     // Redirecionamento para a página com uma mensagem no url
+                        else
+                            Response.Redirect("login.aspx?message=Erro%20ao%20enviar%20email.%20Fale%20com%20o%20suporte%20por%20favor", false);
                     }
                     else if (profile.Verified_Email == "True" && valido == 2)   // Caso autenticação seja correta mas o utilizador não esteja ativo
                     {
@@ -82,9 +84,12 @@ namespace Projeto_Final
         {
             if (tb_pw.Text != tb_pw_rpt.Text)
             {
+                lbl_mensagem.CssClass = "alert alert-danger";
                 lbl_mensagem.Text = "As passwords não coincidem!";
                 tb_pw.Text = "";
                 tb_pw_rpt.Text = "";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
             }
             else
             {
@@ -107,25 +112,40 @@ namespace Projeto_Final
                         if (years >= 18 && years <= 121 || (years == 18 && (months > 0 || (months == 0 && days >= 0))))
                         {
                             Users.Inserir_User(tb_username.Text, tb_pw.Text, tb_email.Text, tb_primeiro_nome.Text, tb_apelido.Text, data_nascimento);
-                            Email.Send(tb_email.Text, tb_username.Text);
-                            lbl_mensagem.Text = "Utilizador registado com sucesso. Veja a sua caixa de correio, precisa de ativar a sua conta.";
-                            lbl_mensagem.CssClass = "alert alert-success";
+                            if (Email.Send(tb_email.Text, tb_username.Text))
+                            {
+                                lbl_mensagem.Text = "Utilizador registado com sucesso. Veja a sua caixa de correio, precisa de ativar a sua conta.";
+                                lbl_mensagem.CssClass = "alert alert-success";
+                            }
+                            else
+                            {
+                                lbl_mensagem.Text = "Utilizador registado com sucesso. Porém houve um erro ao enviar o email de ativação, por favor fale com o suporte.";
+                                lbl_mensagem.CssClass = "alert alert-info";
+                            }
+
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                         }
                         else if (years > 121)
                         {
                             lbl_mensagem.Text = "Introduza uma idade válida até 121 anos, por favor.";
                             lbl_mensagem.CssClass = "alert alert-danger";
+
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                         }
                         else
                         {
                             lbl_mensagem.Text = "É necessário ter pelo menos 18 anos para se registar.";
                             lbl_mensagem.CssClass = "alert alert-danger";
+
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                         }
                     }
                     else
                     {
                         lbl_mensagem.Text = "Formato de data inválido! Por favor tente novamente.";
                         lbl_mensagem.CssClass = "alert alert-danger";
+
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                     }
                 }
                 else if (!Validation.Check_Username(tb_username.Text))
@@ -133,11 +153,16 @@ namespace Projeto_Final
                     lbl_mensagem.Text = "Username já existe!";
                     lbl_mensagem.CssClass = "alert alert-danger";
                     tb_username.Text = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                 }
                 else if (!Validation.Check_Email(tb_email.Text))
                 {
                     lbl_mensagem.Text = "Email já existe!";
+                    lbl_mensagem.CssClass = "alert alert-danger";
                     tb_email.Text = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                 }
                 else
                 {
@@ -145,6 +170,8 @@ namespace Projeto_Final
                     lbl_mensagem.CssClass = "alert alert-danger";
                     tb_username.Text = "";
                     tb_email.Text = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
                 }
             }
         }
