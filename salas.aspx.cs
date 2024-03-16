@@ -42,6 +42,7 @@ namespace Projeto_Final
         {
             string sort_cod_sala = "";
             int cod_sala;
+            int estado = Convert.ToInt32(ddl_estado.SelectedValue);
 
             if (ddl_cod_sala.SelectedIndex == 0)
                 sort_cod_sala = "";
@@ -66,7 +67,7 @@ namespace Projeto_Final
             string fim_formatado = data_fim.ToString("yyyy-MM-dd");
 
             PagedDataSource pagedData = new PagedDataSource();
-            pagedData.DataSource = Salas.Ler_SalasAll(tb_designacao.Text, inicio_formatado, fim_formatado, cod_sala, sort_cod_sala);
+            pagedData.DataSource = Salas.Ler_SalasAll(tb_designacao.Text, inicio_formatado, fim_formatado, cod_sala, sort_cod_sala, estado);
             pagedData.AllowPaging = true;
             pagedData.PageSize = 24;
             pagedData.CurrentPageIndex = PageNumber;
@@ -93,6 +94,11 @@ namespace Projeto_Final
             {
                 ViewState["PageNumber"] = value;
             }
+        }
+
+        protected void btn_aplicar_filtros_Click(object sender, EventArgs e)
+        {
+            filterForm.Style["display"] = "block";
         }
     }
 }

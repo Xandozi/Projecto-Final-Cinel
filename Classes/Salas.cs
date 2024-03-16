@@ -14,6 +14,7 @@ namespace Projeto_Final.Classes
         public string nome_sala { get; set; }
         public DateTime data_criacao { get; set; }
         public DateTime ultimo_update { get; set; }
+        public bool ativo { get; set; }
 
         public static bool Inserir_Sala(string nome_sala, DateTime data_criacao)
         {
@@ -45,13 +46,13 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static List<Salas> Ler_SalasAll(string search_designacao, string data_inicio, string data_fim, int search_cod_sala, string sort_order)
+        public static List<Salas> Ler_SalasAll(string search_designacao, string data_inicio, string data_fim, int search_cod_sala, string sort_order, int estado)
         {
             List<Salas> lst_salas = new List<Salas>();
 
             List<string> conditions = new List<string>();
 
-            string query = $"select cod_sala, nome_sala, data_criacao, ultimo_update from Salas";
+            string query = $"select cod_sala, nome_sala, data_criacao, ultimo_update, ativo from Salas";
 
             // Decisões para colocar ou não os filtros dentro da string query
             if (!string.IsNullOrEmpty(search_designacao))
@@ -65,6 +66,14 @@ namespace Projeto_Final.Classes
             if (search_cod_sala != 0)
             {
                 conditions.Add($"cod_sala = {search_cod_sala}");
+            }
+            if (estado == 0)
+            {
+                conditions.Add($"ativo = {estado}");
+            }
+            else if (estado == 1)
+            {
+                conditions.Add($"ativo = {estado}");
             }
             if (conditions.Count > 0)
             {
@@ -90,6 +99,7 @@ namespace Projeto_Final.Classes
                 informacao.nome_sala = !dr.IsDBNull(1) ? dr.GetString(1) : null;
                 informacao.data_criacao = !dr.IsDBNull(2) ? dr.GetDateTime(2) : default(DateTime);
                 informacao.ultimo_update = !dr.IsDBNull(3) ? dr.GetDateTime(3) : default(DateTime);
+                informacao.ativo = !dr.IsDBNull(4) ? dr.GetBoolean(4) : default(Boolean);
 
                 lst_salas.Add(informacao);
             }
@@ -103,7 +113,7 @@ namespace Projeto_Final.Classes
         {
             List<Salas> lst_sala = new List<Salas>();
 
-            string query = $"select cod_sala, nome_sala, data_criacao, ultimo_update from Salas where cod_sala = {cod_sala}";
+            string query = $"select cod_sala, nome_sala, data_criacao, ultimo_update, ativo from Salas where cod_sala = {cod_sala}";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -120,6 +130,7 @@ namespace Projeto_Final.Classes
                 informacao.nome_sala = !dr.IsDBNull(1) ? dr.GetString(1) : null;
                 informacao.data_criacao = !dr.IsDBNull(2) ? dr.GetDateTime(2) : default(DateTime);
                 informacao.ultimo_update = !dr.IsDBNull(3) ? dr.GetDateTime(3) : default(DateTime);
+                informacao.ativo = !dr.IsDBNull(4) ? dr.GetBoolean(4) : default(Boolean);
 
                 lst_sala.Add(informacao);
             }
@@ -129,7 +140,7 @@ namespace Projeto_Final.Classes
             return lst_sala;
         }
 
-        public static bool Editar_Sala(int cod_sala, string nome_sala, DateTime ultimo_update)
+        public static bool Editar_Sala(int cod_sala, string nome_sala, DateTime ultimo_update, bool ativo)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -138,6 +149,7 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.AddWithValue("@cod_sala", cod_sala);
                 myCommand.Parameters.AddWithValue("@nome_sala", nome_sala);
                 myCommand.Parameters.AddWithValue("@ultimo_update", ultimo_update);
+                myCommand.Parameters.AddWithValue("@ativo", ativo);
 
                 SqlParameter valido = new SqlParameter();
                 valido.ParameterName = "@valido";

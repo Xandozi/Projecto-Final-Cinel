@@ -89,5 +89,10 @@ namespace Projeto_Final
                 ViewState["PageNumber"] = value;
             }
         }
+
+        protected void btn_aplicar_filtros_Click(object sender, EventArgs e)
+        {
+            filterForm.Style["display"] = "block";
+        }
     }
 }

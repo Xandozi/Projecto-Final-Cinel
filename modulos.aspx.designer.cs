@@ -120,7 +120,7 @@ namespace Projeto_Final
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_filtros;
+        protected global::System.Web.UI.WebControls.LinkButton btn_filtros;
 
         /// <summary>
         /// btn_previous_top control.
@@ -129,7 +129,7 @@ namespace Projeto_Final
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_previous_top;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous_top;
 
         /// <summary>
         /// btn_next_top control.
@@ -138,7 +138,7 @@ namespace Projeto_Final
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_next_top;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next_top;
 
         /// <summary>
         /// rpt_modulos control.
@@ -156,7 +156,7 @@ namespace Projeto_Final
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_previous;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous;
 
         /// <summary>
         /// btn_next control.
@@ -165,6 +165,6 @@ namespace Projeto_Final
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_next;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next;
     }
 }

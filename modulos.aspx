@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-md-1 d-flex justify-content-end align-items-end">
                             <div class="form-group justify-content-around">
-                                <asp:Button ID="btn_aplicar_filtros" runat="server" Text="Aplicar" CssClass="btn btn-primary" OnClick="btn_aplicar_filtros_Click" />
+                                <asp:Button ID="btn_aplicar_filtros" runat="server" Text="Aplicar Filtros" CssClass="btn btn-dark" OnClick="btn_aplicar_filtros_Click" />
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,9 @@
                             <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
                             <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
-                        <asp:Button ID="btn_filtros" runat="server" Text="Filtros" CssClass="btn btn-primary" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;" />
+                        <asp:LinkButton ID="btn_filtros" runat="server" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;">
+                                <i class="fas fa-filter"></i> 
+                        </asp:LinkButton>
                         <script type="text/javascript">
                             function toggleFilters() {
                                 var filterForm = document.getElementById('<%= filterForm.ClientID %>');
@@ -104,8 +106,12 @@
                                 <h2 class="display-4" style="font-size: 30px; color: white;">Consulta de Módulos</h2>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:Button ID="btn_previous_top" runat="server" Text="Previous" CssClass="btn btn-primary m-2" OnClick="btn_previous_Click" />
-                                <asp:Button ID="btn_next_top" runat="server" Text="Next" CssClass="btn btn-primary m-2" OnClick="btn_next_Click" />
+                                <asp:LinkButton ID="btn_previous_top" CssClass="btn btn-dark m-2" runat="server" OnClick="btn_previous_Click">
+                                    <i class="fas fa-arrow-left"></i>
+                                </asp:LinkButton>
+                                <asp:LinkButton ID="btn_next_top" runat="server" CssClass="btn btn-dark m-2" OnClick="btn_next_Click">
+                                    <i class="fas fa-arrow-right"></i>
+                                </asp:LinkButton>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -120,7 +126,8 @@
                                                             <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
                                                             <p class="card-text">Código UFCD: <%# Eval("cod_ufcd") %></p>
                                                             <p class="card-text">Último Update: <%# Eval("ultimo_update") %></p>
-                                                            <p class="card-text">Estado: 
+                                                            <p class="card-text">
+                                                                Estado: 
                                                                 <span class='<%# Convert.ToBoolean(Eval("ativo")) ? "ativo" : "inativo" %>'>
                                                                     <%# Convert.ToBoolean(Eval("ativo")) ? "Ativo" : "Inativo" %>
                                                                 </span>
@@ -134,8 +141,12 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:Button ID="btn_previous" runat="server" Text="Previous" CssClass="btn btn-primary m-2" OnClick="btn_previous_Click" />
-                                <asp:Button ID="btn_next" runat="server" Text="Next" CssClass="btn btn-primary m-2" OnClick="btn_next_Click" />
+                                <asp:LinkButton ID="btn_previous" CssClass="btn btn-dark m-2" runat="server" OnClick="btn_previous_Click">
+                                    <i class="fas fa-arrow-left"></i>
+                                </asp:LinkButton>
+                                <asp:LinkButton ID="btn_next" runat="server" CssClass="btn btn-dark m-2" OnClick="btn_next_Click">
+                                    <i class="fas fa-arrow-right"></i>
+                                </asp:LinkButton>
                             </div>
                         </div>
                     </div>

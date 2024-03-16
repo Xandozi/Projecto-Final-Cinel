@@ -39,6 +39,8 @@ namespace Projeto_Final
 
                         lbl_ultimo_update.Text = sala[0].ultimo_update.ToString();
                         lbl_ultimo_update.Font.Bold = true;
+
+                        cb_ativo.Checked = sala[0].ativo;
                     }
 
                 }
@@ -47,7 +49,7 @@ namespace Projeto_Final
 
         protected void btn_editar_Click(object sender, EventArgs e)
         {
-            if (Salas.Editar_Sala(Convert.ToInt32(Request.QueryString["cod_sala"]), tb_designacao.Text, DateTime.Now))
+            if (Salas.Editar_Sala(Convert.ToInt32(Request.QueryString["cod_sala"]), tb_designacao.Text, DateTime.Now, cb_ativo.Checked))
             {
                 Response.Redirect($"salas_detalhe.aspx?cod_sala={Convert.ToInt32(Request.QueryString["cod_sala"])}");
             }
