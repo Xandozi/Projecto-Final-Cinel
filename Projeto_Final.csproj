@@ -156,6 +156,7 @@
     <Content Include="modulos_detalhe.aspx" />
     <Content Include="personal_zone.aspx" />
     <Content Include="personal_zone_editar.aspx" />
+    <Content Include="personal_zone_inscricoes.aspx" />
     <Content Include="register.aspx" />
     <Content Include="salas.aspx" />
     <Content Include="salas_detalhe.aspx" />
@@ -338,6 +339,13 @@
     </Compile>
     <Compile Include="personal_zone_editar.aspx.designer.cs">
       <DependentUpon>personal_zone_editar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="personal_zone_inscricoes.aspx.cs">
+      <DependentUpon>personal_zone_inscricoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="personal_zone_inscricoes.aspx.designer.cs">
+      <DependentUpon>personal_zone_inscricoes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">
