@@ -20,6 +20,230 @@ namespace Projeto_Final
             {
                 Response.Redirect("personal_zone.aspx");
             }
+            else
+            {
+                BindData_Formadores();
+                BindData_Formandos();
+
+                if (!Page.IsPostBack)
+                {
+                    bool bool_rpt_formadores = Check_Repeaters(rpt_formadores);
+                    bool bool_rpt_formandos = Check_Repeaters(rpt_formandos);
+
+                    card_formadores.Visible = bool_rpt_formadores;
+                    card_formandos.Visible = bool_rpt_formandos;
+                }
+            }
+        }
+
+        protected bool Check_Repeaters(Repeater repeater)
+        {
+            return repeater.Items.Count > 0;
+        }
+
+        private void BindData_Formadores()
+        {
+            PagedDataSource pagedData = new PagedDataSource();
+            pagedData.DataSource = Inscricoes.GetFormadores_Por_Validar();
+            pagedData.AllowPaging = true;
+            pagedData.PageSize = 24;
+            pagedData.CurrentPageIndex = PageNumber;
+
+            rpt_formadores.DataSource = pagedData;
+            rpt_formadores.DataBind();
+
+            btn_previous_formadores.Enabled = !pagedData.IsFirstPage;
+            btn_previous_formadores_top.Enabled = !pagedData.IsFirstPage;
+            btn_next_formadores.Enabled = !pagedData.IsLastPage;
+            btn_next_formadores_top.Enabled = !pagedData.IsLastPage;
+        }
+
+        private void BindData_Formandos()
+        {
+            PagedDataSource pagedData = new PagedDataSource();
+            pagedData.DataSource = Inscricoes.GetFormandos_Por_Validar();
+            pagedData.AllowPaging = true;
+            pagedData.PageSize = 24;
+            pagedData.CurrentPageIndex = PageNumber;
+
+            rpt_formandos.DataSource = pagedData;
+            rpt_formandos.DataBind();
+
+            btn_previous_formandos.Enabled = !pagedData.IsFirstPage;
+            btn_previous_formandos_top.Enabled = !pagedData.IsFirstPage;
+            btn_next_formandos.Enabled = !pagedData.IsLastPage;
+            btn_next_formandos_top.Enabled = !pagedData.IsLastPage;
+        }
+
+        public int PageNumber
+        {
+            get
+            {
+                if (ViewState["PageNumber"] != null)
+                    return Convert.ToInt32(ViewState["PageNumber"]);
+                else
+                    return 0;
+            }
+            set
+            {
+                ViewState["PageNumber"] = value;
+            }
+        }
+
+        protected void btn_previous_formadores_Click(object sender, EventArgs e)
+        {
+            PageNumber -= 1;
+            BindData_Formadores();
+        }
+
+        protected void btn_next_formadores_Click(object sender, EventArgs e)
+        {
+            PageNumber += 1;
+            BindData_Formadores();
+        }
+
+        protected void btn_previous_formandos_Click(object sender, EventArgs e)
+        {
+            PageNumber -= 1;
+            BindData_Formandos();
+        }
+
+        protected void btn_next_formandos_Click(object sender, EventArgs e)
+        {
+            PageNumber += 1;
+            BindData_Formandos();
+        }
+
+        protected void rpt_formandos_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Projeto_Final.Classes.Inscricoes formando = (Projeto_Final.Classes.Inscricoes)e.Item.DataItem;
+                string cod_user = formando.cod_user.ToString() + "-" + formando.cod_inscricao.ToString() + "-6";
+
+                LinkButton lb_validar_formandos = (LinkButton)e.Item.FindControl("lb_validar_formandos");
+                lb_validar_formandos.CommandArgument = cod_user;
+
+                LinkButton lb_revogar_formandos = (LinkButton)e.Item.FindControl("lb_revogar_formandos");
+                lb_revogar_formandos.CommandArgument = cod_user;
+            }
+        }
+
+        protected void rpt_formadores_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Projeto_Final.Classes.Inscricoes formador = (Projeto_Final.Classes.Inscricoes)e.Item.DataItem;
+                string cod_user_inscricao = formador.cod_user.ToString() + "-" + formador.cod_inscricao.ToString() + "-7";
+
+                LinkButton lb_validar_formadores = (LinkButton)e.Item.FindControl("lb_validar_formadores");
+                lb_validar_formadores.CommandArgument = cod_user_inscricao;
+
+                LinkButton lb_revogar_formadores = (LinkButton)e.Item.FindControl("lb_revogar_formadores");
+                lb_revogar_formadores.CommandArgument = cod_user_inscricao;
+            }
+        }
+
+        protected void lb_validar_formadores_Click(object sender, EventArgs e)
+        {
+            LinkButton lb_validar_formadores = (LinkButton)sender;
+            string cod_user_inscricao = lb_validar_formadores.CommandArgument;
+
+            string[] partes = cod_user_inscricao.Split('-');
+
+            string cod_user = partes[0];
+            string cod_inscricao = partes[1];
+            string cod_situacao = partes[2];
+
+            if (Inscricoes.Validar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao), Convert.ToInt32(cod_situacao)))
+            {
+                lbl_mensagem.Text = "Formador validado com sucesso.";
+                lbl_mensagem.CssClass = "alert alert-success";
+            }
+            else
+            {
+                lbl_mensagem.Text = "Erro ao validar o formador.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+            }
+
+            BindData_Formadores();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+        }
+
+        protected void lb_revogar_formadores_Click(object sender, EventArgs e)
+        {
+            LinkButton lb_revogar_formandores = (LinkButton)sender;
+            string cod_user_inscricao = lb_revogar_formandores.CommandArgument;
+
+            string[] partes = cod_user_inscricao.Split('-');
+
+            string cod_user = partes[0];
+            string cod_inscricao = partes[1];
+
+            if (Inscricoes.Revogar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao)))
+            {
+                lbl_mensagem.Text = "Inscrição de formador revogada com sucesso.";
+                lbl_mensagem.CssClass = "alert alert-success";
+            }
+            else
+            {
+                lbl_mensagem.Text = "Erro ao revogar a inscrição.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+            }
+
+            BindData_Formadores();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+        }
+
+        protected void lb_validar_formandos_Click(object sender, EventArgs e)
+        {
+            LinkButton lb_validar_formandos = (LinkButton)sender;
+            string cod_user_inscricao = lb_validar_formandos.CommandArgument;
+
+            string[] partes = cod_user_inscricao.Split('-');
+
+            string cod_user = partes[0];
+            string cod_inscricao = partes[1];
+            string cod_situacao = partes[2];
+
+            if (Inscricoes.Validar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao), Convert.ToInt32(cod_situacao)))
+            {
+                lbl_mensagem.Text = "Formando validado com sucesso.";
+                lbl_mensagem.CssClass = "alert alert-success";
+            }
+            else
+            {
+                lbl_mensagem.Text = "Erro ao validar o formando.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+            }
+
+            BindData_Formandos();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+        }
+
+        protected void lb_revogar_formandos_Click(object sender, EventArgs e)
+        {
+            LinkButton lb_revogar_formandos = (LinkButton)sender;
+            string cod_user_inscricao = lb_revogar_formandos.CommandArgument;
+
+            string[] partes = cod_user_inscricao.Split('-');
+
+            string cod_user = partes[0];
+            string cod_inscricao = partes[1];
+
+            if (Inscricoes.Revogar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao)))
+            {
+                lbl_mensagem.Text = "Inscrição de formando revogada com sucesso.";
+                lbl_mensagem.CssClass = "alert alert-success";
+            }
+            else
+            {
+                lbl_mensagem.Text = "Erro ao revogar a inscrição.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+            }
+
+            BindData_Formandos();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
         }
     }
 }

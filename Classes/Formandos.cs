@@ -13,5 +13,6 @@ namespace Projeto_Final.Classes
         public int cod_inscricao { get; set; }
         public int cod_formando { get; set; }
 
+
     }
 }
