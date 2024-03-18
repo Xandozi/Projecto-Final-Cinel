@@ -16,7 +16,18 @@ namespace Projeto_Final
             Session.Remove("logged");
             Session.RemoveAll();
             Session["logged"] = "logout";
-            Response.Redirect("login.aspx");
+            if (Request.QueryString["msg"] == "yesemail")
+            {
+                Response.Redirect("login.aspx?msg=yesemail");
+            }
+            else if (Request.QueryString["msg"] == "erroemail")
+            {
+                Response.Redirect("login.aspx?msg=erroemail");
+            }
+            else
+            {
+                Response.Redirect("login.aspx");
+            }
         }
     }
 }

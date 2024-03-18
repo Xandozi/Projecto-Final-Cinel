@@ -40,6 +40,19 @@ namespace Projeto_Final
 
                     lbl_ultimo_update.Text = modulo[0].ultimo_update.ToString();
                     lbl_ultimo_update.Font.Bold = true;
+
+                    if (modulo[0].ativo)
+                    {
+                        lbl_estado.Text = "Ativo";
+                        lbl_estado.ForeColor = System.Drawing.Color.Green;
+                        lbl_estado.Font.Bold = true;
+                    }
+                    else if (!modulo[0].ativo)
+                    {
+                        lbl_estado.Text = "Inativo";
+                        lbl_estado.ForeColor = System.Drawing.Color.Red;
+                        lbl_estado.Font.Bold = true;
+                    }
                 }
             }
         }

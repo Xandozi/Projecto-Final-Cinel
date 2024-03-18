@@ -42,6 +42,7 @@ namespace Projeto_Final
             string sort_cod_ufcd = "";
             int duracao_modulo;
             int cod_ufcd;
+            int estado = Convert.ToInt32(ddl_estado.SelectedValue);
 
             if (ddl_cod_ufcd.SelectedIndex == 0)
                 sort_cod_ufcd = "";
@@ -71,7 +72,7 @@ namespace Projeto_Final
             string fim_formatado = data_fim.ToString("yyyy-MM-dd");
 
             PagedDataSource pagedData = new PagedDataSource();
-            pagedData.DataSource = Modulos.Ler_ModulosAll(tb_designacao.Text, duracao_modulo, inicio_formatado, fim_formatado, cod_ufcd, sort_cod_ufcd);
+            pagedData.DataSource = Modulos.Ler_ModulosAll(tb_designacao.Text, duracao_modulo, inicio_formatado, fim_formatado, cod_ufcd, sort_cod_ufcd, estado);
             pagedData.AllowPaging = true;
             pagedData.PageSize = 24;
             pagedData.CurrentPageIndex = PageNumber;
@@ -98,6 +99,11 @@ namespace Projeto_Final
             {
                 ViewState["PageNumber"] = value;
             }
+        }
+
+        protected void btn_aplicar_filtros_Click(object sender, EventArgs e)
+        {
+            filterForm.Style["display"] = "block";
         }
     }
 }

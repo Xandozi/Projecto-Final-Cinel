@@ -11,7 +11,7 @@ namespace Projeto_Final
 {
 
 
-    public partial class editar_curso
+    public partial class utilizadores
     {
 
         /// <summary>
@@ -33,183 +33,156 @@ namespace Projeto_Final
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// tb_cod_qualificacao control.
+        /// filterForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_cod_qualificacao;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl filterForm;
 
         /// <summary>
-        /// rfv_cod_qualificacao control.
+        /// tb_username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_cod_qualificacao;
+        protected global::System.Web.UI.WebControls.TextBox tb_username;
 
         /// <summary>
-        /// rev_cod_qualificacao control.
+        /// tb_cod_user control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_cod_qualificacao;
+        protected global::System.Web.UI.WebControls.TextBox tb_cod_user;
 
         /// <summary>
-        /// tb_designacao control.
+        /// ddl_perfil control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_designacao;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_perfil;
 
         /// <summary>
-        /// rfv_designacao control.
+        /// perfis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_designacao;
+        protected global::System.Web.UI.WebControls.SqlDataSource perfis;
 
         /// <summary>
-        /// rev_designacao control.
+        /// tb_email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_designacao;
+        protected global::System.Web.UI.WebControls.TextBox tb_email;
 
         /// <summary>
-        /// tb_cod_ufcd control.
+        /// tb_data_inicio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_cod_ufcd;
+        protected global::System.Web.UI.WebControls.TextBox tb_data_inicio;
 
         /// <summary>
-        /// rfv_cod_ufcd control.
+        /// tb_data_fim control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_cod_ufcd;
+        protected global::System.Web.UI.WebControls.TextBox tb_data_fim;
 
         /// <summary>
-        /// btn_add_ufcd control.
+        /// ddl_sort_username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_add_ufcd;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_sort_username;
 
         /// <summary>
-        /// btn_remove_ufcd control.
+        /// ddl_estado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_remove_ufcd;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_estado;
 
         /// <summary>
-        /// lb_ufcds control.
+        /// btn_aplicar_filtros control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lb_ufcds;
+        protected global::System.Web.UI.WebControls.Button btn_aplicar_filtros;
 
         /// <summary>
-        /// lbl_duracao_curso control.
+        /// btn_filtros control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_duracao_curso;
+        protected global::System.Web.UI.WebControls.LinkButton btn_filtros;
 
         /// <summary>
-        /// tb_duracao control.
+        /// btn_previous_top control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_duracao;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous_top;
 
         /// <summary>
-        /// rfv_duracao control.
+        /// btn_next_top control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_duracao;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next_top;
 
         /// <summary>
-        /// lbl_data_criacao control.
+        /// rpt_users control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_data_criacao;
+        protected global::System.Web.UI.WebControls.Repeater rpt_users;
 
         /// <summary>
-        /// lbl_ultimo_update control.
+        /// btn_previous control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ultimo_update;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous;
 
         /// <summary>
-        /// cb_ativo control.
+        /// btn_next control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cb_ativo;
-
-        /// <summary>
-        /// btn_editar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_editar;
-
-        /// <summary>
-        /// ValidationSummary1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
-
-        /// <summary>
-        /// lbl_mensagem control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_mensagem;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next;
     }
 }

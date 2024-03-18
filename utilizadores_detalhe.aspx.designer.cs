@@ -11,7 +11,7 @@ namespace Projeto_Final
 {
 
 
-    public partial class editar_sala
+    public partial class utilizadores_detalhe
     {
 
         /// <summary>
@@ -24,76 +24,94 @@ namespace Projeto_Final
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// UpdatePanel1 control.
+        /// lbl_cod_user control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.Label lbl_cod_user;
 
         /// <summary>
-        /// lbl_cod_sala control.
+        /// lbl_username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_cod_sala;
+        protected global::System.Web.UI.WebControls.Label lbl_username;
 
         /// <summary>
-        /// tb_designacao control.
+        /// lbl_nome_completo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_designacao;
+        protected global::System.Web.UI.WebControls.Label lbl_nome_completo;
 
         /// <summary>
-        /// rfv_designacao control.
+        /// lbl_morada control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_designacao;
+        protected global::System.Web.UI.WebControls.Label lbl_morada;
 
         /// <summary>
-        /// rev_designacao control.
+        /// lbl_cod_postal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_designacao;
+        protected global::System.Web.UI.WebControls.Label lbl_cod_postal;
 
         /// <summary>
-        /// lbl_data_criacao control.
+        /// lbl_perfis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_data_criacao;
+        protected global::System.Web.UI.WebControls.Label lbl_perfis;
 
         /// <summary>
-        /// lbl_ultimo_update control.
+        /// lbl_email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ultimo_update;
+        protected global::System.Web.UI.WebControls.Label lbl_email;
 
         /// <summary>
-        /// cb_ativo control.
+        /// lbl_data_nascimento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cb_ativo;
+        protected global::System.Web.UI.WebControls.Label lbl_data_nascimento;
+
+        /// <summary>
+        /// lbl_num_contacto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_num_contacto;
+
+        /// <summary>
+        /// img_user control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image img_user;
 
         /// <summary>
         /// btn_editar control.
@@ -112,14 +130,5 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_mensagem;
-
-        /// <summary>
-        /// ValidationSummary1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
     }
 }

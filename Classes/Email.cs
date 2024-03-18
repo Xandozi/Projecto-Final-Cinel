@@ -12,58 +12,86 @@ namespace Projeto_Final.Classes
     public class Email
     {
         // Função para enviar email de ativação ao utilizador que se registar.
-        public static void Send(string email_destino, string username)
+        public static bool Send(string email_destino, string username)
         {
-            SmtpClient servidor = new SmtpClient();
-            MailMessage email = new MailMessage();
+            try
+            {
+                SmtpClient servidor = new SmtpClient();
+                MailMessage email = new MailMessage();
 
-            email.From = new MailAddress(ConfigurationManager.AppSettings["SMTP_MailUser"]);
-            email.To.Add(new MailAddress(email_destino));
-            email.Subject = $"CINEL - Account Activation for {username}";
+                email.From = new MailAddress(ConfigurationManager.AppSettings["SMTP_MailUser"]);
+                email.To.Add(new MailAddress(email_destino));
+                email.Subject = $"CINEL - Ativação de Conta de {username}";
 
-            email.IsBodyHtml = true;
-            email.Body = $"<b>Thank you for your registration {username}. To activate your account please click <a href='https://localhost:44374/ativacao.aspx?user={EncryptString(username)}'>here</a></b>";
+                email.IsBodyHtml = true;
+                email.Body = $"<b>Obrigado pelo seu registo {username}. Para ativar a sua conta clique <a href='https://localhost:44374/ativacao.aspx?user={EncryptString(username)}'>aqui</a></b>";
 
-            servidor.Host = ConfigurationManager.AppSettings["SMTP_URL"];
-            servidor.Port = int.Parse(ConfigurationManager.AppSettings["SMTP_PORT"]);
+                servidor.Host = ConfigurationManager.AppSettings["SMTP_URL"];
+                servidor.Port = int.Parse(ConfigurationManager.AppSettings["SMTP_PORT"]);
 
-            string utilizador = ConfigurationManager.AppSettings["SMTP_MailUser"];
-            string pw = ConfigurationManager.AppSettings["SMTP_PASSWORD"];
+                string utilizador = ConfigurationManager.AppSettings["SMTP_MailUser"];
+                string pw = ConfigurationManager.AppSettings["SMTP_PASSWORD"];
 
-            servidor.Credentials = new NetworkCredential(utilizador, pw);
-            servidor.EnableSsl = true;
+                servidor.Credentials = new NetworkCredential(utilizador, pw);
+                servidor.EnableSsl = true;
 
-            servidor.Send(email);
+                servidor.Send(email);
+
+                // Email sent successfully
+                return true;
+            }
+            catch (SmtpException ex)
+            {
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         // Função para gerar e enviar uma palavra passe nova para o utilizador que pedir
-        public static void Send_Forgot_PW(string email_destino)
+        public static bool Send_Forgot_PW(string email_destino)
         {
-            string password_encrypted = EncryptString(PasswordGen());
-            string password = DecryptString(password_encrypted);
-            Users.Update_Password(email_destino, password_encrypted);
+            try
+            {
+                string password_encrypted = EncryptString(PasswordGen());
+                string password = DecryptString(password_encrypted);
+                Users.Update_Password(email_destino, password_encrypted);
 
-            SmtpClient servidor = new SmtpClient();
-            MailMessage email = new MailMessage();
+                SmtpClient servidor = new SmtpClient();
+                MailMessage email = new MailMessage();
 
-            email.From = new MailAddress(ConfigurationManager.AppSettings["SMTP_MailUser"]);
-            email.To.Add(new MailAddress(email_destino));
-            email.Subject = $"CINEL - Password Reset";
+                email.From = new MailAddress(ConfigurationManager.AppSettings["SMTP_MailUser"]);
+                email.To.Add(new MailAddress(email_destino));
+                email.Subject = $"CINEL - Password Reset";
 
-            email.IsBodyHtml = true;
-            email.Body = $"Your new password is the following one: {password}";
+                email.IsBodyHtml = true;
+                email.Body = $"Your new password is the following one: {password}";
 
-            servidor.Host = ConfigurationManager.AppSettings["SMTP_URL"];
-            servidor.Port = int.Parse(ConfigurationManager.AppSettings["SMTP_PORT"]);
+                servidor.Host = ConfigurationManager.AppSettings["SMTP_URL"];
+                servidor.Port = int.Parse(ConfigurationManager.AppSettings["SMTP_PORT"]);
 
-            string utilizador = ConfigurationManager.AppSettings["SMTP_MailUser"];
-            string pw = ConfigurationManager.AppSettings["SMTP_PASSWORD"];
+                string utilizador = ConfigurationManager.AppSettings["SMTP_MailUser"];
+                string pw = ConfigurationManager.AppSettings["SMTP_PASSWORD"];
 
-            servidor.Credentials = new NetworkCredential(utilizador, pw);
-            servidor.EnableSsl = true;
+                servidor.Credentials = new NetworkCredential(utilizador, pw);
+                servidor.EnableSsl = true;
 
-            servidor.Send(email);
+                servidor.Send(email);
+
+                return true;
+            }
+            catch (SmtpException ex)
+            {
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
+
 
         public static string EncryptString(string Message)
         {

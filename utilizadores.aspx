@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="formandos.aspx.cs" Inherits="Projeto_Final.formandos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="utilizadores.aspx.cs" Inherits="Projeto_Final.utilizadores" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -110,7 +110,7 @@
                     <div class="col-md-10">
                         <div class="card" style="border-color: #333;">
                             <div class="card-header bg-dark text-white">
-                                <h2 class="display-4" style="font-size: 30px; color: white;">Consulta de Formandos</h2>
+                                <h2 class="display-4" style="font-size: 30px; color: white;">Consulta de Utilizadores</h2>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
                                 <asp:LinkButton ID="btn_previous_top" CssClass="btn btn-dark m-2" runat="server" OnClick="btn_previous_Click">

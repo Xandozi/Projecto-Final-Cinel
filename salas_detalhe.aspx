@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="salas_detalhe.aspx.cs" Inherits="Projeto_Final.salas_detalhe" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -46,6 +47,12 @@
                                             <p class="lead">
                                                 Último Update:
                                                 <asp:Label ID="lbl_ultimo_update" runat="server" Text=""></asp:Label>
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <p class="lead">
+                                                Estado:
+                                                <asp:Label ID="lbl_estado" runat="server" Text=""></asp:Label>
                                             </p>
                                         </div>
                                     </div>

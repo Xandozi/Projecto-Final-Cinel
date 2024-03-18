@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="personal_zone.aspx.cs" Inherits="Projeto_Final.personal_zone" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="personal_zone_inscricoes.aspx.cs" Inherits="Projeto_Final.personal_zone_inscricoes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -7,10 +7,10 @@
     <div class="container-fluid">
         <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
             <!-- Sidebar -->
-            <div class="col-md-2 bg-light" style=" margin-top: 10px;">
+            <div class="col-md-2 bg-light" style="margin-top: 10px;">
                 <div class="list-group">
-                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action active">Área Pessoal</a>
-                    <a href="personal_zone_inscricoes.aspx" class="list-group-item list-group-item-action">Minhas Inscrições</a>
+                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
+                    <a href="personal_zone_inscricoes.aspx" class="list-group-item list-group-item-action active">Minhas Inscrições</a>
                     <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeUsernameModal">Mudar o Username</a>
                     <% if (Session["googlefb_log"] != "yes")
                         { %>
@@ -25,44 +25,91 @@
                     <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="Terminar Sessão" OnClick="btn_logout2_Click" />
                 </div>
             </div>
-            <!-- Main Content -->
-            <div class="col-md-10" style=" margin-top: 10px;">
-                <div class="card" style="border-color: #333;">
-                    <div class="card-header bg-dark text-white">
-                        <h2 class="display-4" style="font-size: 40px; color: white;">Bem-vindo à sua zona pessoal, <%= lbl_nome_completo.Text %></h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="lead">Código de Utilizador: <asp:Label ID="lbl_cod_user" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Username: <asp:Label ID="lbl_username" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Nome Completo: <asp:Label ID="lbl_nome_completo" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Morada: <asp:Label ID="lbl_morada" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Código Postal: <asp:Label ID="lbl_cod_postal" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Perfil/Perfis: <asp:Label ID="lbl_perfis" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Email: <asp:Label ID="lbl_email" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Data de Nascimento: <asp:Label ID="lbl_data_nascimento" runat="server" Text=""></asp:Label></p>
-                                <p class="lead">Número de Contacto: <asp:Label ID="lbl_num_contacto" runat="server" Text=""></asp:Label></p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-right mt-3">
-                                    <asp:Image ID="img_user" runat="server" class="rounded-circle" style="height: 200px; width: 200px; border:5px solid orange;"/>
+            <div class="container">
+                <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
+                    <div class="col-md-12">
+                        <%-- Panel for Formador or Super Admin --%>
+                        <asp:Panel ID="pnlFormador" runat="server" Visible='<%# Session["perfil"].ToString().Contains("Formador") || Session["perfil"].ToString().Contains("Super Admin") %>'>
+                            <div class="card" style="border-color: #333;">
+                                <div class="card-header bg-dark text-white">
+                                    <h2 class="display-4" style="font-size: 40px; color: white;">Formador</h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <asp:Repeater ID="rpt_formador" runat="server">
+                                                <HeaderTemplate>
+                                                    <h4>Inscrições</h4>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Código UFCD</th>
+                                                                <th>Nome da UFCD</th>
+                                                                <th>Turma</th>
+                                                                <th>Avaliações</th>
+                                                            </tr>
+                                                        </thead>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <tbody>
+                                                        <%-- Use data binding to populate table rows with inscrições data --%>
+                                                    </tbody>
+                                                </ItemTemplate>
+                                                <FooterTemplate>
+                                                    </table>
+                                                </FooterTemplate>
+                                            </asp:Repeater>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-lg-between mt-3">
-                            <asp:Button ID="btn_editar" class="btn btn-primary btn-lg" runat="server" Text="Editar Informação" CausesValidation="false" OnClick="btn_editar_Click" />
-                        </div>
+                        </asp:Panel>
                     </div>
                 </div>
-            </div>
-            <div class="row" style="margin-bottom: 30px; margin-top: 30px; margin-left: 10px;">
-                <div>
-                    <asp:Label ID="lbl_mensagem" CssClass="mt-3" runat="server" Text=""></asp:Label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <%-- Panel for Formando or Super Admin --%>
+                        <asp:Panel ID="pnlFormando" runat="server" Visible='<%# Session["perfil"].ToString().Contains("Formando") || Session["perfil"].ToString().Contains("Super Admin") %>'>
+                            <div class="card" style="border-color: #333;">
+                                <div class="card-header bg-dark text-white">
+                                    <h2 class="display-4" style="font-size: 40px; color: white;">Formando</h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <asp:Repeater ID="rpt_formando" runat="server">
+                                                <HeaderTemplate>
+                                                    <h4>Inscrições</h4>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Código Qualificação</th>
+                                                                <th>Nome do Curso</th>
+                                                                <th>Estado Inscrição</th>
+                                                                <th>Avaliações</th>
+                                                            </tr>
+                                                        </thead>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <tbody>
+                                                        <%-- Use data binding to populate table rows with inscrições data --%>
+                                                    </tbody>
+                                                </ItemTemplate>
+                                                <FooterTemplate>
+                                                    </table>
+                                                </FooterTemplate>
+                                            </asp:Repeater>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </asp:Panel>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Modals -->
     <!-- Modal for changing the password -->

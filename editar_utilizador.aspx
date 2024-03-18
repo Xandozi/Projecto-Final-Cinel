@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="personal_zone_editar.aspx.cs" Inherits="Projeto_Final.personal_zone_editar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="editar_utilizador.aspx.cs" Inherits="Projeto_Final.editar_utilizador" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -7,21 +7,10 @@
     <div class="container-fluid">
         <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
             <!-- Sidebar -->
-            <div class="col-md-2 bg-light">
+            <div class="col-md-2 bg-light" style="margin-top: 10px;">
                 <div class="list-group">
-                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action active">Área Pessoal</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeUsernameModal">Mudar o Username</a>
-                    <% if (Session["googlefb_log"] != "yes")
-                        { %>
-                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changePasswordModal">Mudar a Password</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeEmailModal">Mudar o Email</a>
-                    <% } %>
-                    <% if (Session["perfil"].ToString() == "Staff" || Session["perfil"].ToString() == "Super Admin")
-                        { %>
-                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos</a>
-                    <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão</a>
-                    <% } %>
-                    <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="Terminar Sessão" OnClick="btn_logout2_Click" />
+                    <a href="#" class="list-group-item list-group-item-action active">Editar informações de <%= tb_nome_proprio.Text + " " + tb_apelido.Text %></a>
+                    <a href="utilizadores.aspx" class="list-group-item list-group-item-action">Voltar</a>
                 </div>
             </div>
             <!-- Main Content -->
@@ -34,10 +23,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <p class="lead">Código de Utilizador: <asp:Label ID="lbl_cod_user" runat="server" Text=""></asp:Label></p>
+                                    <p class="lead">
+                                        Código de Utilizador:
+                                        <asp:Label ID="lbl_cod_user" runat="server" Text=""></asp:Label>
+                                    </p>
                                 </div>
                                 <div class="form-group">
-                                    <p class="lead">Username: <asp:Label ID="lbl_username" runat="server" Text=""></asp:Label></p>
+                                    <p class="lead">
+                                        Username:
+                                        <asp:Label ID="lbl_username" runat="server" Text=""></asp:Label>
+                                    </p>
                                 </div>
                                 <div class="form-group">
                                     <p class="lead">
@@ -104,6 +99,12 @@
                                     <asp:FileUpload ID="fu_foto" runat="server" />
                                     </p>
                                 </div>
+                                <div class="form-group">
+                                    <p class="lead">
+                                        Ativo:
+                                        <asp:CheckBox ID="cb_ativo" runat="server" />
+                                    </p>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="text-right mt-3">
@@ -118,100 +119,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div style="margin-bottom: 30px; margin-top: 30px; margin-left: 10px;">
+        <div class="row" style="margin-bottom: 30px; margin-top: 30px; margin-left: 10px;">
+            <div>
                 <asp:Label ID="lbl_mensagem" CssClass="mt-3" runat="server" Text=""></asp:Label>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modals -->
-    <!-- Modal for changing the password -->
-    <div class="modal" id="changePasswordModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Mudar Password</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <div id="changePasswordForm" runat="server">
-                        <div class="form-group">
-                            <label for="tb_pw">Password atual</label>
-                            <asp:TextBox ID="tb_pw" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label for="tb_new_pw">Nova Password</label>
-                            <asp:TextBox ID="tb_new_pw" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
-                            <asp:RegularExpressionValidator ID="rev_pw_nova" runat="server" ErrorMessage="Invalid Password" Text="*" ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,20}$" ControlToValidate="tb_new_pw"></asp:RegularExpressionValidator>
-                        </div>
-                        <div class="form-group">
-                            <label for="tb_new_pw_repeat">Confirmar Nova Password</label>
-                            <asp:TextBox ID="tb_new_pw_repeat" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btn_change_pw" class="btn btn-primary" runat="server" Text="Mudar Password" OnClick="btn_change_pw_Click" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for changing the username -->
-    <div class="modal" id="changeUsernameModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Mudar Username</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <div id="Div1" runat="server">
-                        <div class="form-group">
-                            <label for="tb_pw">Novo Username</label>
-                            <asp:TextBox ID="tb_new_username" class="form-control" runat="server"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label for="tb_new_pw">Password</label>
-                            <asp:TextBox ID="tb_pw_username" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btn_change_username" class="btn btn-primary" runat="server" Text="Mudar Username" OnClick="btn_change_username_Click" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for changing the email -->
-    <div class="modal" id="changeEmailModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Mudar Email</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <div id="Div2" runat="server">
-                        <div class="form-group">
-                            <label for="tb_email">Novo Email</label>
-                            <asp:TextBox ID="tb_new_email" class="form-control" runat="server" TextMode="SingleLine"></asp:TextBox>
-                            <asp:RegularExpressionValidator ID="rfv_new_email" runat="server" ErrorMessage="New email not inserted correctly" Text="*" ControlToValidate="tb_new_email" ValidationExpression="^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$"></asp:RegularExpressionValidator>
-                        </div>
-                        <div class="form-group">
-                            <label for="tb_pw_email">Password</label>
-                            <asp:TextBox ID="tb_pw_email" class="form-control" runat="server" TextMode="Password"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btn_change_email" class="btn btn-primary" runat="server" Text="Mudar Email" OnClick="btn_change_email_Click" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
             </div>
         </div>
     </div>

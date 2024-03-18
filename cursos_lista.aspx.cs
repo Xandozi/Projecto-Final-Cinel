@@ -61,7 +61,7 @@ namespace Projeto_Final
             string fim_formatado = data_fim.ToString("yyyy-MM-dd");
 
             PagedDataSource pagedData = new PagedDataSource();
-            pagedData.DataSource = Cursos.Ler_CursosAll(tb_designacao.Text, duracao_curso, inicio_formatado, fim_formatado, cod_qualificacao, sort_cod_qualificacao);
+            pagedData.DataSource = Cursos.Ler_CursosAll(tb_designacao.Text, duracao_curso, inicio_formatado, fim_formatado, cod_qualificacao, sort_cod_qualificacao, 1);
             pagedData.AllowPaging = true;
             pagedData.PageSize = 24;
             pagedData.CurrentPageIndex = PageNumber;
@@ -88,6 +88,11 @@ namespace Projeto_Final
             {
                 ViewState["PageNumber"] = value;
             }
+        }
+
+        protected void btn_aplicar_filtros_Click(object sender, EventArgs e)
+        {
+            filterForm.Style["display"] = "block";
         }
     }
 }
