@@ -13,7 +13,7 @@
                         <div class="list-group">
                             <a href="gestao.aspx" class="list-group-item list-group-item-action active">Gestão</a>
                             <a href="cursos.aspx" class="list-group-item list-group-item-action">Cursos</a>
-                            <a href="formadores_gestao.aspx" class="list-group-item list-group-item-action">Formadores</a>
+                            <a href="formadores.aspx" class="list-group-item list-group-item-action">Formadores</a>
                             <a href="formandos.aspx" class="list-group-item list-group-item-action">Formandos</a>
                             <a href="horarios.aspx" class="list-group-item list-group-item-action">Horários</a>
                             <a href="modulos.aspx" class="list-group-item list-group-item-action">Módulos</a>

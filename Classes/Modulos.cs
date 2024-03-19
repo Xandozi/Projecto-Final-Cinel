@@ -117,6 +117,38 @@ namespace Projeto_Final.Classes
             return lst_modulos;
         }
 
+        public static List<Modulos> Ler_ModulosAll_Curso(int cod_curso)
+        {
+            List<Modulos> lst_modulos = new List<Modulos>();
+
+            string query = $"select Modulos.cod_modulo, Modulos.nome_modulo, Modulos.cod_ufcd, Modulos.ativo from Modulos " +
+                           $"join Cursos_Modulos on Cursos_Modulos.cod_modulo = Modulos.cod_modulo " +
+                           $"where Cursos_Modulos.cod_curso = {cod_curso} and Modulos.ativo = 1";
+
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            SqlCommand myCommand = new SqlCommand(query, myConn);
+
+            myConn.Open();
+
+            SqlDataReader dr = myCommand.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Modulos informacao = new Modulos();
+                informacao.cod_modulo = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
+                informacao.nome_modulo = !dr.IsDBNull(1) ? dr.GetString(1) : null;
+                informacao.cod_ufcd = !dr.IsDBNull(2) ? dr.GetInt32(2) : 000;
+                informacao.ativo = !dr.IsDBNull(3) ? dr.GetBoolean(3) : default(Boolean);
+
+                lst_modulos.Add(informacao);
+            }
+
+            myConn.Close();
+
+            return lst_modulos;
+        }
+
         public static List<Modulos> Ler_Modulo(int cod_modulo)
         {
             List<Modulos> lst_modulo = new List<Modulos>();

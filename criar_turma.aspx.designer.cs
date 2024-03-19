@@ -11,7 +11,7 @@ namespace Projeto_Final
 {
 
 
-    public partial class personal_zone_inscricoes
+    public partial class criar_turma
     {
 
         /// <summary>
@@ -24,129 +24,147 @@ namespace Projeto_Final
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// btn_logout2 control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_logout2;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// div_validacoes control.
+        /// lbl_curso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_validacoes;
+        protected global::System.Web.UI.WebControls.Label lbl_curso;
 
         /// <summary>
-        /// card_formadores control.
+        /// ddl_curso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl card_formadores;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_curso;
 
         /// <summary>
-        /// btn_previous_formadores_top control.
+        /// curso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formadores_top;
+        protected global::System.Web.UI.WebControls.SqlDataSource curso;
 
         /// <summary>
-        /// btn_next_formadores_top control.
+        /// lbl_data_inicio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_next_formadores_top;
+        protected global::System.Web.UI.WebControls.Label lbl_data_inicio;
 
         /// <summary>
-        /// rpt_formadores control.
+        /// tb_data_inicio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_formadores;
+        protected global::System.Web.UI.WebControls.TextBox tb_data_inicio;
 
         /// <summary>
-        /// btn_previous_formadores control.
+        /// lbl_regime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formadores;
+        protected global::System.Web.UI.WebControls.Label lbl_regime;
 
         /// <summary>
-        /// btn_next_formadores control.
+        /// ddlRegime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_next_formadores;
+        protected global::System.Web.UI.WebControls.DropDownList ddlRegime;
 
         /// <summary>
-        /// card_formandos control.
+        /// regime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl card_formandos;
+        protected global::System.Web.UI.WebControls.SqlDataSource regime;
 
         /// <summary>
-        /// btn_previous_formandos_top control.
+        /// lbl_lstb_formadores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formandos_top;
+        protected global::System.Web.UI.WebControls.Label lbl_lstb_formadores;
 
         /// <summary>
-        /// btn_next_formandos_top control.
+        /// lstb_formadores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_next_formandos_top;
+        protected global::System.Web.UI.WebControls.ListBox lstb_formadores;
 
         /// <summary>
-        /// rpt_formandos control.
+        /// lbl_lstb_modulos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_formandos;
+        protected global::System.Web.UI.WebControls.Label lbl_lstb_modulos;
 
         /// <summary>
-        /// btn_previous_formandos control.
+        /// lstb_modulos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formandos;
+        protected global::System.Web.UI.WebControls.ListBox lstb_modulos;
 
         /// <summary>
-        /// btn_next_formandos control.
+        /// btn_add control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_next_formandos;
+        protected global::System.Web.UI.WebControls.Button btn_add;
+
+        /// <summary>
+        /// btn_remove control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_remove;
+
+        /// <summary>
+        /// lbl_mensagem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_mensagem;
     }
 }

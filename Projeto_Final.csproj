@@ -74,6 +74,7 @@
     <Content Include="criar_curso.aspx" />
     <Content Include="criar_modulo.aspx" />
     <Content Include="criar_sala.aspx" />
+    <Content Include="criar_turma.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-reboot.css" />
@@ -94,6 +95,7 @@
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="formadores.aspx" />
     <Content Include="formadores_lista.aspx" />
     <Content Include="formandos.aspx" />
     <Content Include="gestao.aspx" />
@@ -161,6 +163,7 @@
     <Content Include="salas.aspx" />
     <Content Include="salas_detalhe.aspx" />
     <Content Include="sobre_nos.aspx" />
+    <Content Include="turmas.aspx" />
     <Content Include="utilizadores.aspx" />
     <Content Include="utilizadores_detalhe.aspx" />
     <Content Include="Web.config" />
@@ -213,6 +216,13 @@
     </Compile>
     <Compile Include="criar_sala.aspx.designer.cs">
       <DependentUpon>criar_sala.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="criar_turma.aspx.cs">
+      <DependentUpon>criar_turma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="criar_turma.aspx.designer.cs">
+      <DependentUpon>criar_turma.aspx</DependentUpon>
     </Compile>
     <Compile Include="cursos.aspx.cs">
       <DependentUpon>cursos.aspx</DependentUpon>
@@ -269,6 +279,13 @@
     </Compile>
     <Compile Include="editar_utilizador.aspx.designer.cs">
       <DependentUpon>editar_utilizador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="formadores.aspx.cs">
+      <DependentUpon>formadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="formadores.aspx.designer.cs">
+      <DependentUpon>formadores.aspx</DependentUpon>
     </Compile>
     <Compile Include="formadores_lista.aspx.cs">
       <DependentUpon>formadores_lista.aspx</DependentUpon>
@@ -375,6 +392,13 @@
     </Compile>
     <Compile Include="sobre_nos.aspx.designer.cs">
       <DependentUpon>sobre_nos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="turmas.aspx.cs">
+      <DependentUpon>turmas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="turmas.aspx.designer.cs">
+      <DependentUpon>turmas.aspx</DependentUpon>
     </Compile>
     <Compile Include="utilizadores.aspx.cs">
       <DependentUpon>utilizadores.aspx</DependentUpon>
