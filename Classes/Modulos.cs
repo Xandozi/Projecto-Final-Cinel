@@ -121,7 +121,7 @@ namespace Projeto_Final.Classes
         {
             List<Modulos> lst_modulos = new List<Modulos>();
 
-            string query = $"select Modulos.cod_modulo, Modulos.nome_modulo, Modulos.cod_ufcd, Modulos.ativo from Modulos " +
+            string query = $"select Modulos.cod_modulo, Modulos.nome_modulo, Modulos.cod_ufcd, Modulos.duracao, Modulos.ativo from Modulos " +
                            $"join Cursos_Modulos on Cursos_Modulos.cod_modulo = Modulos.cod_modulo " +
                            $"where Cursos_Modulos.cod_curso = {cod_curso} and Modulos.ativo = 1";
 
@@ -139,7 +139,8 @@ namespace Projeto_Final.Classes
                 informacao.cod_modulo = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
                 informacao.nome_modulo = !dr.IsDBNull(1) ? dr.GetString(1) : null;
                 informacao.cod_ufcd = !dr.IsDBNull(2) ? dr.GetInt32(2) : 000;
-                informacao.ativo = !dr.IsDBNull(3) ? dr.GetBoolean(3) : default(Boolean);
+                informacao.duracao = !dr.IsDBNull(3) ? dr.GetInt32(3) : 000;
+                informacao.ativo = !dr.IsDBNull(4) ? dr.GetBoolean(4) : default(Boolean);
 
                 lst_modulos.Add(informacao);
             }
@@ -233,6 +234,33 @@ namespace Projeto_Final.Classes
                 myConn.Open();
                 myCommand.ExecuteNonQuery();
                 int resposta_sp = Convert.ToInt32(myCommand.Parameters["@valido"].Value);
+                myConn.Close();
+
+                return resposta_sp;
+            }
+        }
+
+        public static int Check_Duracao_Modulo(int cod_ufcd)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_ufcd", cod_ufcd);
+
+                SqlParameter duracao = new SqlParameter();
+                duracao.ParameterName = "@duracao";
+                duracao.Direction = ParameterDirection.Output;
+                duracao.SqlDbType = SqlDbType.Int;
+                myCommand.Parameters.Add(duracao);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Check_Duracao_Modulo";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                int resposta_sp = Convert.ToInt32(myCommand.Parameters["@duracao"].Value);
                 myConn.Close();
 
                 return resposta_sp;

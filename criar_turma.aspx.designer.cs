@@ -87,13 +87,13 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Label lbl_regime;
 
         /// <summary>
-        /// ddlRegime control.
+        /// ddl_regime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlRegime;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_regime;
 
         /// <summary>
         /// regime control.
@@ -157,6 +157,42 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_remove;
+
+        /// <summary>
+        /// lbl_horas_totais_formador control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_horas_totais_formador;
+
+        /// <summary>
+        /// lbl_mensagem_formadores_modulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_mensagem_formadores_modulos;
+
+        /// <summary>
+        /// lbl_formadores_modulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_formadores_modulos;
+
+        /// <summary>
+        /// lstb_formadores_modulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lstb_formadores_modulos;
 
         /// <summary>
         /// lbl_mensagem control.

@@ -26,7 +26,7 @@
                                 <div class="row">
                                     <div class="col-md-6" style="margin-top: 10px;">
                                         <asp:Label ID="lbl_curso" runat="server" Text="Curso"></asp:Label>
-                                        <asp:DropDownList ID="ddl_curso" runat="server" CssClass="form-control" AutoPostBack="true" DataSourceID="curso" DataTextField="nome_curso" DataValueField="cod_curso">
+                                        <asp:DropDownList ID="ddl_curso" runat="server" AppendDataBoundItems="true" CssClass="form-control" AutoPostBack="true" DataSourceID="curso" DataTextField="nome_curso" DataValueField="cod_curso" OnSelectedIndexChanged="ddl_curso_SelectedIndexChanged">
                                         </asp:DropDownList>
                                         <asp:SqlDataSource runat="server" ID="curso" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_curso], [nome_curso] FROM [Cursos]"></asp:SqlDataSource>
                                     </div>
@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="col-md-6" style="margin-top: 10px;">
                                         <asp:Label ID="lbl_regime" runat="server" Text="Regime"></asp:Label>
-                                        <asp:DropDownList ID="ddlRegime" runat="server" CssClass="form-control" DataSourceID="regime" DataTextField="regime" DataValueField="cod_regime">
+                                        <asp:DropDownList ID="ddl_regime" runat="server" AppendDataBoundItems="true" CssClass="form-control" DataSourceID="regime" DataTextField="regime" DataValueField="cod_regime" OnSelectedIndexChanged="ddl_regime_SelectedIndexChanged">
                                         </asp:DropDownList>
                                         <asp:SqlDataSource runat="server" ID="regime" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Regime]"></asp:SqlDataSource>
                                     </div>
@@ -44,7 +44,7 @@
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-md-6">
                                         <asp:Label ID="lbl_lstb_formadores" runat="server" Text="Formadores"></asp:Label>
-                                        <asp:ListBox ID="lstb_formadores" CssClass="form-control" runat="server"></asp:ListBox>
+                                        <asp:ListBox ID="lstb_formadores" AutoPostBack="true" CssClass="form-control" runat="server" OnSelectedIndexChanged="lstb_formadores_SelectedIndexChanged" ></asp:ListBox>
                                     </div>
                                     <div class="col-md-6">
                                         <asp:Label ID="lbl_lstb_modulos" runat="server" Text="Módulos"></asp:Label>
@@ -53,8 +53,16 @@
                                 </div>
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-md-12" style="margin-top: 5px;">
-                                        <asp:Button ID="btn_add" CssClass="btn btn-primary" runat="server" Text="Adicionar"/>
-                                        <asp:Button ID="btn_remove" CssClass="btn btn-danger" runat="server" Text="Remover" />
+                                        <asp:Button ID="btn_add" CssClass="btn btn-primary" runat="server" Text="Adicionar à Turma" OnClick="btn_add_Click"/>
+                                        <asp:Button ID="btn_remove" CssClass="btn btn-danger" runat="server" Text="Remover da Turma" OnClick="btn_remove_Click"/>
+                                        <asp:Label ID="lbl_horas_totais_formador" runat="server" Text=""></asp:Label>
+                                        <asp:Label ID="lbl_mensagem_formadores_modulos" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-md-12" style="margin-top: 5px;">
+                                        <asp:Label ID="lbl_formadores_modulos" runat="server" Text="Formadores | Módulos"></asp:Label>
+                                        <asp:ListBox ID="lstb_formadores_modulos" CssClass="form-control" runat="server"></asp:ListBox>
                                     </div>
                                 </div>
                             </div>
