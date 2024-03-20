@@ -17,14 +17,15 @@ namespace Projeto_Final.Classes
         public int cod_modulo { get; set; }
         public int cod_turma { get; set; }
 
-        public static bool Inserir_Formador(int cod_formador, int cod_inscricao)
+        public static bool Inserir_Formador_Turma_Modulo(int cod_formador, int cod_modulo, int cod_turma)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
             using (SqlCommand myCommand = new SqlCommand())
             {
                 myCommand.Parameters.AddWithValue("@cod_formador", cod_formador);
-                myCommand.Parameters.AddWithValue("@cod_inscricao", cod_inscricao);
+                myCommand.Parameters.AddWithValue("@cod_modulo", cod_modulo);
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
 
                 SqlParameter valido = new SqlParameter();
                 valido.ParameterName = "@valido";
@@ -33,7 +34,7 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.Add(valido);
 
                 myCommand.CommandType = CommandType.StoredProcedure;
-                myCommand.CommandText = "Insert_Formador";
+                myCommand.CommandText = "Insert_Formador_Turma_Modulo";
 
                 myCommand.Connection = myConn;
                 myConn.Open();
@@ -46,13 +47,14 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static List<Formadores> Ler_FormadoresAll()
+        public static List<Formadores> Ler_FormadoresAll(int cod_curso)
         {
             List<Formadores> lst_formadores = new List<Formadores>();
 
             string query = $"select Formadores.cod_formador, Formadores.cod_inscricao, Users.nome_proprio, Users.apelido from Formadores " +
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formadores.cod_inscricao " +
-                           $"join Users on Users.cod_user = Inscricoes.cod_user";
+                           $"join Users on Users.cod_user = Inscricoes.cod_user " +
+                           $"where Inscricoes.cod_curso = {cod_curso}";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
