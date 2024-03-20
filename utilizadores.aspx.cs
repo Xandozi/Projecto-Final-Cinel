@@ -105,13 +105,13 @@ namespace Projeto_Final
         {
             filterForm.Style["display"] = "block";
 
-            int index = ddl_perfil.SelectedIndex;
+            //int index = ddl_perfil.SelectedIndex;
 
-            ddl_perfil.Items.Clear();
-            ddl_perfil.Items.Insert(0, "Todos");
-            ddl_perfil.DataBind();
-            perfis.DataBind();
-            ddl_perfil.SelectedIndex = index;
+            //ddl_perfil.Items.Clear();
+            //ddl_perfil.Items.Insert(0, "Todos");
+            //ddl_perfil.DataBind();
+            //perfis.DataBind();
+            //ddl_perfil.SelectedIndex = index;
         }
     }
 }

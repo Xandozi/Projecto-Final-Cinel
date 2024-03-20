@@ -33,174 +33,120 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Button btn_logout2;
 
         /// <summary>
-        /// pnlFormador control.
+        /// div_validacoes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFormador;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_validacoes;
 
         /// <summary>
-        /// rpt_formador control.
+        /// card_formadores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_formador;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl card_formadores;
 
         /// <summary>
-        /// pnlFormando control.
+        /// btn_previous_formadores_top control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFormando;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formadores_top;
 
         /// <summary>
-        /// rpt_formando control.
+        /// btn_next_formadores_top control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_formando;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next_formadores_top;
 
         /// <summary>
-        /// changePasswordForm control.
+        /// rpt_formadores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl changePasswordForm;
+        protected global::System.Web.UI.WebControls.Repeater rpt_formadores;
 
         /// <summary>
-        /// tb_pw control.
+        /// btn_previous_formadores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_pw;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formadores;
 
         /// <summary>
-        /// tb_new_pw control.
+        /// btn_next_formadores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_new_pw;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next_formadores;
 
         /// <summary>
-        /// rev_pw_nova control.
+        /// card_formandos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_pw_nova;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl card_formandos;
 
         /// <summary>
-        /// tb_new_pw_repeat control.
+        /// btn_previous_formandos_top control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_new_pw_repeat;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formandos_top;
 
         /// <summary>
-        /// btn_change_pw control.
+        /// btn_next_formandos_top control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_change_pw;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next_formandos_top;
 
         /// <summary>
-        /// Div1 control.
+        /// rpt_formandos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        protected global::System.Web.UI.WebControls.Repeater rpt_formandos;
 
         /// <summary>
-        /// tb_new_username control.
+        /// btn_previous_formandos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_new_username;
+        protected global::System.Web.UI.WebControls.LinkButton btn_previous_formandos;
 
         /// <summary>
-        /// tb_pw_username control.
+        /// btn_next_formandos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_pw_username;
-
-        /// <summary>
-        /// btn_change_username control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_change_username;
-
-        /// <summary>
-        /// Div2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
-
-        /// <summary>
-        /// tb_new_email control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_new_email;
-
-        /// <summary>
-        /// rfv_new_email control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rfv_new_email;
-
-        /// <summary>
-        /// tb_pw_email control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_pw_email;
-
-        /// <summary>
-        /// btn_change_email control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_change_email;
+        protected global::System.Web.UI.WebControls.LinkButton btn_next_formandos;
     }
 }

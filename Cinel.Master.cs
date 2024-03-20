@@ -15,7 +15,8 @@ namespace Projeto_Final
             Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
             Response.Cache.SetNoStore();
 
-            this.DataBind();
+            if (!Page.IsPostBack)
+                this.DataBind();
         }
         protected string DetermineColumnClass()
         {
