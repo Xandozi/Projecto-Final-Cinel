@@ -17,6 +17,7 @@ namespace Projeto_Final.Classes
         public int cod_ufcd { get; set; }
         public DateTime ultimo_update { get; set; }
         public bool ativo { get; set; }
+        public string ufcd_nome_modulo { get { return $"{cod_ufcd} | {nome_modulo}"; } }
 
         public static int Inserir_Modulo(int cod_ufcd, string nome_modulo, int duracao, DateTime data_criacao)
         {
@@ -240,13 +241,13 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static int Check_Duracao_Modulo(int cod_ufcd)
+        public static int Check_Duracao_Modulo(int cod_modulo)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
             using (SqlCommand myCommand = new SqlCommand())
             {
-                myCommand.Parameters.AddWithValue("@cod_ufcd", cod_ufcd);
+                myCommand.Parameters.AddWithValue("@cod_modulo", cod_modulo);
 
                 SqlParameter duracao = new SqlParameter();
                 duracao.ParameterName = "@duracao";

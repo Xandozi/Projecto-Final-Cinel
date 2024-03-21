@@ -109,14 +109,15 @@
                                     <div class="row">
                                         <div class="col-md-6" style="margin-top: 10px;">
                                             <asp:Button ID="btn_criar_turma" CssClass="btn btn-primary" runat="server" Text="Criar Turma" OnClick="btn_criar_turma_Click" />
+                                            <asp:Label ID="lbl_mensagem" runat="server" Text=""></asp:Label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin: 13px;">
+                        <%--<div class="row" style="margin: 13px;">
                             <asp:Label ID="lbl_mensagem" runat="server" Text=""></asp:Label>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
         </ContentTemplate>

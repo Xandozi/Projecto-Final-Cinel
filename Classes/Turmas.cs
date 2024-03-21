@@ -23,7 +23,7 @@ namespace Projeto_Final.Classes
         public List<Formandos> formandos { get; set; }
         public List<Formadores> formadores { get; set; }
 
-        public static void Inserir_Turma(int cod_curso, DateTime data_inicio, int cod_regime, List<Formandos> formandos, List<Formadores> formadores)
+        public static void Inserir_Turma(int cod_curso, DateTime data_inicio, int cod_regime, List<Formandos> formandos, List<Formadores_Modulos> formadores_modulos)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -52,7 +52,7 @@ namespace Projeto_Final.Classes
                 foreach (Formandos formando in formandos)
                     Turmas.Inserir_Formandos_Turma(formando.cod_formando, resposta_sp);
 
-                foreach (Formadores formador in formadores)
+                foreach (Formadores_Modulos formador in formadores_modulos)
                     Turmas.Inserir_Formadores_Turma_Modulo(formador.cod_formador, formador.cod_modulo, resposta_sp);
             }
         }

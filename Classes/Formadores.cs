@@ -13,6 +13,7 @@ namespace Projeto_Final.Classes
         public int cod_formador { get; set; }
         public string nome_proprio { get; set; }
         public string apelido { get; set; }
+        public string nome_completo { get; set; }
         public int cod_inscricao { get; set; }
         public int cod_modulo { get; set; }
         public int cod_turma { get; set; }
@@ -71,6 +72,7 @@ namespace Projeto_Final.Classes
                 informacao.cod_inscricao = !dr.IsDBNull(1) ? dr.GetInt32(1) : 000;
                 informacao.nome_proprio = !dr.IsDBNull(2) ? dr.GetString(2) : null;
                 informacao.apelido = !dr.IsDBNull(3) ? dr.GetString(3) : null;
+                informacao.nome_completo = informacao.nome_proprio + " " + informacao.apelido;
 
                 lst_formadores.Add(informacao);
             }
