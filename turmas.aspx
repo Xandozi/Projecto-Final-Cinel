@@ -38,7 +38,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <asp:Repeater ID="rpt_turmas" runat="server" OnItemDataBound="rpt_turmas_ItemDataBound">
+                                                <asp:Repeater ID="rpt_turmas" runat="server">
                                                     <ItemTemplate>
                                                         <tr>
                                                             <td><a href="turmas_detalhe.aspx?cod_user=<%# Eval("cod_turma") %>"><%# Eval("nome_turma") %></a></td>

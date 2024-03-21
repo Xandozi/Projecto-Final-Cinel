@@ -35,10 +35,5 @@ namespace Projeto_Final
         {
 
         }
-
-        protected void rpt_turmas_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-
-        }
     }
 }
