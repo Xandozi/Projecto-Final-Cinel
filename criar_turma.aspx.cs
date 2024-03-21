@@ -32,6 +32,9 @@ namespace Projeto_Final
 
         protected void ddl_curso_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lbl_mensagem.Text = "";
+            lbl_mensagem.CssClass = "";
+
             if (ddl_curso.SelectedIndex != 0)
             {
                 List<Formadores> lst_formadores = Formadores.Ler_FormadoresAll(Convert.ToInt32(ddl_curso.SelectedValue));
@@ -105,7 +108,7 @@ namespace Projeto_Final
                     lbl_mensagem_formadores_modulos.Text = "Formador ultrapassará o límite de 200h por CET. Não pode adicionar mais.";
                     lbl_mensagem_formadores_modulos.CssClass = "alert alert-danger";
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeDangerAlert", "$('.alert.alert-danger').delay(5000).fadeOut('slow');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels", "$('#" + lbl_mensagem_formadores_modulos.ClientID + "').delay(5000).fadeOut('slow');", true);
                 }
                 else
                 {
@@ -128,7 +131,7 @@ namespace Projeto_Final
 
                     lstb_modulos.Items.RemoveAt(lstb_modulos.SelectedIndex);
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlerts", "$('.alert.alert-danger, .alert.alert-success').delay(2000).fadeOut('slow');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels2", "$('#" + lbl_mensagem_formadores_modulos.ClientID + "').delay(2000).fadeOut('slow');", true);
                 }
             }
             else
@@ -136,7 +139,7 @@ namespace Projeto_Final
                 lbl_mensagem_formadores_modulos.Text = "Tem de escolher um formador e um módulo antes de adicionar ao curso.";
                 lbl_mensagem_formadores_modulos.CssClass = "alert alert-danger";
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlerts", "$('.alert.alert-danger, .alert.alert-success').delay(5000).fadeOut('slow');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels3", "$('#" + lbl_mensagem_formadores_modulos.ClientID + "').delay(5000).fadeOut('slow');", true);
             }
         }
 
@@ -183,8 +186,10 @@ namespace Projeto_Final
 
                 lstb_modulos.Items.Add(new ListItem(modulo_removido.ufcd_nome_modulo, modulo_removido.cod_modulo.ToString()));
 
-                lbl_mensagem_formadores_modulos.Text = "";
-                lbl_mensagem_formadores_modulos.CssClass = "";
+                lbl_mensagem_formadores_modulos.Text = "Formador e módulo removidos da turma.";
+                lbl_mensagem_formadores_modulos.CssClass = "alert alert-success";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels11", "$('#" + lbl_mensagem_formadores_modulos.ClientID + "').delay(2000).fadeOut('slow');", true);
 
                 Check_Horas_Totais(formador_removido.nome_completo);
             }
@@ -192,6 +197,8 @@ namespace Projeto_Final
             {
                 lbl_mensagem_formadores_modulos.Text = "Tem de selecionar um formador e módulo inserido antes de poder remover.";
                 lbl_mensagem_formadores_modulos.CssClass = "alert alert-danger";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels11", "$('#" + lbl_mensagem_formadores_modulos.ClientID + "').delay(2000).fadeOut('slow');", true);
             }
         }
 
@@ -218,6 +225,9 @@ namespace Projeto_Final
 
             lbl_mensagem_formadores_modulos.Text = "";
             lbl_mensagem_formadores_modulos.CssClass = "";
+
+            lbl_mensagem.Text = "";
+            lbl_mensagem.CssClass = "";
         }
 
         private void Check_Horas_Totais(string nome_formador)
@@ -269,14 +279,26 @@ namespace Projeto_Final
                 lbl_mensagem_formandos.Text = "Formando adicionado à turma com sucesso.";
                 lbl_mensagem_formandos.CssClass = "alert alert-success";
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlerts", "$('.alert.alert-danger, .alert.alert-success').delay(2000).fadeOut('slow');", true);
+                lbl_mensagem_formadores_modulos.Text = "";
+                lbl_mensagem_formadores_modulos.CssClass = "";
+
+                lbl_mensagem.Text = "";
+                lbl_mensagem.CssClass = "";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels4", "$('#" + lbl_mensagem_formandos.ClientID + "').delay(2000).fadeOut('slow');", true);
             }
             else
             {
                 lbl_mensagem_formandos.Text = "Tem de selecionar um formando antes de poder adicionar.";
                 lbl_mensagem_formandos.CssClass = "alert alert-danger";
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlerts", "$('.alert.alert-danger, .alert.alert-success').delay(2000).fadeOut('slow');", true);
+                lbl_mensagem_formadores_modulos.Text = "";
+                lbl_mensagem_formadores_modulos.CssClass = "";
+
+                lbl_mensagem.Text = "";
+                lbl_mensagem.CssClass = "";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels5", "$('#" + lbl_mensagem_formandos.ClientID + "').delay(2000).fadeOut('slow');", true);
             }
         }
 
@@ -297,14 +319,26 @@ namespace Projeto_Final
                 lbl_mensagem_formandos.Text = "Formando removido da turma com sucesso.";
                 lbl_mensagem_formandos.CssClass = "alert alert-success";
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlerts", "$('.alert.alert-danger, .alert.alert-success').delay(2000).fadeOut('slow');", true);
+                lbl_mensagem_formadores_modulos.Text = "";
+                lbl_mensagem_formadores_modulos.CssClass = "";
+
+                lbl_mensagem.Text = "";
+                lbl_mensagem.CssClass = "";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels6", "$('#" + lbl_mensagem_formandos.ClientID + "').delay(2000).fadeOut('slow');", true);
             }
             else
             {
                 lbl_mensagem_formandos.Text = "Tem de selecionar um formando antes de poder remover.";
                 lbl_mensagem_formandos.CssClass = "alert alert-danger";
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlerts", "$('.alert.alert-danger, .alert.alert-success').delay(2000).fadeOut('slow');", true);
+                lbl_mensagem_formadores_modulos.Text = "";
+                lbl_mensagem_formadores_modulos.CssClass = "";
+
+                lbl_mensagem.Text = "";
+                lbl_mensagem.CssClass = "";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels7", "$('#" + lbl_mensagem_formandos.ClientID + "').delay(2000).fadeOut('slow');", true);
             }
         }
 
@@ -318,26 +352,66 @@ namespace Projeto_Final
                 {
                     lbl_mensagem.Text = "Tem de escolher um curso antes de criar a turma.";
                     lbl_mensagem.CssClass = "alert alert-danger";
+
+                    lbl_mensagem_formadores_modulos.Text = "";
+                    lbl_mensagem_formadores_modulos.CssClass = "";
+
+                    lbl_mensagem_formandos.Text = "";
+                    lbl_mensagem_formandos.CssClass = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels111", "$('#" + lbl_mensagem.ClientID + "').delay(5000).fadeOut('slow');", true);
                 }
                 else if (ddl_regime.SelectedIndex == 0 || ddl_regime.SelectedIndex == -1)
                 {
                     lbl_mensagem.Text = "Tem de escolher um regime antes de criar a turma.";
                     lbl_mensagem.CssClass = "alert alert-danger";
+
+                    lbl_mensagem_formadores_modulos.Text = "";
+                    lbl_mensagem_formadores_modulos.CssClass = "";
+
+                    lbl_mensagem_formandos.Text = "";
+                    lbl_mensagem_formandos.CssClass = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels1111", "$('#" + lbl_mensagem.ClientID + "').delay(5000).fadeOut('slow');", true);
                 }
                 else if (lstb_modulos.Items.Count != 0)
                 {
                     lbl_mensagem.Text = "Ainda tem módulos por alocar a formadores. Aloque todos os módulos antes de continuar.";
                     lbl_mensagem.CssClass = "alert alert-danger";
+
+                    lbl_mensagem_formadores_modulos.Text = "";
+                    lbl_mensagem_formadores_modulos.CssClass = "";
+
+                    lbl_mensagem_formandos.Text = "";
+                    lbl_mensagem_formandos.CssClass = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels1112", "$('#" + lbl_mensagem.ClientID + "').delay(5000).fadeOut('slow');", true);
                 }
                 else if (lstb_formandos_turma.Items.Count < 5)
                 {
                     lbl_mensagem.Text = "Uma turma tem de ter pelo menos 5 formandos.";
                     lbl_mensagem.CssClass = "alert alert-danger";
+
+                    lbl_mensagem_formadores_modulos.Text = "";
+                    lbl_mensagem_formadores_modulos.CssClass = "";
+
+                    lbl_mensagem_formandos.Text = "";
+                    lbl_mensagem_formandos.CssClass = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels113", "$('#" + lbl_mensagem.ClientID + "').delay(5000).fadeOut('slow');", true);
                 }
                 else if (data_inicio <= DateTime.Today)
                 {
                     lbl_mensagem.Text = "A data de início não é válida.";
                     lbl_mensagem.CssClass = "alert alert-danger";
+
+                    lbl_mensagem_formadores_modulos.Text = "";
+                    lbl_mensagem_formadores_modulos.CssClass = "";
+
+                    lbl_mensagem_formandos.Text = "";
+                    lbl_mensagem_formandos.CssClass = "";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels114", "$('#" + lbl_mensagem.ClientID + "').delay(5000).fadeOut('slow');", true);
                 }
                 else
                 {
@@ -348,10 +422,13 @@ namespace Projeto_Final
 
                     foreach (ListItem item in lstb_formandos_turma.Items)
                     {
+                        int cod_inscricao = Extract.Cod_Inscricao_Formando(Convert.ToInt32(item.Value));
+
                         Formandos formando = new Formandos
                         {
                             nome_completo = item.Text.Trim(),
-                            cod_formando = Convert.ToInt32(item.Value)
+                            cod_formando = Convert.ToInt32(item.Value),
+                            cod_inscricao = cod_inscricao
                         };
 
                         lst_formandos.Add(formando);
@@ -382,9 +459,42 @@ namespace Projeto_Final
                     }
 
                     Turmas.Inserir_Turma(cod_curso, data_inicio, cod_regime, lst_formandos, lst_formadores_modulos);
-                }
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlerts", "$('.alert.alert-danger, .alert.alert-success').delay(5000).fadeOut('slow');", true);
+                    lbl_mensagem.Text = "Turma criada com sucesso!";
+                    lbl_mensagem.CssClass = "alert alert-success";
+
+                    lbl_mensagem_formadores_modulos.Text = "";
+                    lbl_mensagem_formadores_modulos.CssClass = "";
+
+                    lbl_mensagem_formandos.Text = "";
+                    lbl_mensagem_formandos.CssClass = "";
+
+                    lbl_horas_totais_formador.Text = "";
+                    lbl_horas_totais_formador.CssClass = "";
+
+                    ddl_curso.SelectedIndex = -1;
+                    ddl_regime.SelectedIndex = -1;
+                    tb_data_inicio.Text = "";
+
+                    lstb_formadores.Items.Clear();
+                    lstb_modulos.Items.Clear();
+                    lstb_formadores_modulos.Items.Clear();
+                    lstb_formandos_legiveis.Items.Clear();
+                    lstb_formandos_turma.Items.Clear();
+                }
+            }
+            else
+            {
+                lbl_mensagem.Text = "Tem de escolher uma data de início de curso.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+
+                lbl_mensagem_formadores_modulos.Text = "";
+                lbl_mensagem_formadores_modulos.CssClass = "";
+
+                lbl_mensagem_formandos.Text = "";
+                lbl_mensagem_formandos.CssClass = "";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels9", "$('#" + lbl_mensagem.ClientID + "').delay(5000).fadeOut('slow');", true);
             }
         }
     }

@@ -168,5 +168,34 @@ namespace Projeto_Final.Classes
                 return nome;
             }
         }
+
+        public static int Cod_Inscricao_Formando(int cod_formando)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_formando", cod_formando);
+
+                SqlParameter resposta_SP = new SqlParameter();
+                resposta_SP.ParameterName = "@cod_inscricao";
+                resposta_SP.Direction = ParameterDirection.Output;
+                resposta_SP.SqlDbType = SqlDbType.Int;
+                myCommand.Parameters.Add(resposta_SP);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Extract_Cod_Inscricao_Formando";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+
+                int cod_inscricao = Convert.ToInt32(myCommand.Parameters["@cod_inscricao"].Value);
+
+                myConn.Close();
+
+                return cod_inscricao;
+            }
+        }
     }
 }

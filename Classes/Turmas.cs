@@ -50,14 +50,14 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.Clear();
 
                 foreach (Formandos formando in formandos)
-                    Turmas.Inserir_Formandos_Turma(formando.cod_formando, resposta_sp);
+                    Turmas.Inserir_Formandos_Turma(formando.cod_formando, resposta_sp, formando.cod_inscricao);
 
                 foreach (Formadores_Modulos formador in formadores_modulos)
                     Turmas.Inserir_Formadores_Turma_Modulo(formador.cod_formador, formador.cod_modulo, resposta_sp);
             }
         }
 
-        public static void Inserir_Formandos_Turma(int cod_formando, int cod_turma)
+        public static void Inserir_Formandos_Turma(int cod_formando, int cod_turma, int cod_inscricao)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -65,6 +65,7 @@ namespace Projeto_Final.Classes
             {
                 myCommand.Parameters.AddWithValue("@cod_formando", cod_formando);
                 myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
+                myCommand.Parameters.AddWithValue("@cod_inscricao", cod_inscricao);
 
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.CommandText = "Insert_Formando_Turma";
