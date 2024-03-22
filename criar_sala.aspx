@@ -29,7 +29,7 @@
                                                     <p class="font-weight-bold">Nome da Sala</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_designacao" runat="server" MaxLength="50" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_designacao" CssClass="form-control" runat="server" MaxLength="50" Style="width: 90%;"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Nome da sala obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
                                                     <asp:RegularExpressionValidator ID="rev_designacao" runat="server" ErrorMessage="Nome da sala inválida" ControlToValidate="tb_designacao" Text="*" ValidationExpression="^.{1,50}$"></asp:RegularExpressionValidator>
                                                 </div>

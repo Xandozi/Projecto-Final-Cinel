@@ -27,6 +27,12 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <p class="lead">
+                                                Área:
+                                                <asp:Label ID="lbl_area" runat="server" Text=""></asp:Label>
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <p class="lead">
                                                 Código Qualificação:
                                                 <asp:Label ID="lbl_cod_qualificacao" runat="server" Text=""></asp:Label>
                                             </p>

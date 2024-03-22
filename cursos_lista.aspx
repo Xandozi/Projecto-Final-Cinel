@@ -107,6 +107,7 @@
                                                     <a href="cursos_lista_detalhe.aspx?cod_curso=<%# Eval("cod_curso") %>" style="text-decoration: none;">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><%# Eval("nome_curso") %></h5>
+                                                            <p class="card-text">Área: <%# Eval("area") %></p>
                                                             <p class="card-text">Duração: <%# Eval("duracao_curso") %> horas</p>
                                                             <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
                                                             <p class="card-text">Código Qualificação: <%# Eval("cod_qualificacao") %></p>

@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="turmas.aspx.cs" Inherits="Projeto_Final.turmas" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -6,6 +7,120 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
+                <div id="filterForm" runat="server" style="display: none; margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nome Turma:</label>
+                                <asp:TextBox ID="tb_nome_turma" CssClass="form-control" runat="server" Style="margin-left: 5px;" MaxLength="50"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Código Qualificação:</label>
+                                <asp:TextBox ID="tb_cod_qualificacao" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Number"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Curso:</label>
+                                <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="cursos" DataTextField="nome_curso" DataValueField="cod_curso"></asp:DropDownList>
+                                <asp:SqlDataSource runat="server" ID="cursos" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [nome_curso], [cod_curso] FROM [Cursos]"></asp:SqlDataSource>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Regime:</label>
+                                <asp:DropDownList ID="ddl_regime" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="regimes" DataTextField="regime" DataValueField="cod_regime"></asp:DropDownList>
+                                <asp:SqlDataSource runat="server" ID="regimes" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Regime]"></asp:SqlDataSource>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Início do Intervalo do Início do Curso:</label>
+                                <asp:TextBox ID="tb_data_inicio_inicio" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Date" placeholder="Data de início"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Fim do Intervalo do Início do Curso:</label>
+                                <asp:TextBox ID="tb_data_fim_inicio" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Date" placeholder="Data de fim"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Início do Intervalo do Fim do Curso:</label>
+                                <asp:TextBox ID="tb_data_inicio_fim" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Date" placeholder="Data de início"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Fim do Intervalo do Fim do Curso:</label>
+                                <asp:TextBox ID="tb_data_fim_fim" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Date" placeholder="Data de fim"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Área:</label>
+                                        <asp:DropDownList ID="ddl_area" CssClass="form-control" runat="server" Style="margin-left: 5px;"></asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Ordenação Nome Curso:</label>
+                                        <asp:DropDownList ID="ddl_sort_nome_curso" CssClass="form-control" runat="server" Style="margin-left: 5px;">
+                                            <asp:ListItem>Nenhuma</asp:ListItem>
+                                            <asp:ListItem Value="asc">A-Z</asp:ListItem>
+                                            <asp:ListItem Value="desc">Z-A</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Ordenação Código Qualificação:</label>
+                                        <asp:DropDownList ID="ddl_sort_cod_qualificacao" CssClass="form-control" runat="server" Style="margin-left: 5px;">
+                                            <asp:ListItem>Nenhuma</asp:ListItem>
+                                            <asp:ListItem Value="asc">Ascendente</asp:ListItem>
+                                            <asp:ListItem Value="desc">Descendente</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Duração</label>
+                                        <asp:DropDownList ID="ddl_duracao" CssClass="form-control" runat="server" Style="margin-left: 5px;">
+                                            <asp:ListItem>Todas</asp:ListItem>
+                                            <asp:ListItem Value="curta">Curta Duração</asp:ListItem>
+                                            <asp:ListItem Value="longa">Longa Duração</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Estado:</label>
+                                        <asp:DropDownList ID="ddl_estado" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="estados" DataTextField="turma_estado" DataValueField="cod_turmas_estado"></asp:DropDownList>
+                                        <asp:SqlDataSource runat="server" ID="estados" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Turmas_Estado]"></asp:SqlDataSource>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1 d-flex justify-content-end align-items-end">
+                            <div class="form-group justify-content-around">
+                                <asp:Button ID="btn_aplicar_filtros" runat="server" Text="Aplicar Filtros" CssClass="btn btn-dark" OnClick="btn_aplicar_filtros_Click" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
                 <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-top: 10px;">
@@ -14,6 +129,19 @@
                             <a href="criar_turma.aspx" class="list-group-item list-group-item-action">Criar Turma</a>
                             <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
+                        <asp:LinkButton ID="btn_filtros" runat="server" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;">
+                                <i class="fas fa-filter">Filtros</i> 
+                        </asp:LinkButton>
+                        <script type="text/javascript">
+                            function toggleFilters() {
+                                var filterForm = document.getElementById('<%= filterForm.ClientID %>');
+                                if (filterForm.style.display === 'none') {
+                                    filterForm.style.display = 'block';
+                                } else {
+                                    filterForm.style.display = 'none';
+                                }
+                            }
+                        </script>
                     </div>
                     <div id="div_turmas" class="col-md-10" runat="server">
                         <div id="card_turmas" class="card" style="border-color: #333; margin-top: 10px;" runat="server">
@@ -26,32 +154,26 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nome</th>
-                                                    <th>Cód. Qual</th>
-                                                    <th>Curso</th>
-                                                    <th>Regime</th>
-                                                    <th>Estado</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <asp:Repeater ID="rpt_turmas" runat="server">
-                                                    <ItemTemplate>
-                                                        <tr>
-                                                            <td><a href="turmas_detalhe.aspx?cod_user=<%# Eval("cod_turma") %>"><%# Eval("nome_turma") %></a></td>
-                                                            <td><%# Eval("cod_qualificacao") %></td>
-                                                            <td><%# Eval("nome_curso") %></td>
-                                                            <td><%# Eval("regime") %></td>
-                                                            <td><%# Eval("turma_estado") %></td>
-                                                        </tr>
-                                                    </ItemTemplate>
-                                                </asp:Repeater>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <asp:Repeater ID="rpt_turmas" runat="server">
+                                        <ItemTemplate>
+                                            <div class="col-md-4">
+                                                <div class="card" style="margin: 5px;">
+                                                    <a href="turmas_detalhe.aspx?cod_user=<%# Eval("cod_turma") %>" style="text-decoration: none;">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title"><%# Eval("nome_turma") %></h5>
+                                                            <p class="card-text">Cód. Qual: <%# Eval("cod_qualificacao") %></p>
+                                                            <p class="card-text">Curso: <%# Eval("nome_curso") %></p>
+                                                            <p class="card-text">Regime: <%# Eval("regime") %></p>
+                                                            <p class="card-text">Duração: <%# Eval("duracao_curso") %>h</p>
+                                                            <p class="card-text">Data Início: <%# Eval("data_inicio", "{0:dd/MM/yyyy}") %></p>
+                                                            <p class="card-text">Data Fim: <%# Eval("data_fim", "{0:dd/MM/yyyy}") %></p>
+                                                            <p class="card-text">Estado: <%# Eval("estado") %></p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">

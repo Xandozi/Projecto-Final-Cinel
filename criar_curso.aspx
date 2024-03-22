@@ -27,10 +27,21 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-8">
+                                                    <p class="font-weight-bold">Área do Curso</p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <asp:DropDownList ID="ddl_area" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="areas" DataTextField="area" DataValueField="cod_area"></asp:DropDownList>
+                                                    <asp:SqlDataSource runat="server" ID="areas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Areas]"></asp:SqlDataSource>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-8">
                                                     <p class="font-weight-bold">Código Qualificação</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_cod_qualificacao" runat="server" TextMode="Number" MaxLength="9" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_cod_qualificacao" CssClass="form-control" runat="server" TextMode="Number" MaxLength="9" Style="width: 90%;"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_cod_qualificacao" runat="server" ErrorMessage="Código qualificação obrigatório" Text="*" ControlToValidate="tb_cod_qualificacao" ValidationGroup="criar_curso"></asp:RequiredFieldValidator>
                                                     <asp:RegularExpressionValidator ID="rev_cod_qualificacao" runat="server" ErrorMessage="Código Qualificação inválido" ValidationExpression="^[0-9]{1,10}$" ControlToValidate="tb_cod_qualificacao" Text="*" ValidationGroup="criar_curso"></asp:RegularExpressionValidator>
                                                 </div>
@@ -42,7 +53,7 @@
                                                     <p class="font-weight-bold">Designação do Curso</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_designacao" runat="server" MaxLength="100" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_designacao" CssClass="form-control" runat="server" MaxLength="100" Style="width: 90%;"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação do curso obrigatória." Text="*" ControlToValidate="tb_designacao" ValidationGroup="criar_curso"></asp:RequiredFieldValidator>
                                                     <asp:RegularExpressionValidator ID="rev_designacao" runat="server" ErrorMessage="Designação do curso inválida" ControlToValidate="tb_designacao" Text="*" ValidationExpression="^.{1,100}$" ValidationGroup="criar_curso"></asp:RegularExpressionValidator>
                                                 </div>
@@ -54,7 +65,7 @@
                                                     <p class="font-weight-bold">UFCDs do Curso</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_cod_ufcd" runat="server" Style="width: 90%;" TextMode="Number"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_cod_ufcd" CssClass="form-control" runat="server" Style="width: 90%;" TextMode="Number"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório." ControlToValidate="tb_cod_ufcd" Text="*" ValidationGroup="insert_ufcd"></asp:RequiredFieldValidator>
                                                 </div>
                                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -76,7 +87,7 @@
                                                     <p class="font-weight-bold">Duração do Estágio</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_duracao_estagio" runat="server" TextMode="Number" MaxLength="3" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_duracao_estagio" CssClass="form-control" runat="server" TextMode="Number" MaxLength="3" Style="width: 90%;"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_duracao_estagio" runat="server" ErrorMessage="Duração do estágio é obrigatória." Text="*" ControlToValidate="tb_duracao_estagio" ValidationGroup="criar_curso"></asp:RequiredFieldValidator>
                                                     <asp:RegularExpressionValidator ID="rev_duracao_estagio" runat="server" ErrorMessage="Duração estágio  inválida" ValidationExpression="^[0-9]{1,10}$" ControlToValidate="tb_duracao_estagio" Text="*" ValidationGroup="criar_curso"></asp:RegularExpressionValidator>
                                                 </div>

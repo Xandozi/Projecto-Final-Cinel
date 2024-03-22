@@ -27,8 +27,15 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <p class="lead">
+                                                Área: 
+                                                <asp:DropDownList ID="ddl_area" CssClass="form-control" runat="server" DataSourceID="areas" DataTextField="area" DataValueField="cod_area"></asp:DropDownList>
+                                                <asp:SqlDataSource runat="server" ID="areas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Areas]"></asp:SqlDataSource>
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <p class="lead">
                                                 Código Qualificação:
-                                                <asp:TextBox ID="tb_cod_qualificacao" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="tb_cod_qualificacao" CssClass="form-control" runat="server"></asp:TextBox>
                                                 <asp:RequiredFieldValidator ID="rfv_cod_qualificacao" runat="server" ErrorMessage="Código Qualificação obrigatório" Text="*" ControlToValidate="tb_cod_qualificacao"></asp:RequiredFieldValidator>
                                                 <asp:RegularExpressionValidator ID="rev_cod_qualificacao" runat="server" ErrorMessage="Código Qualificação inválido" ValidationExpression="^[0-9]{1,10}$" ControlToValidate="tb_cod_qualificacao" Text="*"></asp:RegularExpressionValidator>
                                             </p>
@@ -36,7 +43,7 @@
                                         <div class="form-group">
                                             <p class="lead">
                                                 Designação da UFCD:
-                                                <asp:TextBox ID="tb_designacao" runat="server" MaxLength="100"></asp:TextBox>
+                                                <asp:TextBox ID="tb_designacao" CssClass="form-control" runat="server" MaxLength="100"></asp:TextBox>
                                                 <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação da UFCD obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
                                                 <asp:RegularExpressionValidator ID="rev_designacao" runat="server" ErrorMessage="Designação do curso inválida" ControlToValidate="tb_designacao" Text="*" ValidationExpression="^.{1,100}$"></asp:RegularExpressionValidator>
                                             </p>
@@ -47,7 +54,7 @@
                                                     <p class="font-weight-bold">UFCDs do Curso</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_cod_ufcd" runat="server" Style="width: 90%;" TextMode="Number"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_cod_ufcd" CssClass="form-control" runat="server" Style="width: 90%;" TextMode="Number"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório." ControlToValidate="tb_cod_ufcd" Text="*" ValidationGroup="insert_ufcd"></asp:RequiredFieldValidator>
                                                 </div>
                                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -66,26 +73,26 @@
                                         <div class="form-group">
                                             <p class="lead">
                                                 Duração Curso (Estágio incluído):
-                                                <asp:Label ID="lbl_duracao_curso" runat="server" Text=""></asp:Label>
+                                                <asp:Label ID="lbl_duracao_curso" CssClass="form-control" runat="server" Text=""></asp:Label>
                                             </p>
                                         </div>
                                         <div class="form-group">
                                             <p class="lead">
                                                 Duração Estágio:
-                                                <asp:TextBox ID="tb_duracao" runat="server" TextMode="Number" MaxLength="2"></asp:TextBox>
+                                                <asp:TextBox ID="tb_duracao" CssClass="form-control" runat="server" TextMode="Number" MaxLength="2"></asp:TextBox>
                                                 <asp:RequiredFieldValidator ID="rfv_duracao" runat="server" ErrorMessage="Duração é obrigatória." Text="*" ControlToValidate="tb_duracao"></asp:RequiredFieldValidator>
                                             </p>
                                         </div>
                                         <div class="form-group">
                                             <p class="lead">
                                                 Data de Criação:
-                                                <asp:Label ID="lbl_data_criacao" runat="server" Text=""></asp:Label>
+                                                <asp:Label ID="lbl_data_criacao" CssClass="form-control" runat="server" Text=""></asp:Label>
                                             </p>
                                         </div>
                                         <div class="form-group">
                                             <p class="lead">
                                                 Último Update:
-                                                <asp:Label ID="lbl_ultimo_update" runat="server" Text=""></asp:Label>
+                                                <asp:Label ID="lbl_ultimo_update" CssClass="form-control" runat="server" Text=""></asp:Label>
                                             </p>
                                         </div>
                                         <div class="form-group">

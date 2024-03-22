@@ -20,6 +20,10 @@ namespace Projeto_Final
             {
                 Response.Redirect("personal_zone.aspx");
             }
+            else
+            {
+                ddl_area.Items.Insert(0, "---");
+            }
         }
 
         protected void btn_add_ufcd_Click(object sender, EventArgs e)
@@ -96,9 +100,9 @@ namespace Projeto_Final
                 }
             }
 
-            if (ufcds.Count > 0)
+            if (ufcds.Count > 0 && (ddl_area.SelectedIndex != 0 || ddl_area.SelectedIndex != -1))
             {
-                if (Cursos.Inserir_Curso(Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 1)
+                if (Cursos.Inserir_Curso(Convert.ToInt32(ddl_area.SelectedValue), Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 1)
                 {
                     lbl_mensagem.Text = "Curso criado com sucesso!";
                     lbl_mensagem.CssClass = "alert alert-success";
@@ -108,7 +112,7 @@ namespace Projeto_Final
                     tb_duracao_estagio.Text = "";
                     lb_selected_ufcds.Items.Clear();
                 }
-                else if (Cursos.Inserir_Curso(Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 2)
+                else if (Cursos.Inserir_Curso(Convert.ToInt32(ddl_area.SelectedValue), Convert.ToInt32(tb_cod_qualificacao.Text), tb_designacao.Text, Convert.ToInt32(tb_duracao_estagio.Text), DateTime.Today, ufcds) == 2)
                 {
                     lbl_mensagem.Text = "Código de qualificação já existe na base de dados!";
                     lbl_mensagem.CssClass = "alert alert-danger";
@@ -119,9 +123,14 @@ namespace Projeto_Final
                     lbl_mensagem.CssClass = "alert alert-danger";
                 }
             }
-            else
+            else if (ufcds.Count < 1)
             {
                 lbl_mensagem.Text = "Tem de selecionar pelo menos 1 UFCD.";
+                lbl_mensagem.CssClass = "alert alert-danger";
+            }
+            else
+            {
+                lbl_mensagem.Text = "Tem de selecionar uma área de curso.";
                 lbl_mensagem.CssClass = "alert alert-danger";
             }
 

@@ -30,7 +30,7 @@
                                                     <p class="font-weight-bold">Código UFCD</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_cod_ufcd" runat="server" TextMode="Number" MaxLength="10" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_cod_ufcd" runat="server" CssClass="form-control" TextMode="Number" MaxLength="10" Style="width: 90%;"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_cod_ufcd" runat="server" ErrorMessage="Código UFCD obrigatório" Text="*" ControlToValidate="tb_cod_ufcd"></asp:RequiredFieldValidator>
                                                     <asp:RegularExpressionValidator ID="rev_cod_ufcd" runat="server" ErrorMessage="Código UFCD inválido" ValidationExpression="^[0-9]{1,10}$" ControlToValidate="tb_cod_ufcd" Text="*"></asp:RegularExpressionValidator>
                                                 </div>
@@ -42,7 +42,7 @@
                                                     <p class="font-weight-bold">Designação da UFCD</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_designacao" runat="server" MaxLength="100" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_designacao" runat="server" CssClass="form-control" MaxLength="100" Style="width: 90%;"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação da UFCD obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
                                                     <asp:RegularExpressionValidator ID="rev_designacao" runat="server" ErrorMessage="Designação da UFCD inválida" ControlToValidate="tb_designacao" Text="*" ValidationExpression="^.{1,100}$"></asp:RegularExpressionValidator>
                                                 </div>
@@ -54,7 +54,7 @@
                                                     <p class="font-weight-bold">Duração</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:TextBox ID="tb_duracao" runat="server" TextMode="Number" MaxLength="2" Style="width: 90%;"></asp:TextBox>
+                                                    <asp:TextBox ID="tb_duracao" runat="server" CssClass="form-control" TextMode="Number" MaxLength="2" Style="width: 90%;"></asp:TextBox>
                                                     <asp:RequiredFieldValidator ID="rfv_duracao" runat="server" ErrorMessage="Duração é obrigatória." Text="*" ControlToValidate="tb_duracao"></asp:RequiredFieldValidator>
                                                     <asp:RegularExpressionValidator ID="rev_duracao" runat="server" ErrorMessage="Duração  inválida" ValidationExpression="^[0-9]{1,10}$" ControlToValidate="tb_duracao" Text="*"></asp:RegularExpressionValidator>
                                                 </div>
