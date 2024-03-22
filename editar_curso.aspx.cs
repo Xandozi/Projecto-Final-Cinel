@@ -28,6 +28,8 @@ namespace Projeto_Final
 
                     if (curso.Count > 0)
                     {
+                        ddl_area.SelectedValue = curso[0].cod_area.ToString();
+
                         tb_cod_qualificacao.Text = curso[0].cod_qualificacao.ToString();
                         tb_cod_qualificacao.Font.Bold = true;
 
@@ -138,16 +140,16 @@ namespace Projeto_Final
                         ufcds.Add(value);
                 }
 
-                if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds, cb_ativo.Checked) == 1)
+                if (Cursos.Editar_Curso(Convert.ToInt32(ddl_area.SelectedValue), Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds, cb_ativo.Checked) == 1)
                 {
                     Response.Redirect($"cursos_detalhe.aspx?cod_curso={Convert.ToInt32(Request.QueryString["cod_curso"])}");
                 }
-                else if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds, cb_ativo.Checked) == 2)
+                else if (Cursos.Editar_Curso(Convert.ToInt32(ddl_area.SelectedValue), Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds, cb_ativo.Checked) == 2)
                 {
                     lbl_mensagem.Text = "Designação do curso já existe!";
                     lbl_mensagem.CssClass = "alert alert-danger";
                 }
-                else if (Cursos.Editar_Curso(Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds, cb_ativo.Checked) == 3)
+                else if (Cursos.Editar_Curso(Convert.ToInt32(ddl_area.SelectedValue), Convert.ToInt32(Request.QueryString["cod_curso"]), tb_designacao.Text, Convert.ToInt32(tb_duracao.Text), Convert.ToInt32(tb_cod_qualificacao.Text), DateTime.Now, ufcds, cb_ativo.Checked) == 3)
                 {
                     lbl_mensagem.Text = "Código Qualificação do curso já existe!";
                     lbl_mensagem.CssClass = "alert alert-danger";

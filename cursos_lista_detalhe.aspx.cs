@@ -16,6 +16,9 @@ namespace Projeto_Final
 
             if (curso.Count > 0)
             {
+                lbl_area.Text = curso[0].area;
+                lbl_area.Font.Bold = true;
+
                 lbl_cod_qualificacao.Text = curso[0].cod_qualificacao.ToString();
                 lbl_cod_qualificacao.Font.Bold = true;
 
