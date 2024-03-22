@@ -68,13 +68,14 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Área:</label>
-                                        <asp:DropDownList ID="ddl_area" CssClass="form-control" runat="server" Style="margin-left: 5px;"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddl_area" CssClass="form-control" AppendDataBoundItems="true" runat="server" Style="margin-left: 5px;" DataSourceID="areas" DataTextField="area" DataValueField="cod_area"></asp:DropDownList>
+                                        <asp:SqlDataSource runat="server" ID="areas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Areas]"></asp:SqlDataSource>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Ordenação Nome Curso:</label>
-                                        <asp:DropDownList ID="ddl_sort_nome_curso" CssClass="form-control" runat="server" Style="margin-left: 5px;">
+                                        <label>Ordenação Nome Turma:</label>
+                                        <asp:DropDownList ID="ddl_sort_nome_turma" CssClass="form-control" runat="server" Style="margin-left: 5px;">
                                             <asp:ListItem>Nenhuma</asp:ListItem>
                                             <asp:ListItem Value="asc">A-Z</asp:ListItem>
                                             <asp:ListItem Value="desc">Z-A</asp:ListItem>
