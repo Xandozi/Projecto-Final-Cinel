@@ -135,9 +135,9 @@ namespace Projeto_Final.Classes
             {
                 conditions.Add($"Turmas.data_inicio >= '{inicio_data_inicio}' and Turmas.data_inicio <= '{fim_data_inicio}'");
             }
-            if (fim_data_inicio != null && fim_data_fim != null)
+            if (inicio_data_fim != null && fim_data_fim != null)
             {
-                conditions.Add($"Turmas.data_inicio >= '{fim_data_inicio}' and Turmas.data_inicio <= '{fim_data_fim}'");
+                conditions.Add($"Turmas.data_inicio >= '{inicio_data_fim}' and Turmas.data_inicio <= '{fim_data_fim}'");
             }
             if (cod_area != 0)
             {

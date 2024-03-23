@@ -90,7 +90,7 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static List<Cursos> Ler_CursosAll(string search_designacao, int search_duracao, string data_inicio, string data_fim, int search_cod_qualificacao, string sort_order, int estado)
+        public static List<Cursos> Ler_CursosAll(int cod_area, string search_designacao, string duracao, string data_inicio, string data_fim, int search_cod_qualificacao, string sort_order, int estado)
         {
             List<Cursos> lst_cursos = new List<Cursos>();
 
@@ -106,9 +106,16 @@ namespace Projeto_Final.Classes
             {
                 conditions.Add($"Cursos.nome_curso LIKE '%{search_designacao}%'");
             }
-            if (search_duracao != 0)
+            if (cod_area != 0)
             {
-                conditions.Add($"Cursos.duracao_estagio + (SELECT SUM(Modulos.duracao) FROM Modulos JOIN Cursos_Modulos ON Modulos.cod_modulo = Cursos_Modulos.cod_modulo WHERE Cursos_Modulos.cod_curso = Cursos.cod_curso) = {search_duracao}");
+                conditions.Add($"Cursos.cod_area = {cod_area}");
+            }
+            if (duracao != "Todas")
+            {
+                if (duracao == "curta")
+                    conditions.Add($"Cursos.duracao_estagio + (SELECT SUM(Modulos.duracao) FROM Modulos JOIN Cursos_Modulos ON Modulos.cod_modulo = Cursos_Modulos.cod_modulo WHERE Cursos_Modulos.cod_curso = Cursos.cod_curso) <= 300");
+                else
+                    conditions.Add($"Cursos.duracao_estagio + (SELECT SUM(Modulos.duracao) FROM Modulos JOIN Cursos_Modulos ON Modulos.cod_modulo = Cursos_Modulos.cod_modulo WHERE Cursos_Modulos.cod_curso = Cursos.cod_curso) > 300");
             }
             if (data_inicio != null && data_fim != null)
             {

@@ -34,7 +34,7 @@
                                             <asp:Label ID="lbl_curso" runat="server" Text="Curso"></asp:Label>
                                             <asp:DropDownList ID="ddl_curso" runat="server" AppendDataBoundItems="true" CssClass="form-control" AutoPostBack="true" DataSourceID="curso" DataTextField="nome_curso" DataValueField="cod_curso" OnSelectedIndexChanged="ddl_curso_SelectedIndexChanged">
                                             </asp:DropDownList>
-                                            <asp:SqlDataSource runat="server" ID="curso" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_curso], [nome_curso] FROM [Cursos]"></asp:SqlDataSource>
+                                            <asp:SqlDataSource runat="server" ID="curso" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_curso], [nome_curso] FROM [Cursos] WHERE [ativo] = 1"></asp:SqlDataSource>
                                         </div>
                                         <div class="col-md-6" style="margin-top: 10px;">
                                             <asp:Label ID="lbl_data_inicio" runat="server" Text="Data de Início"></asp:Label>
@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-12" style="margin-top: 5px;">
-                                            <asp:Label ID="lbl_formandos" runat="server" Text="Formandos Legíveis"></asp:Label>
+                                            <asp:Label ID="lbl_formandos" runat="server" Text="Formandos Elegíveis"></asp:Label>
                                             <asp:ListBox ID="lstb_formandos_legiveis" CssClass="form-control" runat="server"></asp:ListBox>
                                         </div>
                                     </div>
