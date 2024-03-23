@@ -101,7 +101,7 @@ namespace Projeto_Final.Classes
             }
         }
 
-        public static List<Turmas> Ler_TurmasAll()
+        public static List<Turmas> Ler_TurmasAll(string nome_turma, int cod_qualificacao, int cod_curso, int cod_regime, string inicio_data_inicio, string fim_data_inicio, string inicio_data_fim, string fim_data_fim, int cod_area, string ordenacao_nome_turma, string ordenacao_cod_qualificacao, string duracao, int cod_turma_estado)
         {
             List<Turmas> lst_turmas = new List<Turmas>();
 
@@ -114,39 +114,62 @@ namespace Projeto_Final.Classes
                            $"join Turmas_Estado on Turmas_Estado.cod_turmas_estado = Turmas.cod_turmas_estado " +
                            $"join Cursos on Cursos.cod_curso = Turmas.cod_curso ";
 
-            //// Decisões para colocar ou não os filtros dentro da string query
-            //if (!string.IsNullOrEmpty(search_designacao))
-            //{
-            //    conditions.Add($"Cursos.nome_curso LIKE '%{search_designacao}%'");
-            //}
-            //if (search_duracao != 0)
-            //{
-            //    conditions.Add($"Cursos.duracao_estagio + (SELECT SUM(Modulos.duracao) FROM Modulos JOIN Cursos_Modulos ON Modulos.cod_modulo = Cursos_Modulos.cod_modulo WHERE Cursos_Modulos.cod_curso = Cursos.cod_curso) = {search_duracao}");
-            //}
-            //if (data_inicio != null && data_fim != null)
-            //{
-            //    conditions.Add($"Cursos.data_criacao >= '{data_inicio}' and Cursos.data_criacao <= '{data_fim}'");
-            //}
-            //if (search_cod_qualificacao != 0)
-            //{
-            //    conditions.Add($"Cursos.cod_qualificacao = {search_cod_qualificacao}");
-            //}
-            //if (estado == 0)
-            //{
-            //    conditions.Add($"Cursos.ativo = {estado}");
-            //}
-            //else if (estado == 1)
-            //{
-            //    conditions.Add($"Cursos.ativo = {estado}");
-            //}
-            //if (conditions.Count > 0)
-            //{
-            //    query += " WHERE " + string.Join(" AND ", conditions);
-            //}
-            //if (!string.IsNullOrEmpty(sort_order))
-            //{
-            //    query += " ORDER BY Cursos.cod_qualificacao " + sort_order;
-            //}
+            // Decisões para colocar ou não os filtros dentro da string query
+            if (!string.IsNullOrEmpty(nome_turma))
+            {
+                conditions.Add($"Turmas.nome_turma LIKE '%{nome_turma}%'");
+            }
+            if (cod_qualificacao != 0)
+            {
+                conditions.Add($"Cursos.cod_qualificacao = {cod_qualificacao}");
+            }
+            if (cod_curso != 0)
+            {
+                conditions.Add($"Cursos.cod_curso = {cod_curso}");
+            }
+            if (cod_regime != 0)
+            {
+                conditions.Add($"Turmas.cod_regime = {cod_regime}");
+            }
+            if (inicio_data_inicio != null && fim_data_inicio != null)
+            {
+                conditions.Add($"Turmas.data_inicio >= '{inicio_data_inicio}' and Turmas.data_inicio <= '{fim_data_inicio}'");
+            }
+            if (inicio_data_fim != null && fim_data_fim != null)
+            {
+                conditions.Add($"Turmas.data_inicio >= '{inicio_data_fim}' and Turmas.data_inicio <= '{fim_data_fim}'");
+            }
+            if (cod_area != 0)
+            {
+                conditions.Add($"Cursos.cod_area = {cod_area}");
+            }
+            if (duracao != "Todas")
+            {
+                if (duracao == "curta")
+                    conditions.Add($"Cursos.duracao_estagio + (SELECT SUM(Modulos.duracao) FROM Modulos JOIN Cursos_Modulos ON Modulos.cod_modulo = Cursos_Modulos.cod_modulo WHERE Cursos_Modulos.cod_curso = Cursos.cod_curso) <= 300");
+                else
+                    conditions.Add($"Cursos.duracao_estagio + (SELECT SUM(Modulos.duracao) FROM Modulos JOIN Cursos_Modulos ON Modulos.cod_modulo = Cursos_Modulos.cod_modulo WHERE Cursos_Modulos.cod_curso = Cursos.cod_curso) > 300");
+            }
+            if (cod_turma_estado != 0)
+            {
+                conditions.Add($"Turmas.cod_turmas_estado = {cod_turma_estado}");
+            }
+            if (conditions.Count > 0)
+            {
+                query += " WHERE " + string.Join(" AND ", conditions);
+            }
+            if (ordenacao_nome_turma != "Nenhuma" && string.IsNullOrEmpty(ordenacao_cod_qualificacao))
+            {
+                query += " ORDER BY Turmas.nome_turma " + ordenacao_nome_turma;
+            }
+            if (string.IsNullOrEmpty(ordenacao_nome_turma) && ordenacao_cod_qualificacao != "Nenhuma")
+            {
+                query += " ORDER BY Cursos.cod_qualificacao " + ordenacao_cod_qualificacao;
+            }
+            if (ordenacao_nome_turma != "Nenhuma" && ordenacao_cod_qualificacao != "Nenhuma")
+            {
+                query += " ORDER BY Cursos.cod_qualificacao " + ordenacao_cod_qualificacao + ", Turmas.nome_turma " + ordenacao_nome_turma;
+            }
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 

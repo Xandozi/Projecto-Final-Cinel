@@ -20,7 +20,7 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <div id="div_validacoes" class="col-md-10" runat="server">
+                    <div id="div_inscricoes" class="col-md-10" runat="server">
                         <div id="card_formadores" class="card" style="border-color: #333; margin-top: 10px;" runat="server">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Módulos como Formador</h2>

@@ -12,21 +12,33 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["logged"] != "yes")
-            //{
-            //    Response.Redirect("login.aspx");
-            //}
-            //else if (!Validation.Check_IsStaff(Session["username"].ToString()))
-            //{
-            //    Response.Redirect("personal_zone.aspx");
-            //}
-            //else
-            //{
-            ddl_curso.Items.Insert(0, "Todos");
-            ddl_regime.Items.Insert(0, "Todos");
-            ddl_estado.Items.Insert(0, "Todos");
+            if (Session["logged"] != "yes")
+            {
+                Response.Redirect("login.aspx");
+            }
+            else if (!Validation.Check_IsStaff(Session["username"].ToString()))
+            {
+                Response.Redirect("personal_zone.aspx");
+            }
+            else
+            {
+                if (!Page.IsPostBack)
+                {
+                    ddl_curso.Items.Insert(0, new ListItem("Todos", "0"));
+                    ddl_regime.Items.Insert(0, new ListItem("Todos", "0"));
+                    ddl_estado.Items.Insert(0, new ListItem("Todos", "0"));
+                    ddl_area.Items.Insert(0, new ListItem("Todos", "0"));
+
+                    ddl_curso.SelectedIndex = 0;
+                    ddl_regime.SelectedIndex = 0;
+                    ddl_estado.SelectedIndex = 0;
+                    ddl_area.SelectedIndex = 0;
+
+                    tb_cod_qualificacao.Text = "0";
+                }
+
                 BindData();
-            //}
+            }
         }
 
         protected void btn_previous_turmas_Click(object sender, EventArgs e)
@@ -43,36 +55,42 @@ namespace Projeto_Final
 
         private void BindData()
         {
-            //string sort_username = "";
-            //string email = tb_email.Text;
-            //string username = tb_username.Text;
-            //int perfil = 0;
-            //int cod_user = 0;
-            //int estado = Convert.ToInt32(ddl_estado.SelectedValue);
+            string nome_turma = tb_nome_turma.Text;
+            int cod_qualificacao = Convert.ToInt32(tb_cod_qualificacao.Text);
+            int cod_curso = Convert.ToInt32(ddl_curso.SelectedValue);
+            int cod_regime = Convert.ToInt32(ddl_regime.SelectedValue);
+            int cod_area = Convert.ToInt32(ddl_area.SelectedValue);
+            string ordenacao_nome_turma = ddl_sort_nome_turma.SelectedValue;
+            string ordenacao_cod_qualificacao = ddl_sort_cod_qualificacao.SelectedValue;
+            string duracao = ddl_duracao.SelectedValue;
+            int cod_turma_estado = Convert.ToInt32(ddl_estado.SelectedValue);
 
-            //if (ddl_perfil.SelectedIndex != 0)
-            //    perfil = Convert.ToInt32(ddl_perfil.SelectedValue);
+            DateTime inicio_data_inicio = DateTime.MinValue;
+            DateTime fim_data_inicio = DateTime.Today;
 
-            //if (tb_cod_user.Text != "")
-            //    cod_user = Convert.ToInt32(tb_cod_user.Text);
+            DateTime inicio_data_fim = DateTime.MinValue;
+            DateTime fim_data_fim = DateTime.Today;
 
-            //if (ddl_sort_username.SelectedIndex != 0)
-            //    sort_username = ddl_sort_username.SelectedValue;
+            if (DateTime.TryParse(tb_data_inicio_inicio.Text, out DateTime inicio))
+                inicio_data_inicio = inicio;
 
-            //DateTime data_inicio = DateTime.MinValue;
-            //DateTime data_fim = DateTime.Today;
+            if (DateTime.TryParse(tb_data_fim_inicio.Text, out DateTime fim))
+                fim_data_inicio = fim;
 
-            //if (DateTime.TryParse(tb_data_inicio.Text, out DateTime inicio))
-            //    data_inicio = inicio;
+            if (DateTime.TryParse(tb_data_inicio_fim.Text, out DateTime inicio2))
+                inicio_data_fim = inicio2;
 
-            //if (DateTime.TryParse(tb_data_fim.Text, out DateTime fim))
-            //    data_fim = fim;
+            if (DateTime.TryParse(tb_data_fim_inicio.Text, out DateTime fim2))
+                fim_data_fim = fim2;
 
-            //string inicio_formatado = data_inicio.ToString("yyyy-MM-dd");
-            //string fim_formatado = data_fim.ToString("yyyy-MM-dd");
+            string inicio_inicio_formatado = inicio_data_inicio.ToString("yyyy-MM-dd");
+            string fim_inicio_formatado = fim_data_inicio.ToString("yyyy-MM-dd");
+
+            string inicio_fim_formatado = inicio_data_fim.ToString("yyyy-MM-dd");
+            string fim_fim_formatado = fim_data_fim.ToString("yyyy-MM-dd");
 
             PagedDataSource pagedData = new PagedDataSource();
-            pagedData.DataSource = Turmas.Ler_TurmasAll(); ;
+            pagedData.DataSource = Turmas.Ler_TurmasAll(nome_turma, cod_qualificacao, cod_curso, cod_regime, inicio_inicio_formatado, fim_inicio_formatado, inicio_fim_formatado, fim_fim_formatado, cod_area, ordenacao_nome_turma, ordenacao_cod_qualificacao, duracao, cod_turma_estado);
             pagedData.AllowPaging = true;
             pagedData.PageSize = 24;
             pagedData.CurrentPageIndex = PageNumber;
@@ -103,7 +121,7 @@ namespace Projeto_Final
 
         protected void btn_aplicar_filtros_Click(object sender, EventArgs e)
         {
-
+            filterForm.Style["display"] = "block";
         }
     }
 }

@@ -141,13 +141,22 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.DropDownList ddl_area;
 
         /// <summary>
-        /// ddl_sort_nome_curso control.
+        /// areas control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_sort_nome_curso;
+        protected global::System.Web.UI.WebControls.SqlDataSource areas;
+
+        /// <summary>
+        /// ddl_sort_nome_turma control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_sort_nome_turma;
 
         /// <summary>
         /// ddl_sort_cod_qualificacao control.

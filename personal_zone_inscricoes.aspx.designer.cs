@@ -33,13 +33,13 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Button btn_logout2;
 
         /// <summary>
-        /// div_validacoes control.
+        /// div_inscricoes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_validacoes;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_inscricoes;
 
         /// <summary>
         /// card_formadores control.

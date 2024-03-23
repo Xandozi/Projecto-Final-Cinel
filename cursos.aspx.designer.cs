@@ -42,6 +42,24 @@ namespace Projeto_Final
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl filterForm;
 
         /// <summary>
+        /// ddl_area control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_area;
+
+        /// <summary>
+        /// areas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource areas;
+
+        /// <summary>
         /// tb_designacao control.
         /// </summary>
         /// <remarks>
@@ -51,13 +69,13 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.TextBox tb_designacao;
 
         /// <summary>
-        /// tb_duracao control.
+        /// ddl_duracao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_duracao;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_duracao;
 
         /// <summary>
         /// tb_cod_qualificacao control.

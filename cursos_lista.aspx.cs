@@ -12,6 +12,11 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                ddl_area.Items.Insert(0, new ListItem("Todas", "0"));
+            }
+
             BindData();
         }
 
@@ -29,9 +34,10 @@ namespace Projeto_Final
 
         private void BindData()
         {
+            int cod_area = Convert.ToInt32(ddl_area.SelectedValue);
             string sort_cod_qualificacao = "";
-            int duracao_curso;
             int cod_qualificacao;
+            string duracao = ddl_duracao.SelectedValue;
 
             if (ddl_cod_ufcd.SelectedIndex == 0)
                 sort_cod_qualificacao = "";
@@ -47,11 +53,6 @@ namespace Projeto_Final
             if (DateTime.TryParse(tb_data_fim.Text, out DateTime fim))
                 data_fim = fim;
 
-            if (tb_duracao.Text == "")
-                duracao_curso = 0;
-            else
-                duracao_curso = Convert.ToInt32(tb_duracao.Text);
-
             if (tb_cod_qualificacao.Text == "")
                 cod_qualificacao = 0;
             else
@@ -61,7 +62,7 @@ namespace Projeto_Final
             string fim_formatado = data_fim.ToString("yyyy-MM-dd");
 
             PagedDataSource pagedData = new PagedDataSource();
-            pagedData.DataSource = Cursos.Ler_CursosAll(tb_designacao.Text, duracao_curso, inicio_formatado, fim_formatado, cod_qualificacao, sort_cod_qualificacao, 1);
+            pagedData.DataSource = Cursos.Ler_CursosAll(cod_area, tb_designacao.Text, duracao, inicio_formatado, fim_formatado, cod_qualificacao, sort_cod_qualificacao, 1);
             pagedData.AllowPaging = true;
             pagedData.PageSize = 24;
             pagedData.CurrentPageIndex = PageNumber;
