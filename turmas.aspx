@@ -159,7 +159,7 @@
                                         <ItemTemplate>
                                             <div class="col-md-4">
                                                 <div class="card" style="margin: 5px;">
-                                                    <a href="turmas_detalhe.aspx?cod_user=<%# Eval("cod_turma") %>" style="text-decoration: none;">
+                                                    <a href="turmas_detalhe.aspx?cod_turma=<%# Eval("cod_turma") %>" style="text-decoration: none;">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><%# Eval("nome_turma") %></h5>
                                                             <p class="card-text">Cód. Qual: <%# Eval("cod_qualificacao") %></p>

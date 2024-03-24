@@ -23,7 +23,7 @@ namespace Projeto_Final.Classes
         public int cod_turmas_estado { get; set; }
         public string estado { get; set; }
         public List<Formandos> formandos { get; set; }
-        public List<Formadores> formadores { get; set; }
+        public List<Formadores_Modulos> formadores_modulos { get; set; }
 
         public static void Inserir_Turma(int cod_curso, DateTime data_inicio, int cod_regime, List<Formandos> formandos, List<Formadores_Modulos> formadores_modulos)
         {
@@ -201,6 +201,52 @@ namespace Projeto_Final.Classes
             myConn.Close();
 
             return lst_turmas;
+        }
+
+        public static List<Turmas> Ler_Turma(int cod_turma)
+        {
+            List<Turmas> lst_turma = new List<Turmas>();
+
+            string query = $"select Turmas.cod_turma, Turmas.cod_curso, Turmas.nome_turma, Turmas.data_inicio, Turmas.data_fim, Cursos.cod_qualificacao, Turmas.cod_regime, Regime.regime, " +
+                $"Cursos.duracao_estagio + (select SUM(Modulos.duracao) from Modulos join Cursos_Modulos on Modulos.cod_modulo = Cursos_Modulos.cod_modulo where Cursos_Modulos.cod_curso = Cursos.cod_curso) as total_duracao, " +
+                $"Turmas.cod_turmas_estado, Turmas_Estado.turma_estado, Cursos.nome_curso from Turmas " +
+                $"join Turmas_Estado on Turmas_Estado.cod_turmas_estado = Turmas.cod_turmas_estado " +
+                $"join Cursos on Cursos.cod_curso = Turmas.cod_curso " +
+                $"join Regime on Regime.cod_regime = Turmas.cod_regime " +
+                $"where Turmas.cod_turma = {cod_turma}";
+
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            SqlCommand myCommand = new SqlCommand(query, myConn);
+
+            myConn.Open();
+
+            SqlDataReader dr = myCommand.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Turmas informacao = new Turmas();
+                informacao.cod_turma = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
+                informacao.cod_curso = !dr.IsDBNull(1) ? dr.GetInt32(1) : 000;
+                informacao.nome_turma = !dr.IsDBNull(2) ? dr.GetString(2) : null;
+                informacao.data_inicio = !dr.IsDBNull(3) ? dr.GetDateTime(3) : default(DateTime);
+                informacao.data_fim = !dr.IsDBNull(4) ? dr.GetDateTime(4) : default(DateTime);
+                informacao.cod_qualificacao = !dr.IsDBNull(5) ? dr.GetInt32(5) : 000;
+                informacao.cod_regime = !dr.IsDBNull(6) ? dr.GetInt32(6) : 000;
+                informacao.regime = !dr.IsDBNull(7) ? dr.GetString(7) : null;
+                informacao.duracao_curso = !dr.IsDBNull(8) ? dr.GetInt32(8) : 000;
+                informacao.cod_turmas_estado = !dr.IsDBNull(9) ? dr.GetInt32(9) : 000;
+                informacao.estado = !dr.IsDBNull(10) ? dr.GetString(10) : null;
+                informacao.nome_curso = !dr.IsDBNull(11) ? dr.GetString(11) : null;
+                informacao.formadores_modulos = Formadores_Modulos.Ler_Formadores_Modulos_Turma(cod_turma);
+                informacao.formandos = Formandos.Ler_Formandos_Turma(cod_turma);
+
+                lst_turma.Add(informacao);
+            }
+
+            myConn.Close();
+
+            return lst_turma;
         }
     }
 }

@@ -164,6 +164,7 @@
     <Content Include="salas_detalhe.aspx" />
     <Content Include="sobre_nos.aspx" />
     <Content Include="turmas.aspx" />
+    <Content Include="turmas_detalhe.aspx" />
     <Content Include="utilizadores.aspx" />
     <Content Include="utilizadores_detalhe.aspx" />
     <Content Include="Web.config" />
@@ -400,6 +401,13 @@
     </Compile>
     <Compile Include="turmas.aspx.designer.cs">
       <DependentUpon>turmas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="turmas_detalhe.aspx.cs">
+      <DependentUpon>turmas_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="turmas_detalhe.aspx.designer.cs">
+      <DependentUpon>turmas_detalhe.aspx</DependentUpon>
     </Compile>
     <Compile Include="utilizadores.aspx.cs">
       <DependentUpon>utilizadores.aspx</DependentUpon>
