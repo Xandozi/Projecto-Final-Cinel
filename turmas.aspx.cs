@@ -12,18 +12,20 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["logged"] != "yes")
-            //{
-            //    Response.Redirect("login.aspx");
-            //}
-            //else if (!Validation.Check_IsStaff(Session["username"].ToString()))
-            //{
-            //    Response.Redirect("personal_zone.aspx");
-            //}
-            //else
-            //{
+            if (Session["logged"] != "yes")
+            {
+                Response.Redirect("login.aspx");
+            }
+            else if (!Validation.Check_IsStaff(Session["username"].ToString()))
+            {
+                Response.Redirect("personal_zone.aspx");
+            }
+            else
+            {
                 if (!Page.IsPostBack)
                 {
+                    Turmas.Check_Estado_Turmas();
+
                     ddl_curso.Items.Insert(0, new ListItem("Todos", "0"));
                     ddl_regime.Items.Insert(0, new ListItem("Todos", "0"));
                     ddl_estado.Items.Insert(0, new ListItem("Todos", "0"));
@@ -38,7 +40,7 @@ namespace Projeto_Final
                 }
 
                 BindData();
-            //    }
+            }
         }
 
         protected void btn_previous_turmas_Click(object sender, EventArgs e)
