@@ -157,18 +157,18 @@
                                 <div class="row">
                                     <asp:Repeater ID="rpt_turmas" runat="server">
                                         <ItemTemplate>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="card" style="margin: 5px;">
                                                     <a href="turmas_detalhe.aspx?cod_turma=<%# Eval("cod_turma") %>" style="text-decoration: none;">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><%# Eval("nome_turma") %></h5>
-                                                            <p class="card-text">Cód. Qual: <%# Eval("cod_qualificacao") %></p>
-                                                            <p class="card-text">Curso: <%# Eval("nome_curso") %></p>
-                                                            <p class="card-text">Regime: <%# Eval("regime") %></p>
-                                                            <p class="card-text">Duração: <%# Eval("duracao_curso") %>h</p>
-                                                            <p class="card-text">Data Início: <%# Eval("data_inicio", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Data Fim: <%# Eval("data_fim", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Estado: <%# Eval("estado") %></p>
+                                                            <p class="card-text">Cód. Qual: <b><%# Eval("cod_qualificacao") %></b></p>
+                                                            <p class="card-text">Curso: <b><%# Eval("nome_curso") %></b></p>
+                                                            <p class="card-text">Regime: <b><%# Eval("regime") %></b></p>
+                                                            <p class="card-text">Duração: <b><%# Eval("duracao_curso") %>h</b></p>
+                                                            <p class="card-text">Data Início: <b><%# Eval("data_inicio", "{0:dd/MM/yyyy}") %></b></p>
+                                                            <p class="card-text">Data Fim: <b><%# Eval("data_fim", "{0:dd/MM/yyyy}") %></b></p>
+                                                            <p class="card-text">Estado: <b><%# Eval("estado") %></b></p>
                                                         </div>
                                                     </a>
                                                 </div>

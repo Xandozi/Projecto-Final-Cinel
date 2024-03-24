@@ -78,6 +78,15 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Label lbl_data_inicio;
 
         /// <summary>
+        /// lbl_data_fim control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_data_fim;
+
+        /// <summary>
         /// lbl_estado control.
         /// </summary>
         /// <remarks>
@@ -123,13 +132,13 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.ListBox lstb_formandos;
 
         /// <summary>
-        /// btn_editar control.
+        /// btn_cancelar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_editar;
+        protected global::System.Web.UI.WebControls.Button btn_cancelar;
 
         /// <summary>
         /// lbl_mensagem control.
@@ -139,5 +148,86 @@ namespace Projeto_Final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_mensagem;
+
+        /// <summary>
+        /// lbl_formandos_modal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_formandos_modal;
+
+        /// <summary>
+        /// lbl_formandos_elegiveis_modal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_formandos_elegiveis_modal;
+
+        /// <summary>
+        /// lstb_formandos_legiveis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lstb_formandos_legiveis;
+
+        /// <summary>
+        /// btn_add_formandos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_add_formandos;
+
+        /// <summary>
+        /// btn_remove_formandos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_remove_formandos;
+
+        /// <summary>
+        /// lbl_mensagem_formandos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_mensagem_formandos;
+
+        /// <summary>
+        /// lbl_formandos_turma_modal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_formandos_turma_modal;
+
+        /// <summary>
+        /// lstb_formandos_turma control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lstb_formandos_turma;
+
+        /// <summary>
+        /// btn_gravar_alteracoes_formandos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_gravar_alteracoes_formandos;
     }
 }

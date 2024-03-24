@@ -248,5 +248,21 @@ namespace Projeto_Final.Classes
 
             return lst_turma;
         }
+
+        public static void Check_Estado_Turmas()
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Check_Turmas_Estado";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                myConn.Close();
+            }
+        }
     }
 }
