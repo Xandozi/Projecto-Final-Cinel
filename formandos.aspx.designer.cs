@@ -42,85 +42,94 @@ namespace Projeto_Final
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl filterForm;
 
         /// <summary>
-        /// tb_username control.
+        /// tb_nome_turma control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_username;
+        protected global::System.Web.UI.WebControls.TextBox tb_nome_turma;
 
         /// <summary>
-        /// tb_cod_user control.
+        /// tb_nome_formando control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_cod_user;
+        protected global::System.Web.UI.WebControls.TextBox tb_nome_formando;
 
         /// <summary>
-        /// ddl_perfil control.
+        /// ddl_curso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_perfil;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_curso;
 
         /// <summary>
-        /// perfis control.
+        /// cursos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource perfis;
+        protected global::System.Web.UI.WebControls.SqlDataSource cursos;
 
         /// <summary>
-        /// tb_email control.
+        /// ddl_regime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_email;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_regime;
 
         /// <summary>
-        /// tb_data_inicio control.
+        /// regimes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_data_inicio;
+        protected global::System.Web.UI.WebControls.SqlDataSource regimes;
 
         /// <summary>
-        /// tb_data_fim control.
+        /// ddl_ordem_nome_formando control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_data_fim;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_ordem_nome_formando;
 
         /// <summary>
-        /// ddl_sort_username control.
+        /// ddl_ordem_nome_turma control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_sort_username;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_ordem_nome_turma;
 
         /// <summary>
-        /// ddl_estado control.
+        /// ddl_estado_inscricao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_estado;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_estado_inscricao;
+
+        /// <summary>
+        /// estado_inscricao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource estado_inscricao;
 
         /// <summary>
         /// btn_aplicar_filtros control.
@@ -159,13 +168,13 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.LinkButton btn_next_top;
 
         /// <summary>
-        /// rpt_users control.
+        /// rpt_formandos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_users;
+        protected global::System.Web.UI.WebControls.Repeater rpt_formandos;
 
         /// <summary>
         /// btn_previous control.

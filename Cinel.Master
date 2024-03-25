@@ -156,7 +156,7 @@
                                     <a href="home.aspx" class="nav-item nav-link <%= IsActivePage("home.aspx") %>">Home</a>
                                     <a href="sobre_nos.aspx" class="nav-item nav-link <%= IsActivePage("sobre_nos.aspx") %>">Sobre Nós</a>
                                     <a href="cursos_lista.aspx" class="nav-item nav-link <%= IsActivePage("cursos_lista.aspx") %>">Cursos</a>
-                                    <a href="formadores_lista.aspx" class="nav-item nav-link <%= IsActivePage("formadores.aspx") %>">Formadores</a>
+                                    <a href="formadores_lista.aspx" class="nav-item nav-link <%= IsActivePage("formadores_lista.aspx") %>">Formadores</a>
                                     <a href="contactos.aspx" class="nav-item nav-link <%= IsActivePage("contactos.aspx") %>">Contactos</a>
                                 </div>
 
