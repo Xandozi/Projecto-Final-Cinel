@@ -139,9 +139,10 @@ namespace Projeto_Final.Classes
 
             string query = $"select Formandos.cod_formando, Formandos.cod_inscricao, Users.nome_proprio, Users.apelido from Formandos " +
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formandos.cod_inscricao " +
+                           $"join Inscricoes_Situacao on Inscricoes_Situacao.cod_inscricao = Inscricoes.cod_inscricao " +
                            $"join Users on Users.cod_user = Inscricoes.cod_user " +
                            $"join Turmas_Formandos on Turmas_Formandos.cod_formando = Formandos.cod_formando " +
-                           $"where Turmas_Formandos.cod_turma = {cod_turma}";
+                           $"where Turmas_Formandos.cod_turma = {cod_turma} and Inscricoes_Situacao.cod_situacao = 1";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -166,6 +167,26 @@ namespace Projeto_Final.Classes
             myConn.Close();
 
             return lst_formandos;
+        }
+
+        public static void Alterar_Estado_Formando(int cod_formando)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_formando", cod_formando);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Edit_Inscricoes_Situacao_Formando";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+                myConn.Close();
+            }
         }
     }
 }
