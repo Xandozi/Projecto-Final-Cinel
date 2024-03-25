@@ -164,6 +164,8 @@
     <Content Include="salas_detalhe.aspx" />
     <Content Include="sobre_nos.aspx" />
     <Content Include="turmas.aspx" />
+    <Content Include="turmas_adicionar_formandos.aspx" />
+    <Content Include="turmas_cancelar_formandos.aspx" />
     <Content Include="turmas_detalhe.aspx" />
     <Content Include="utilizadores.aspx" />
     <Content Include="utilizadores_detalhe.aspx" />
@@ -401,6 +403,20 @@
     </Compile>
     <Compile Include="turmas.aspx.designer.cs">
       <DependentUpon>turmas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="turmas_adicionar_formandos.aspx.cs">
+      <DependentUpon>turmas_adicionar_formandos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="turmas_adicionar_formandos.aspx.designer.cs">
+      <DependentUpon>turmas_adicionar_formandos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="turmas_cancelar_formandos.aspx.cs">
+      <DependentUpon>turmas_cancelar_formandos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="turmas_cancelar_formandos.aspx.designer.cs">
+      <DependentUpon>turmas_cancelar_formandos.aspx</DependentUpon>
     </Compile>
     <Compile Include="turmas_detalhe.aspx.cs">
       <DependentUpon>turmas_detalhe.aspx</DependentUpon>
