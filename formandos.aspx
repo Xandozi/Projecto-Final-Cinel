@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="formandos.aspx.cs" Inherits="Projeto_Final.formandos" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -10,65 +11,57 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Username:</label>
-                                <asp:TextBox ID="tb_username" CssClass="form-control" runat="server" Style="margin-left: 5px;" MaxLength="50"></asp:TextBox>
+                                <label>Nome Turma:</label>
+                                <asp:TextBox ID="tb_nome_turma" CssClass="form-control" runat="server" Style="margin-left: 5px;" MaxLength="50" placeholder="Nome Turma..."></asp:TextBox>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Código User:</label>
-                                <asp:TextBox ID="tb_cod_user" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Number"></asp:TextBox>
+                                <label>Nome Formando:</label>
+                                <asp:TextBox ID="tb_nome_formando" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="SingleLine" placeholder="Nome Formando..."></asp:TextBox>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Perfil:</label>
-                                <asp:DropDownList ID="ddl_perfil" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="perfis" DataTextField="perfil" DataValueField="cod_perfil"></asp:DropDownList>
-                                <asp:SqlDataSource runat="server" ID="perfis" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Perfis]"></asp:SqlDataSource>
+                                <label>Curso:</label>
+                                <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="cursos" DataTextField="nome_curso" DataValueField="cod_curso"></asp:DropDownList>
+                                <asp:SqlDataSource runat="server" ID="cursos" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [nome_curso], [cod_curso] FROM [Cursos]"></asp:SqlDataSource>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Email:</label>
-                                <asp:TextBox ID="tb_email" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="SingleLine" MaxLength="100"></asp:TextBox>
+                                <label>Regime:</label>
+                                <asp:DropDownList ID="ddl_regime" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="regimes" DataTextField="regime" DataValueField="cod_regime"></asp:DropDownList>
+                                <asp:SqlDataSource runat="server" ID="regimes" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Regime]"></asp:SqlDataSource>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-11">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Início do Intervalo da Data de Nascimento:</label>
-                                        <asp:TextBox ID="tb_data_inicio" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Date" placeholder="Data de início"></asp:TextBox>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Fim do Intervalo da Data de Nascimento:</label>
-                                        <asp:TextBox ID="tb_data_fim" CssClass="form-control" runat="server" Style="margin-left: 5px;" TextMode="Date" placeholder="Data de fim"></asp:TextBox>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Ordenação Username:</label>
-                                        <asp:DropDownList ID="ddl_sort_username" CssClass="form-control" runat="server" Style="margin-left: 5px;">
-                                            <asp:ListItem>Nenhuma</asp:ListItem>
-                                            <asp:ListItem Value="asc">A-Z</asp:ListItem>
-                                            <asp:ListItem Value="desc">Z-A</asp:ListItem>
-                                        </asp:DropDownList>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Estado:</label>
-                                        <asp:DropDownList ID="ddl_estado" CssClass="form-control" runat="server" Style="margin-left: 5px;">
-                                            <asp:ListItem Value="2">Todos</asp:ListItem>
-                                            <asp:ListItem Value="1">Ativo</asp:ListItem>
-                                            <asp:ListItem Value="0">Inativo</asp:ListItem>
-                                        </asp:DropDownList>
-                                    </div>
-                                </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Ordenação Nome Formando:</label>
+                                <asp:DropDownList ID="ddl_ordem_nome_formando" CssClass="form-control" runat="server" Style="margin-left: 5px;">
+                                    <asp:ListItem>Nenhuma</asp:ListItem>
+                                    <asp:ListItem Value="asc">A-Z</asp:ListItem>
+                                    <asp:ListItem Value="desc">Z-A</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Ordenação Nome Turma:</label>
+                                <asp:DropDownList ID="ddl_ordem_nome_turma" CssClass="form-control" runat="server" Style="margin-left: 5px;">
+                                    <asp:ListItem>Nenhuma</asp:ListItem>
+                                    <asp:ListItem Value="asc">A-Z</asp:ListItem>
+                                    <asp:ListItem Value="desc">Z-A</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Estado Inscrição:</label>
+                                <asp:DropDownList ID="ddl_estado_inscricao" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="estado_inscricao" DataTextField="situacao" DataValueField="cod_situacao"></asp:DropDownList>
+                                <asp:SqlDataSource runat="server" ID="estado_inscricao" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_situacao], [situacao] FROM [Situacao]"></asp:SqlDataSource>
                             </div>
                         </div>
                         <div class="col-md-1 d-flex justify-content-end align-items-end">
@@ -77,19 +70,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="utilizadores.aspx" class="list-group-item list-group-item-action active">Utilizadores</a>
-                            <a href="formadores.aspx" class="list-group-item list-group-item-action">Formadores</a>
-                            <a href="formandos.aspx" class="list-group-item list-group-item-action">Formandos</a>
+                            <a href="formandos.aspx" class="list-group-item list-group-item-action active">Formandos</a>
                             <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
                             <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
@@ -122,23 +109,17 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <asp:Repeater ID="rpt_users" runat="server">
+                                    <asp:Repeater ID="rpt_formandos" runat="server">
                                         <ItemTemplate>
                                             <div class="col-md-4">
                                                 <div class="card" style="margin: 5px;">
                                                     <a href="utilizadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><%# Eval("username") %></h5>
-                                                            <p class="card-text">Nome Completo: <%# Eval("nome_proprio") + " " + Eval("apelido") %></p>
-                                                            <p class="card-text">Email: <%# Eval("email") %></p>
-                                                            <p class="card-text">Data de Nascimento: <%# Eval("data_nascimento", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Perfil/Perfis: <%# Eval("perfis") %></p>
-                                                            <p class="card-text">
-                                                                Estado: 
-                                                                <span class='<%# Convert.ToBoolean(Eval("ativo")) ? "ativo" : "inativo" %>'>
-                                                                    <%# Convert.ToBoolean(Eval("ativo")) ? "Ativo" : "Inativo" %>
-                                                                </span>
-                                                            </p>
+                                                            <p class="card-text">Nome Completo: <b><%# Eval("nome_proprio") + " " + Eval("apelido") %></b></p>
+                                                            <p class="card-text">Turma: <b><%# Eval("nome_turma") %></b></p>
+                                                            <p class="card-text">Curso: <b><%# Eval("nome_curso") %></b></p>
+                                                            <p class="card-text">Regime: <b><%# Eval("regime") %></b></p>
+                                                            <p class="card-text">Estado Matrícula: <b><%# Eval("situacao") %></b></p>
                                                         </div>
                                                     </a>
                                                 </div>
