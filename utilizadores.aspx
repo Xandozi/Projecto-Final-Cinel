@@ -128,12 +128,12 @@
                                                 <div class="card" style="margin: 5px;">
                                                     <a href="utilizadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><%# Eval("username") %></h5>
-                                                            <p class="card-text">Nome Completo: <%# Eval("nome_proprio") + " " + Eval("apelido") %></p>
-                                                            <p class="card-text">Email: <%# Eval("email") %></p>
-                                                            <p class="card-text">Data de Nascimento: <%# Eval("data_nascimento", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Perfil/Perfis: <%# Eval("perfis") %></p>
-                                                            <p class="card-text">
+                                                            <h5 class="card-title"><b><%# Eval("username") %></b></h5>
+                                                            <p class="card-text" style="color: black;">Nome Completo: <span style="color: orangered"><%# Eval("nome_proprio") + " " + Eval("apelido") %></span></p>
+                                                            <p class="card-text" style="color: black;">Email: <span style="color: orangered"><%# Eval("email") %></span></p>
+                                                            <p class="card-text" style="color: black;">Data de Nascimento: <span style="color: orangered"><%# Eval("data_nascimento", "{0:dd/MM/yyyy}") %></span></p>
+                                                            <p class="card-text" style="color: black;">Perfil/Perfis: <span style="color: orangered"><%# Eval("perfis") %></span></p>
+                                                            <p class="card-text" style="color: black;">
                                                                 Estado: 
                                                                 <span class='<%# Convert.ToBoolean(Eval("ativo")) ? "ativo" : "inativo" %>'>
                                                                     <%# Convert.ToBoolean(Eval("ativo")) ? "Ativo" : "Inativo" %>

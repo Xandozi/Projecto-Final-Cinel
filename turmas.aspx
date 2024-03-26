@@ -161,14 +161,14 @@
                                                 <div class="card" style="margin: 5px;">
                                                     <a href="turmas_detalhe.aspx?cod_turma=<%# Eval("cod_turma") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><%# Eval("nome_turma") %></h5>
-                                                            <p class="card-text">Cód. Qual: <b><%# Eval("cod_qualificacao") %></b></p>
-                                                            <p class="card-text">Curso: <b><%# Eval("nome_curso") %></b></p>
-                                                            <p class="card-text">Regime: <b><%# Eval("regime") %></b></p>
-                                                            <p class="card-text">Duração: <b><%# Eval("duracao_curso") %>h</b></p>
-                                                            <p class="card-text">Data Início: <b><%# Eval("data_inicio", "{0:dd/MM/yyyy}") %></b></p>
-                                                            <p class="card-text">Data Fim: <b><%# Eval("data_fim", "{0:dd/MM/yyyy}") %></b></p>
-                                                            <p class="card-text">Estado: <b><%# Eval("estado") %></b></p>
+                                                            <h5 class="card-title"><b><%# Eval("nome_turma") %></b></h5>
+                                                            <p class="card-text" style="color: black;">Cód. Qual: <span style="color: orangered"><%# Eval("cod_qualificacao") %></span></p>
+                                                            <p class="card-text" style="color: black;">Curso: <span style="color: orangered"><%# Eval("nome_curso") %></span></p>
+                                                            <p class="card-text" style="color: black;">Regime: <span style="color: orangered"><%# Eval("regime") %></span></p>
+                                                            <p class="card-text" style="color: black;">Duração: <span style="color: orangered"><%# Eval("duracao_curso") %>h</span></p>
+                                                            <p class="card-text" style="color: black;">Data Início: <span style="color: orangered"><%# Eval("data_inicio", "{0:dd/MM/yyyy}") %></span></p>
+                                                            <p class="card-text" style="color: black;">Data Fim: <span style="color: orangered"><%# Eval("data_fim", "{0:dd/MM/yyyy}") %></span></p>
+                                                            <p class="card-text" style="color: black;">Estado: <span style="color: orangered"><%# Eval("estado") %></span></p>
                                                         </div>
                                                     </a>
                                                 </div>

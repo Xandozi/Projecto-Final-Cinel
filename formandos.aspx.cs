@@ -54,7 +54,7 @@ namespace Projeto_Final
             PagedDataSource pagedData = new PagedDataSource();
             pagedData.DataSource = Formandos.Ler_Formandos(nome_turma, nome_formando, cod_curso, cod_regime, ordenacao_nome_turma, ordenacao_nome_formando, cod_inscricao_situacao);
             pagedData.AllowPaging = true;
-            pagedData.PageSize = 24;
+            pagedData.PageSize = 9;
             pagedData.CurrentPageIndex = PageNumber;
 
             rpt_formandos.DataSource = pagedData;
