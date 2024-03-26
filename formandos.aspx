@@ -115,11 +115,11 @@
                                                 <div class="card" style="margin: 5px;">
                                                     <a href="utilizadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <p class="card-text">Nome Completo: <b><%# Eval("nome_proprio") + " " + Eval("apelido") %></b></p>
-                                                            <p class="card-text">Turma: <b><%# Eval("nome_turma") %></b></p>
-                                                            <p class="card-text">Curso: <b><%# Eval("nome_curso") %></b></p>
-                                                            <p class="card-text">Regime: <b><%# Eval("regime") %></b></p>
-                                                            <p class="card-text">Estado Matrícula: <b><%# Eval("situacao") %></b></p>
+                                                            <h5 class="card-title"><b><%# Eval("nome_proprio") + " " + Eval("apelido") %></b></h5>
+                                                            <p class="card-text" style="color: black;">Turma: <span style="color: orangered"><%# Eval("nome_turma") %></span></p>
+                                                            <p class="card-text" style="color: black;">Curso: <span style="color: orangered"><%# Eval("nome_curso") %></span></p>
+                                                            <p class="card-text" style="color: black;">Regime: <span style="color: orangered"><%# Eval("regime") %></span></p>
+                                                            <p class="card-text" style="color: black;">Estado Matrícula: <span style="color: orangered"><%# Eval("situacao") %></span></p>
                                                         </div>
                                                     </a>
                                                 </div>

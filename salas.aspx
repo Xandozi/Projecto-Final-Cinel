@@ -115,11 +115,11 @@
                                                 <div class="card" style="margin: 5px;">
                                                     <a href="salas_detalhe.aspx?cod_sala=<%# Eval("cod_sala") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><%# Eval("nome_sala") %></h5>
-                                                            <p class="card-text">Código da Sala: <%# Eval("cod_sala") %></p>
-                                                            <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Último Update: <%# Eval("ultimo_update") %></p>
-                                                            <p class="card-text">
+                                                            <h5 class="card-title"><b><%# Eval("nome_sala") %></b></h5>
+                                                            <p class="card-text" style="color:black;">Código da Sala: <span style="color: orangered"><%# Eval("cod_sala") %></span></p>
+                                                            <p class="card-text" style="color:black;">Data de Criação: <span style="color: orangered"><%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></span></p>
+                                                            <p class="card-text" style="color:black;">Último Update: <span style="color: orangered"><%# Eval("ultimo_update") %></span></p>
+                                                            <p class="card-text" style="color:black;">
                                                                 Estado: 
                                                                 <span class='<%# Convert.ToBoolean(Eval("ativo")) ? "ativo" : "inativo" %>'>
                                                                     <%# Convert.ToBoolean(Eval("ativo")) ? "Ativo" : "Inativo" %>

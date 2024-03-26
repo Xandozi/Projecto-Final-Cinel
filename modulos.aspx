@@ -121,12 +121,12 @@
                                                 <div class="card" style="margin: 5px;">
                                                     <a href="modulos_detalhe.aspx?cod_modulo=<%# Eval("cod_modulo") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><%# Eval("nome_modulo") %></h5>
-                                                            <p class="card-text">Duração: <%# Eval("duracao") %> horas</p>
-                                                            <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Código UFCD: <%# Eval("cod_ufcd") %></p>
-                                                            <p class="card-text">Último Update: <%# Eval("ultimo_update") %></p>
-                                                            <p class="card-text">
+                                                            <h5 class="card-title"><b><%# Eval("nome_modulo") %></b></h5>
+                                                            <p class="card-text" style="color: black;">Duração: <span style="color: orangered"><%# Eval("duracao") %> horas</span></p>
+                                                            <p class="card-text" style="color: black;">Data de Criação: <span style="color: orangered"><%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></span></p>
+                                                            <p class="card-text" style="color: black;">Código UFCD: <span style="color: orangered"><%# Eval("cod_ufcd") %></span></p>
+                                                            <p class="card-text" style="color: black;">Último Update: <span style="color: orangered"><%# Eval("ultimo_update") %></span></p>
+                                                            <p class="card-text" style="color: black;">
                                                                 Estado: 
                                                                 <span class='<%# Convert.ToBoolean(Eval("ativo")) ? "ativo" : "inativo" %>'>
                                                                     <%# Convert.ToBoolean(Eval("ativo")) ? "Ativo" : "Inativo" %>
