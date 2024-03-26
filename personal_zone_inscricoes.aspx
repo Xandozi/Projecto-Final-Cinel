@@ -13,7 +13,7 @@
                     <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
                     <% if (Session["perfil"].ToString().Contains("Formador"))
                      { %>
-                    <a href="formador_disponibilidade.aspx" class="list-group-item list-group-item-action">Disponibilidade Formador</a>
+                    <a href="formador_disponibilidade.aspx?cod_user=<%= Session["cod_user"].ToString() %>" class="list-group-item list-group-item-action">Disponibilidade Formador</a>
                     <% } %>
                     <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="Terminar Sessão" OnClick="btn_logout2_Click" />
                 </div>
