@@ -97,6 +97,7 @@
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="formadores.aspx" />
     <Content Include="formadores_lista.aspx" />
+    <Content Include="formador_disponibilidade.aspx" />
     <Content Include="formandos.aspx" />
     <Content Include="gestao.aspx" />
     <Content Include="home.aspx" />
@@ -297,6 +298,13 @@
     </Compile>
     <Compile Include="formadores_lista.aspx.designer.cs">
       <DependentUpon>formadores_lista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="formador_disponibilidade.aspx.cs">
+      <DependentUpon>formador_disponibilidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="formador_disponibilidade.aspx.designer.cs">
+      <DependentUpon>formador_disponibilidade.aspx</DependentUpon>
     </Compile>
     <Compile Include="formandos.aspx.cs">
       <DependentUpon>formandos.aspx</DependentUpon>
