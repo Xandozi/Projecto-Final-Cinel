@@ -1,12 +1,55 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="formador_disponibilidade.aspx.cs" Inherits="Projeto_Final.formador_disponibilidade" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="card" style="border-color: #333; margin-top: 30px; margin-bottom: 30px;">
+        <div class="card-header bg-dark text-white">
+            <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Disponibilidade Formador</h2>
+        </div>
+        <div class="card" style="margin: 5px;">
+            <div class="card-body">
+                <div id='calendar' style="margin-top: 30px; margin-bottom: 10px;"></div>
+                <div class="row justify-content-between">
+                    <div class="form-group" style="margin: 10px;">
+                        <asp:Label ID="lbl_sabados" runat="server" Text="Selecionar como Indisponível"></asp:Label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="btn_SelecionarSabados" class="btn btn-dark">Sábados</button>
+                                <button id="btn_SelecionarSabadosManha" class="btn btn-dark">Sábados de manhã</button>
+                                <button id="btn_SelecionarSabadosTarde" class="btn btn-dark">Sábados de tarde</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin: 10px;">
+                        <asp:Label ID="Label1" runat="server" Text="Selecionar como Indisponível"></asp:Label>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <button id="btn_SelecionarDiasSemanaManha" class="btn btn-dark">Dias de semana manhã</button>
+                                <button id="btn_SelecionarDiasSemanaTarde" class="btn btn-dark">Dias de semana de tarde</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <button id="btn_SaveSelectedSlots"></button>
+
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
+        // Ensure the script runs after the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
             console.log("DOMContentLoaded event fired."); // Log DOMContentLoaded event
 
             var selectedSlots = []; // Array to store selected time slots
+            var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
+
+            // Function to check if the selected slot duration meets the minimum requirement
+            function isSlotDurationValid(info) {
+                var slotDuration = info.end.getTime() - info.start.getTime();
+                return slotDuration >= MIN_SLOT_DURATION && info.start.getMinutes() === 0;
+            }
 
             // Add events for national holidays to the selectedSlots array
             var holidays = [
@@ -109,6 +152,10 @@
                 allDaySlot: true,
                 selectable: true, // Enable selection
                 select: function (info) {
+                    if (!isSlotDurationValid(info)) {
+                        alert("Please select a slot of at least 1 hour starting at hour:00.");
+                        return;
+                    }
                     // Add selected time slot to the array
                     selectedSlots.push(info);
                     // Highlight selected time slot on the calendar
@@ -134,6 +181,16 @@
                     rendering: 'background',
                     color: '#ff0000'
                 });
+            });
+
+            // Add an eventClick callback to handle event deselection
+            calendar.setOption('eventClick', function (info) {
+                // Remove the event from selectedSlots array
+                selectedSlots = selectedSlots.filter(function (slot) {
+                    return !(slot.startStr === info.event.startStr && slot.endStr === info.event.endStr);
+                });
+                // Remove the event from the calendar
+                info.event.remove();
             });
 
             calendar.render();
@@ -196,7 +253,6 @@
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
             }
-
 
             // Function to select all Saturdays and mark them as "Não Disponível"
             function SelecionarSabados() {
@@ -291,44 +347,33 @@
                 SelecionarSabadosTarde();
                 event.preventDefault(); // Prevent default button behavior (e.g., form submission or postback)
             });
+
+            document.getElementById('btn_SaveSelectedSlots').addEventListener('click', function (event) {
+                // Extract startStr and endStr values from selectedSlots array
+                var slotStrings = selectedSlots.map(function (slot) {
+                    return slot.startStr + ',' + slot.endStr;
+                });
+
+                // Call the server-side method using AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "formador_disponibilidade.aspx/ProcessSelectedSlots", // Specify your page and method name
+                    data: JSON.stringify({ selectedSlots: slotStrings }), // Send the string array directly
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        // Handle success response if needed
+                        console.log("Data sent successfully to server.");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle error
+                        console.error("Error occurred while sending data to server.");
+                    }
+                });
+                event.preventDefault(); // Prevent default button behavior
+            });
         });
 
     </script>
-</asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="card" style="border-color: #333; margin-top: 30px; margin-bottom: 30px;">
-        <div class="card-header bg-dark text-white">
-            <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Disponibilidade Formador</h2>
-        </div>
-        <div class="card" style="margin: 5px;">
-            <div class="card-body">
-                <div id='calendar' style="margin-top: 30px; margin-bottom: 10px;"></div>
-                <div class="row justify-content-between">
-                    <div class="form-group" style="margin: 10px;">
-                        <asp:Label ID="lbl_sabados" runat="server" Text="Selecionar como Indisponível"></asp:Label>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button id="btn_SelecionarSabados" class="btn btn-dark">Sábados</button>
-                                <button id="btn_SelecionarSabadosManha" class="btn btn-dark">Sábados de manhã</button>
-                                <button id="btn_SelecionarSabadosTarde" class="btn btn-dark">Sábados de tarde</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin: 10px;">
-                        <asp:Label ID="Label1" runat="server" Text="Selecionar como Indisponível"></asp:Label>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <button id="btn_SelecionarDiasSemanaManha" class="btn btn-dark">Dias de semana manhã</button>
-                                <button id="btn_SelecionarDiasSemanaTarde" class="btn btn-dark">Dias de semana de tarde</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </asp:Content>
-
-
