@@ -45,60 +45,61 @@
             var selectedSlots = []; // Array to store selected time slots
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
 
-            // Function to check if the selected slot duration meets the minimum requirement
+            // Function to check if the selected slot duration meets the minimum requirement and starts and ends on the hour
             function isSlotDurationValid(info) {
                 var slotDuration = info.end.getTime() - info.start.getTime();
-                return slotDuration >= MIN_SLOT_DURATION && info.start.getMinutes() === 0;
+                return slotDuration >= MIN_SLOT_DURATION && info.start.getMinutes() === 0 && info.end.getMinutes() === 0;
             }
 
             // Add events for national holidays to the selectedSlots array
             var holidays = [
                 {
                     title: 'Ano Novo',
-                    start: '2024-01-01',
-                    end: '2024-01-01',
+                    start: '2024-01-01T08:00:00',
+                    end: '2024-01-01T23:00:00',
                 },
                 {
                     title: 'Dia da Liberdade',
-                    start: '2024-04-25',
-                    end: '2024-04-25',
+                    start: '2024-04-25T08:00:00',
+                    end: '2024-04-25T23:00:00',
                 },
                 {
                     title: 'Dia do Trabalhador',
-                    start: '2024-05-01',
-                    end: '2024-05-01',
+                    start: '2024-05-01T08:00:00',
+                    end: '2024-05-01T23:00:00',
                 },
                 {
                     title: 'Dia de Portugal',
-                    start: '2024-06-10',
-                    end: '2024-06-10',
+                    start: '2024-06-10T08:00:00',
+                    end: '2024-06-10T23:00:00',
                 },
                 {
                     title: 'Assunção de Nossa Senhora',
-                    start: '2024-08-15',
-                    end: '2024-08-15',
+                    start: '2024-08-15T08:00:00',
+                    end: '2024-08-15T23:00:00',
                 },
                 {
                     title: 'Implantação da República',
-                    start: '2024-10-05',
-                    end: '2024-10-05',
+                    start: '2024-10-05T08:00:00',
+                    end: '2024-10-05T23:00:00',
                 },
                 {
                     title: 'Dia de Todos os Santos',
-                    start: '2024-11-01',
-                    end: '2024-11-01',
+                    start: '2024-11-01T08:00:00',
+                    end: '2024-11-01T23:00:00',
                 },
                 {
                     title: 'Restauração da Independência',
-                    start: '2024-12-01',
-                    end: '2024-12-01',
+                    start: '2024-12-01T08:00:00',
+                    end: '2024-12-01T23:00:00',
                 },
                 {
                     title: 'Natal',
-                    start: '2024-12-25',
-                    end: '2024-12-25',
+                    start: '2024-12-25T08:00:00',
+                    end: '2024-12-25T23:00:00',
                 },
             ];
+
 
             holidays.forEach(function (holiday) {
                 selectedSlots.push({
@@ -116,8 +117,8 @@
 
                 while (currentYear === currentDate.getFullYear()) {
                     sundays.push({
-                        start: currentDate.toISOString().slice(0, 10), // Convert date to ISO string format (YYYY-MM-DD)
-                        end: currentDate.toISOString().slice(0, 10), // End date can be the same as start date for single-day events
+                        start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Convert date to ISO string format (YYYY-MM-DD)
+                        end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End date can be the same as start date for single-day events
                     });
                     currentDate.setDate(currentDate.getDate() + 7); // Move to the next Sunday
                 }
@@ -151,7 +152,26 @@
                 slotMaxTime: '23:00:00', // End time (changed to 23:00)
                 allDaySlot: true,
                 selectable: true, // Enable selection
+                timeZone: 'UTC', // Display dates in utc timezone
                 select: function (info) {
+                    // Check if the selection is an all-day event
+                    var isAllDay = info.allDay;
+
+                    if (isAllDay) {
+                        // Get the selected date and set the time to 08:00:00 UTC
+                        var selectedDateStart = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), 8, 0, 0));
+
+                        // Create a new date object for the end time and set it to 23:00:00 UTC
+                        var selectedDateEnd = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), 23, 0, 0));
+
+                        // Update the start and end times in the info object
+                        info.startStr = selectedDateStart.toISOString();
+                        info.endStr = selectedDateEnd.toISOString();
+
+                        info.start = new Date(selectedDateStart);
+                        info.end = new Date(selectedDateEnd);
+                    }
+
                     if (!isSlotDurationValid(info)) {
                         alert("Please select a slot of at least 1 hour starting at hour:00.");
                         return;
