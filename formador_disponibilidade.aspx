@@ -3,38 +3,43 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="card" style="border-color: #333; margin-top: 30px; margin-bottom: 30px;">
-        <div class="card-header bg-dark text-white">
-            <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Disponibilidade Formador</h2>
-        </div>
-        <div class="card" style="margin: 5px;">
-            <div class="card-body">
-                <div id='calendar' style="margin-top: 30px; margin-bottom: 10px;"></div>
-                <div class="row justify-content-between">
-                    <div class="form-group" style="margin: 10px;">
-                        <asp:Label ID="lbl_sabados" runat="server" Text="Selecionar como Indisponível"></asp:Label>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button id="btn_SelecionarSabados" class="btn btn-dark">Sábados</button>
-                                <button id="btn_SelecionarSabadosManha" class="btn btn-dark">Sábados de manhã</button>
-                                <button id="btn_SelecionarSabadosTarde" class="btn btn-dark">Sábados de tarde</button>
+    <div class="container-fluid">
+        <div class="card" style="border-color: #333; margin-top: 30px; margin-bottom: 30px;">
+            <div class="card-header bg-dark text-white">
+                <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Disponibilidade Formador</h2>
+            </div>
+            <div class="card" style="margin: 5px;">
+                <div class="card-body">
+                    <div id='calendar' style="margin-top: 30px; margin-bottom: 10px;"></div>
+                    <div class="row justify-content-between">
+                        <div class="form-group" style="margin: 10px;">
+                            <asp:Label ID="lbl_sabados" runat="server" Text="Selecionar como Indisponível"></asp:Label>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button id="btn_SelecionarSabados" class="btn btn-dark">Sábados</button>
+                                    <button id="btn_SelecionarSabadosManha" class="btn btn-dark">Sábados de manhã</button>
+                                    <button id="btn_SelecionarSabadosTarde" class="btn btn-dark">Sábados de tarde</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group" style="margin: 10px;">
-                        <asp:Label ID="Label1" runat="server" Text="Selecionar como Indisponível"></asp:Label>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <button id="btn_SelecionarDiasSemanaManha" class="btn btn-dark">Dias de semana manhã</button>
-                                <button id="btn_SelecionarDiasSemanaTarde" class="btn btn-dark">Dias de semana de tarde</button>
+                        <div class="form-group" style="margin: 10px;">
+                            <asp:Label ID="Label1" runat="server" Text="Selecionar como Indisponível"></asp:Label>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 10px;">
+                                    <button id="btn_SelecionarDiasSemanaManha" class="btn btn-dark">Dias de semana manhã</button>
+                                    <button id="btn_SelecionarDiasSemanaTarde" class="btn btn-dark">Dias de semana de tarde</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row" style="margin: 10px;">
+            <button class="btn btn-success" id="btn_SaveSelectedSlots">Guardar Disponibilidade</button>
+            <asp:HiddenField ID="hf_cod_user" runat="server" />
+        </div>
     </div>
-   <button id="btn_SaveSelectedSlots"></button>
 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
@@ -44,6 +49,7 @@
 
             var selectedSlots = []; // Array to store selected time slots
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
+            var currentYear = new Date().getFullYear(); // Get the current year
 
             // Function to check if the selected slot duration meets the minimum requirement and starts and ends on the hour
             function isSlotDurationValid(info) {
@@ -189,7 +195,12 @@
                     });
                 },
                 contentHeight: 'auto', // Adjusts the calendar's height automatically
-                aspectRatio: 1.5
+                aspectRatio: 1.5,
+                initialDate: currentYear + '-01-01', // Set initial date to January 1st of the current year
+                validRange: { // Restrict the valid range to the current year
+                    start: currentYear + '-01-01',
+                    end: (currentYear + 1) + '-01-01' // January 1st of the next year
+                }
             });
 
             // Add events from selectedSlots array to the calendar
@@ -283,14 +294,14 @@
                 while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
                     calendar.addEvent({
                         title: 'Não Disponível',
-                        start: currentDate.toISOString().slice(0, 10),
-                        end: currentDate.toISOString().slice(0, 10),
+                        start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
+                        end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
                         rendering: 'background',
                         color: '#ff0000'
                     });
                     selectedSlots.push({
-                        startStr: currentDate.toISOString().slice(0, 10), // Start time
-                        endStr: currentDate.toISOString().slice(0, 10), // End time
+                        startStr: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                        endStr: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
                     });
                     currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                 }
@@ -378,12 +389,20 @@
                 $.ajax({
                     type: "POST",
                     url: "formador_disponibilidade.aspx/ProcessSelectedSlots", // Specify your page and method name
-                    data: JSON.stringify({ selectedSlots: slotStrings }), // Send the string array directly
+                    data: JSON.stringify({ selectedSlots: slotStrings, cod_user: codUserValue }), // Send the string array directly
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
                         // Handle success response if needed
-                        console.log("Data sent successfully to server.");
+                        if (response.d) {
+                            // Show success message
+                            alert("Disponibilidade de Formador actualizada com sucesso! Será redireccionado para outra página.");
+                            // Redirect to another page
+                            window.location.href = "personal_zone_inscricoes.aspx"; // Change "new_page.aspx" to the desired page
+                        } else {
+                            // Show error message
+                            alert("Ocorreu um erro ao actualizar a disponibilidade do formador.");
+                        }
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         // Handle error
@@ -392,6 +411,25 @@
                 });
                 event.preventDefault(); // Prevent default button behavior
             });
+
+            var codUserValue; // Variable to store the cod_user value
+
+            // Function to set the cod_user value received from server-side
+            function setCodUser(cod_user) {
+                codUserValue = cod_user;
+            }
+
+            // Function to parse the URL and extract the value of the cod_user variable
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            // Call setCodUser function with the value of the cod_user URL variable
+            var codUserFromUrl = getUrlParameter('cod_user');
+            setCodUser(codUserFromUrl);
         });
 
     </script>
