@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Projeto_Final.Classes;
 
 namespace Projeto_Final
 {
@@ -17,62 +18,93 @@ namespace Projeto_Final
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["logged"] != "yes")
+            {
+                Response.Redirect("login.aspx");
+            }
+            else if ((Request.QueryString["cod_user"].ToString() != Session["cod_user"].ToString()))
+            {
+                Response.Redirect("personal_zone.aspx");
+            }
+            else
+            {
+                int cod_user = Convert.ToInt32(Request.QueryString["cod_user"]);
+                hf_cod_user.Value = cod_user.ToString();
 
+                // RegisterStartupScript is used to call the JavaScript function from server-side
+                ScriptManager.RegisterStartupScript(this, GetType(), "SetCodUser", $"setCodUser({cod_user});", true);
+            }
         }
 
         // Method to receive data from client-side
         [WebMethod]
-        public static void ProcessSelectedSlots(string[] selectedSlots)
+        public static bool ProcessSelectedSlots(string[] selectedSlots, int cod_user)
         {
-            string[] slots = new string[selectedSlots.Length];
-            int i = 0;
-            // Process the selectedSlots array received from the client-side (JavaScript)
-            foreach (var slot in selectedSlots)
+            try
             {
-                slots[i] = slot;
-                i++;
+                string[] slots = new string[selectedSlots.Length];
+                int i = 0;
+                // Process the selectedSlots array received from the client-side (JavaScript)
+                foreach (var slot in selectedSlots)
+                {
+                    slots[i] = slot;
+                    i++;
+                }
+
+                foreach (var slot in slots)
+                {
+                    // Split the string into start and end date-time strings
+                    string[] parts = slot.Split(',');
+                    string inicio_data_str = parts[0];
+                    string fim_data_str = parts.Length > 1 ? parts[1] : inicio_data_str;
+
+                    // Append default times if only date is provided
+                    if (!inicio_data_str.Contains("T"))
+                        inicio_data_str += "T08:00:00";
+                    else if (inicio_data_str.EndsWith("Z"))
+                        inicio_data_str = inicio_data_str.Remove(inicio_data_str.Length - 1);
+
+                    if (!fim_data_str.Contains("T"))
+                        fim_data_str += "T23:00:00";
+                    else if (fim_data_str.EndsWith("Z"))
+                        fim_data_str = fim_data_str.Remove(fim_data_str.Length - 1);
+
+                    // Parse start and end date-time strings into DateTime objects
+                    DateTime inicio_data_slot = DateTime.Parse(inicio_data_str);
+                    DateTime fim_data_slot = DateTime.Parse(fim_data_str);
+
+                    TimeSpan diferença_tempo = fim_data_slot.TimeOfDay - inicio_data_slot.TimeOfDay;
+
+                    int diferença = diferença_tempo.Hours;
+
+                    // Extract date and time components
+                    string data_inicio = inicio_data_slot.ToString("yyyy-MM-dd");
+                    string slot_inicio = inicio_data_slot.ToString("HH:mm:ss");
+                    string data_fim = fim_data_slot.ToString("yyyy-MM-dd");
+                    string slot_fim = fim_data_slot.ToString("HH:mm:ss");
+
+                    for (int k = 0; k < diferença; k++)
+                    {
+                        if (k == 0)
+                        {
+                            int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot, inicio_data_slot.AddHours(1));
+
+                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio);
+                        }
+                        else
+                        {
+                            int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot.AddHours(k), inicio_data_slot.AddHours(1 + k));
+
+                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio);
+                        }
+                    }
+                }
+
+                return true;
             }
-
-            foreach (var slot in slots)
+            catch (Exception ex)
             {
-                // Split the string into start and end date-time strings
-                string[] parts = slot.Split(',');
-                string startDateTimeStr = parts[0];
-                string endDateTimeStr = parts.Length > 1 ? parts[1] : startDateTimeStr;
-
-                // Append default times if only date is provided
-                if (!startDateTimeStr.Contains("T"))
-                {
-                    startDateTimeStr += "T08:00:00";
-                }
-                else if (startDateTimeStr.EndsWith("Z"))
-                {
-                    startDateTimeStr = startDateTimeStr.Remove(startDateTimeStr.Length - 1);
-                }
-                if (!endDateTimeStr.Contains("T"))
-                {
-                    endDateTimeStr += "T23:00:00";
-                }
-                else if (endDateTimeStr.EndsWith("Z"))
-                {
-                    endDateTimeStr = endDateTimeStr.Remove(endDateTimeStr.Length - 1);
-                }
-
-                // Parse start and end date-time strings into DateTime objects
-                DateTime startDateTime = DateTime.Parse(startDateTimeStr);
-                DateTime endDateTime = DateTime.Parse(endDateTimeStr);
-
-                // Extract date and time components
-                string startDate = startDateTime.ToString("yyyy-MM-dd");
-                string startTime = startDateTime.ToString("HH:mm:ss");
-                string endDate = endDateTime.ToString("yyyy-MM-dd");
-                string endTime = endDateTime.ToString("HH:mm:ss");
-
-                // Output the components
-                Console.WriteLine("Start Date: " + startDate);
-                Console.WriteLine("Start Time: " + startTime);
-                Console.WriteLine("End Date: " + endDate);
-                Console.WriteLine("End Time: " + endTime);
+                return false;
             }
         }
     }
