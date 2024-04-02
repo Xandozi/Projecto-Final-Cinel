@@ -47,6 +47,9 @@
       <HintPath>..\..\..\Firefox Downloads\New folder\Bin\ASPSnippets.GoogleAPI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -87,6 +90,7 @@
     <Content Include="cursos_detalhe.aspx" />
     <Content Include="cursos_lista.aspx" />
     <Content Include="cursos_lista_detalhe.aspx" />
+    <Content Include="Disponibilidade_WebService.asmx" />
     <Content Include="editar_curso.aspx" />
     <Content Include="editar_modulo.aspx" />
     <Content Include="editar_sala.aspx" />
@@ -194,6 +198,7 @@
     <Compile Include="Classes\Formadores_Modulos.cs" />
     <Compile Include="Classes\Formadores.cs" />
     <Compile Include="Classes\Formandos.cs" />
+    <Compile Include="Classes\FullCalendarData.cs" />
     <Compile Include="Classes\Horarios.cs" />
     <Compile Include="Classes\Inscricoes.cs" />
     <Compile Include="Classes\Modulos.cs" />
@@ -256,6 +261,10 @@
     </Compile>
     <Compile Include="cursos_lista_detalhe.aspx.designer.cs">
       <DependentUpon>cursos_lista_detalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Disponibilidade_WebService.asmx.cs">
+      <DependentUpon>Disponibilidade_WebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="editar_curso.aspx.cs">
       <DependentUpon>editar_curso.aspx</DependentUpon>
