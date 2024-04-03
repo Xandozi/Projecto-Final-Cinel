@@ -38,25 +38,18 @@ namespace Projeto_Final
 
         // Method to receive data from client-side
         [WebMethod]
-        public static bool ProcessSelectedSlots(string[] selectedSlots, int cod_user)
+        public static bool ProcessSelectedSlots(SlotData[] selectedSlots, int cod_user)
         {
             try
             {
-                string[] slots = new string[selectedSlots.Length];
-                int i = 0;
-                // Process the selectedSlots array received from the client-side (JavaScript)
+                Horarios.Delete_Disponibilidade_Formador(cod_user);
+
                 foreach (var slot in selectedSlots)
                 {
-                    slots[i] = slot;
-                    i++;
-                }
-
-                foreach (var slot in slots)
-                {
-                    // Split the string into start and end date-time strings
-                    string[] parts = slot.Split(',');
-                    string inicio_data_str = parts[0];
-                    string fim_data_str = parts.Length > 1 ? parts[1] : inicio_data_str;
+                    // Access the title property for each slot
+                    string titulo = slot.title;
+                    string inicio_data_str = slot.start;
+                    string fim_data_str = slot.end;
 
                     // Append default times if only date is provided
                     if (!inicio_data_str.Contains("T"))
@@ -89,13 +82,13 @@ namespace Projeto_Final
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot, inicio_data_slot.AddHours(1));
 
-                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio);
+                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo);
                         }
                         else
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot.AddHours(k), inicio_data_slot.AddHours(1 + k));
 
-                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio);
+                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo);
                         }
                     }
                 }
@@ -104,8 +97,18 @@ namespace Projeto_Final
             }
             catch (Exception ex)
             {
+                string exx = ex.ToString();
                 return false;
             }
         }
+
+        // Define a class to represent the structure of each slot object
+        public class SlotData
+        {
+            public string title { get; set; }
+            public string start { get; set; }
+            public string end { get; set; }
+        }
+
     }
 }

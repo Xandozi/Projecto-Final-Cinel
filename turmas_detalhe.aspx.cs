@@ -41,7 +41,7 @@ namespace Projeto_Final
                 lbl_regime.Text = lst_turma[0].regime;
                 lbl_regime.Font.Bold = true;
 
-                lbl_duracao.Text = lst_turma[0].duracao_curso.ToString();
+                lbl_duracao.Text = lst_turma[0].duracao_curso.ToString() + " horas";
                 lbl_duracao.Font.Bold = true;
 
                 lbl_data_inicio.Text = lst_turma[0].data_inicio.ToShortDateString();

@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="form-group">
                                             <p class="lead">
-                                                Designação da UFCD:
+                                                Designação do Curso:
                                                 <asp:TextBox ID="tb_designacao" CssClass="form-control" runat="server" MaxLength="100"></asp:TextBox>
                                                 <asp:RequiredFieldValidator ID="rfv_designacao" runat="server" ErrorMessage="Designação da UFCD obrigatória." Text="*" ControlToValidate="tb_designacao"></asp:RequiredFieldValidator>
                                                 <asp:RegularExpressionValidator ID="rev_designacao" runat="server" ErrorMessage="Designação do curso inválida" ControlToValidate="tb_designacao" Text="*" ValidationExpression="^.{1,100}$"></asp:RegularExpressionValidator>
