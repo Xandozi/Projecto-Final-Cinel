@@ -35,9 +35,10 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin: 10px;">
-            <button class="btn btn-success" id="btn_SaveSelectedSlots">Guardar Disponibilidade</button>
+        <div class="row justify-content-between" style="margin: 10px;">
+            <button class="btn btn-success" id="btn_SaveSelectedSlots">Submeter Disponibilidade</button>
             <asp:HiddenField ID="hf_cod_user" runat="server" />
+            <a href="personal_zone_inscricoes.aspx" class="btn btn-info">Voltar para Minhas Inscrições</a>
         </div>
     </div>
 
@@ -124,6 +125,11 @@
                     start: '2024-12-25T08:00:00',
                     end: '2024-12-25T23:00:00',
                 },
+                {
+                    title: 'Véspera de Natal',
+                    start: '2024-12-24T08:00:00',
+                    end: '2024-12-24T23:00:00',
+                },
             ];
 
             // Function to generate Sundays for all years
@@ -135,6 +141,7 @@
 
                 while (currentYear === currentDate.getFullYear()) {
                     sundays.push({
+                        title: 'Domingo',
                         start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Convert date to ISO string format (YYYY-MM-DD)
                         end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End date can be the same as start date for single-day events
                     });
@@ -147,16 +154,21 @@
             function addHolidaysAndSundaysToSelectedSlots() {
                 holidays.forEach(function (holiday) {
                     selectedSlots.push({
-                        startStr: holiday.start,
-                        endStr: holiday.end,
+                        title: holiday.title,
+                        start: holiday.start,
+                        end: holiday.end,
                     });
+                    console.log(holiday.title);
+                    console.log(holiday.start);
+                    console.log(holiday.end);
                 });
 
                 var sundays = generateSundays();
                 sundays.forEach(function (sunday) {
                     selectedSlots.push({
-                        startStr: sunday.start,
-                        endStr: sunday.end,
+                        title: sunday.title,
+                        start: sunday.start,
+                        end: sunday.end,
                     });
                 });
             }
@@ -165,8 +177,9 @@
             function addEventsToSelectedSlots(eventData) {
                 eventData.forEach(function (event) {
                     selectedSlots.push({
-                        startStr: event.start,
-                        endStr: event.end
+                        title: event.title,
+                        start: event.start,
+                        end: event.end
                     });
                 });
             }
@@ -227,8 +240,8 @@
                             var selectedDateStart = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), 8, 0, 0));
                             var selectedDateEnd = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), 23, 0, 0));
 
-                            info.startStr = selectedDateStart.toISOString();
-                            info.endStr = selectedDateEnd.toISOString();
+                            info.start = selectedDateStart.toISOString();
+                            info.end = selectedDateEnd.toISOString();
 
                             info.start = new Date(selectedDateStart);
                             info.end = new Date(selectedDateEnd);
@@ -239,15 +252,22 @@
                             return;
                         }
 
-                        selectedSlots.push(info);
-                        calendar.unselect();
-                        calendar.addEvent({
+                        var eventToAdd = {
                             title: 'Não Disponível',
-                            start: info.startStr,
-                            end: info.endStr,
+                            start: info.start,
+                            end: info.end,
                             rendering: 'background',
                             color: '#ff0000'
-                        });
+                        };
+
+                        // Push the event object to selectedSlots array
+                        selectedSlots.push(eventToAdd);
+
+                        // Add the event to the calendar
+                        calendar.addEvent(eventToAdd);
+
+                        // Unselect the event
+                        calendar.unselect();
                     },
                     contentHeight: 'auto',
                     aspectRatio: 1.5,
@@ -267,9 +287,9 @@
 
                 selectedSlots.forEach(function (slot) {
                     calendar.addEvent({
-                        title: 'Não Disponível',
-                        start: slot.startStr,
-                        end: slot.endStr,
+                        title: slot.title,
+                        start: slot.start,
+                        end: slot.end,
                         rendering: 'background',
                         color: '#ff0000'
                     });
@@ -291,15 +311,16 @@
                             console.log("Marking:", currentDate);
                             // Add the time slot from 8:00 to 16:00 as "Não Disponível"
                             calendar.addEvent({
-                                title: 'Não Disponível',
+                                title: 'Manhã Não Disponível',
                                 start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
                                 end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
                                 rendering: 'background',
                                 color: '#ff0000'
                             });
                             selectedSlots.push({
-                                startStr: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                                endStr: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                                title: 'Manhã Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                                end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
                             });
                         }
                         // Move to the next day
@@ -321,15 +342,16 @@
                             console.log("Marking:", currentDate);
                             // Add the time slot from 8:00 to 16:00 as "Não Disponível"
                             calendar.addEvent({
-                                title: 'Não Disponível',
+                                title: 'Tarde Não Disponível',
                                 start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
                                 end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
                                 rendering: 'background',
                                 color: '#ff0000'
                             });
                             selectedSlots.push({
-                                startStr: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
-                                endStr: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                                title: 'Tarde Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
+                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
                             });
                         }
                         // Move to the next day
@@ -346,15 +368,16 @@
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
                         console.log("Marking:", currentDate);
                         calendar.addEvent({
-                            title: 'Não Disponível',
+                            title: 'Sábado Não Disponível',
                             start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
                             end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
                             rendering: 'background',
                             color: '#ff0000'
                         });
                         selectedSlots.push({
-                            startStr: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                            endStr: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                            title: 'Sábado Não Disponível',
+                            start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                            end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
                         });
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
@@ -368,15 +391,16 @@
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
                         console.log("Marking:", currentDate);
                         calendar.addEvent({
-                            title: 'Não Disponível',
+                            title: 'Manhã Não Disponível',
                             start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
                             end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
                             rendering: 'background',
                             color: '#ff0000'
                         });
                         selectedSlots.push({
-                            startStr: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                            endStr: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                            title: 'Manhã Não Disponível',
+                            start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                            end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
                         });
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
@@ -390,15 +414,16 @@
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
                         console.log("Marking:", currentDate);
                         calendar.addEvent({
-                            title: 'Não Disponível',
+                            title: 'Tarde Não Disponível',
                             start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
                             end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
                             rendering: 'background',
                             color: '#ff0000'
                         });
                         selectedSlots.push({
-                            startStr: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
-                            endStr: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                            title: 'Tarde Não Disponível',
+                            start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
+                            end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
                         });
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
@@ -435,28 +460,32 @@
                 });
 
                 document.getElementById('btn_SaveSelectedSlots').addEventListener('click', function (event) {
-                    // Extract startStr and endStr values from selectedSlots array
-                    var slotStrings = selectedSlots.map(function (slot) {
-                        return slot.startStr + ',' + slot.endStr;
+                    // Ensure selectedSlots array is properly structured
+                    var formattedSlots = selectedSlots.map(function (slot) {
+                        return {
+                            title: slot.title,
+                            start: slot.start,
+                            end: slot.end
+                        };
                     });
 
                     // Call the server-side method using AJAX
                     $.ajax({
                         type: "POST",
-                        url: "formador_disponibilidade.aspx/ProcessSelectedSlots", // Specify your page and method name
-                        data: JSON.stringify({ selectedSlots: slotStrings, cod_user: codUserValue }), // Send the string array directly
+                        url: "formador_disponibilidade.aspx/ProcessSelectedSlots",
+                        data: JSON.stringify({ selectedSlots: formattedSlots, cod_user: codUserValue }), // Pass formattedSlots with all properties
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (response) {
                             // Handle success response if needed
                             if (response.d) {
                                 // Show success message
-                                alert("Disponibilidade de Formador actualizada com sucesso! Será redireccionado para outra página.");
+                                alert("Disponibilidade de Formador atualizada com sucesso! Será redirecionado para outra página.");
                                 // Redirect to another page
                                 window.location.href = "personal_zone_inscricoes.aspx"; // Change "new_page.aspx" to the desired page
                             } else {
                                 // Show error message
-                                alert("Ocorreu um erro ao actualizar a disponibilidade do formador.");
+                                alert("Ocorreu um erro ao atualizar a disponibilidade do formador.");
                             }
                         },
                         error: function (xhr, textStatus, errorThrown) {
@@ -466,6 +495,7 @@
                     });
                     event.preventDefault(); // Prevent default button behavior
                 });
+
             }
         });
 

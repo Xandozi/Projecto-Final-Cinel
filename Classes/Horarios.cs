@@ -15,7 +15,7 @@ namespace Projeto_Final.Classes
         public DateTime data_inicio { get; set; }
         public DateTime data_fim { get; set; }
 
-        public static void Insert_Disponibilidade_Formador(int cod_user, int cod_timeslot, string data)
+        public static void Insert_Disponibilidade_Formador(int cod_user, int cod_timeslot, string data, string titulo)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -24,9 +24,30 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.AddWithValue("@cod_user", cod_user);
                 myCommand.Parameters.AddWithValue("@cod_timeslot", cod_timeslot);
                 myCommand.Parameters.AddWithValue("@data", data);
+                myCommand.Parameters.AddWithValue("@titulo", titulo);
 
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.CommandText = "Insert_Disponibilidade_Formador";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+                myConn.Close();
+            }
+        }
+
+        public static void Delete_Disponibilidade_Formador(int cod_user)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_user", cod_user);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Delete_Disponibilidade_Formador";
 
                 myCommand.Connection = myConn;
                 myConn.Open();

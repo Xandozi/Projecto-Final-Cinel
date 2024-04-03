@@ -7,7 +7,7 @@ namespace Projeto_Final.Classes
 {
     public class FullCalendarData
     {
-        public int Cod_Timeslot { get; set; }
+        public string title { get; set; }
         public DateTime Data { get; set; }
         public TimeSpan TimeSlot_Inicio { get; set; }
         public TimeSpan TimeSlot_Fim { get; set; }

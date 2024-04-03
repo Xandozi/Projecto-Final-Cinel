@@ -37,10 +37,13 @@ namespace Projeto_Final
         {
             List<FullCalendarData> lst_disponibilidade = new List<FullCalendarData>();
 
-            string query = $"select Disponibilidade.cod_timeslot, Disponibilidade.dataa, Disponibilidade.cod_user, Disponibilidade.available, Timeslots.hora_inicio, Timeslots.hora_fim " +
-                           $"from Disponibilidade " +
-                           $"join Timeslots on Timeslots.cod_timeslot = Disponibilidade.cod_timeslot " +
-                           $"where Disponibilidade.cod_user = {cod_user} and Disponibilidade.available = 0";
+            string query = $"WITH ContiguousSlots AS (" +
+                           $"SELECT cod_timeslot, dataa, cod_user, available, hora_inicio, hora_fim, titulo, ROW_NUMBER() OVER (ORDER BY dataa, hora_inicio) AS rn " +
+                           $"FROM (SELECT Disponibilidade.cod_timeslot, Disponibilidade.dataa, Disponibilidade.cod_user, Disponibilidade.available, Timeslots.hora_inicio, Timeslots.hora_fim, Disponibilidade.titulo " +
+                           $"FROM Disponibilidade JOIN Timeslots ON Timeslots.cod_timeslot = Disponibilidade.cod_timeslot WHERE Disponibilidade.cod_user = {cod_user} AND Disponibilidade.available = 0) AS Availability) " +
+                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo " +
+                           $"ORDER BY dataa, start_time;";
+
 
             using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString))
             {
@@ -53,10 +56,10 @@ namespace Projeto_Final
                         while (dr.Read())
                         {
                             FullCalendarData eventData = new FullCalendarData();
-                            eventData.Cod_Timeslot = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000; // Set cod_timeslot
-                            eventData.Data = !dr.IsDBNull(1) ? dr.GetDateTime(1) : default(DateTime); // Set dataa
-                            eventData.TimeSlot_Inicio = !dr.IsDBNull(4) ? dr.GetTimeSpan(4) : default(TimeSpan);
-                            eventData.TimeSlot_Fim = !dr.IsDBNull(5) ? dr.GetTimeSpan(5) : default(TimeSpan);
+                            eventData.Data = !dr.IsDBNull(2) ? dr.GetDateTime(2) : default(DateTime); // Set dataa
+                            eventData.TimeSlot_Inicio = !dr.IsDBNull(0) ? dr.GetTimeSpan(0) : default(TimeSpan);
+                            eventData.TimeSlot_Fim = !dr.IsDBNull(1) ? dr.GetTimeSpan(1) : default(TimeSpan);
+                            eventData.title = !dr.IsDBNull(3) ? dr.GetString(3) : null;
 
                             lst_disponibilidade.Add(eventData);
                         }
