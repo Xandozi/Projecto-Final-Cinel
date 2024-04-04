@@ -132,13 +132,13 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.ListBox lstb_formandos;
 
         /// <summary>
-        /// btn_cancelar control.
+        /// btn_editar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_cancelar;
+        protected global::System.Web.UI.WebControls.Button btn_editar;
 
         /// <summary>
         /// lbl_mensagem control.

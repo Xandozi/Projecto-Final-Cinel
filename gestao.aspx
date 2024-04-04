@@ -49,13 +49,13 @@
                                                 <asp:Repeater ID="rpt_formadores" runat="server" OnItemDataBound="rpt_formadores_ItemDataBound">
                                                     <ItemTemplate>
                                                         <tr>
-                                                            <td><a href="formadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>"><%# Eval("nome_proprio") + " " + Eval("apelido") %></a></td>
+                                                            <td><a href="utilizadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>"><%# Eval("nome_proprio") + " " + Eval("apelido") %></a></td>
                                                             <td><%# Eval("cod_qualificacao") %></td>
                                                             <td><%# Eval("nome_curso") %></td>
                                                             <td><%# Eval("data_inscricao", "{0:dd/MM/yyyy}") %></td>
                                                             <td>
-                                                                <asp:LinkButton ID="lb_validar_formadores" runat="server" Style="margin-right: 5px;" OnClick="lb_validar_formadores_Click"><i class="fas fa-check-square"></i></asp:LinkButton>
-                                                                <asp:LinkButton ID="lb_revogar_formadores" runat="server" Style="margin-right: 5px;" OnClick="lb_revogar_formadores_Click"><i class="fas fa-window-close"></i></asp:LinkButton>
+                                                                <asp:LinkButton ID="lb_validar_formadores" runat="server" Style="margin-right: 5px;" OnClick="lb_validar_formadores_Click"><i class="fas fa-check-square fa-lg" style="color: #18b620;"></i></asp:LinkButton>
+                                                                <asp:LinkButton ID="lb_revogar_formadores" runat="server" Style="margin-right: 5px;" OnClick="lb_revogar_formadores_Click"><i class="fas fa-window-close fa-lg" style="color: #cd4532;"></i></asp:LinkButton>
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
@@ -63,15 +63,18 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="cod-md-12" style="margin: 13px;">
+                                        <asp:Label ID="lbl_mensagem_formadores" runat="server" Text=""></asp:Label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
                                 <asp:LinkButton ID="btn_previous_formadores" CssClass="btn btn-dark m-1" runat="server" OnClick="btn_previous_formadores_Click">
                 <i class="fas fa-arrow-left"></i>
-            </asp:LinkButton>
+                                </asp:LinkButton>
                                 <asp:LinkButton ID="btn_next_formadores" runat="server" CssClass="btn btn-dark m-1" OnClick="btn_next_formadores_Click">
                 <i class="fas fa-arrow-right"></i>
-            </asp:LinkButton>
+                                </asp:LinkButton>
                             </div>
                         </div>
                         <div id="card_formandos" class="card" style="border-color: #333; margin-top: 10px;" runat="server">
@@ -79,8 +82,8 @@
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Formandos por Validar Inscrição</h2>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:LinkButton ID="btn_previous_formandos_top" CssClass="btn btn-dark m-1" runat="server" OnClick="btn_previous_formadores_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
-                                <asp:LinkButton ID="btn_next_formandos_top" runat="server" CssClass="btn btn-dark m-1" OnClick="btn_next_formadores_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btn_previous_formandos_top" CssClass="btn btn-dark m-1" runat="server" OnClick="btn_previous_formandos_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btn_next_formandos_top" runat="server" CssClass="btn btn-dark m-1" OnClick="btn_next_formandos_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -104,14 +107,17 @@
                                                             <td><%# Eval("nome_curso") %></td>
                                                             <td><%# Eval("data_inscricao", "{0:dd/MM/yyyy}") %></td>
                                                             <td>
-                                                                <asp:LinkButton ID="lb_validar_formandos" runat="server" Style="margin-right: 5px;" OnClick="lb_validar_formandos_Click"><i class="fas fa-check-square"></i></asp:LinkButton>
-                                                                <asp:LinkButton ID="lb_revogar_formandos" runat="server" Style="margin-right: 5px;" OnClick="lb_revogar_formandos_Click"><i class="fas fa-window-close"></i></asp:LinkButton>
+                                                                <asp:LinkButton ID="lb_validar_formandos" runat="server" Style="margin-right: 5px;" OnClick="lb_validar_formandos_Click"><i class="fas fa-check-square fa-lg" style="color: #18b620;"></i></asp:LinkButton>
+                                                                <asp:LinkButton ID="lb_revogar_formandos" runat="server" Style="margin-right: 5px;" OnClick="lb_revogar_formandos_Click"><i class="fas fa-window-close fa-lg" style="color: #cd4532;"></i></asp:LinkButton>
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
                                                 </asp:Repeater>
                                             </tbody>
                                         </table>
+                                        <div class="row" style="margin: 13px;">
+                                            <asp:Label ID="lbl_mensagem_formandos" runat="server" Text=""></asp:Label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -120,9 +126,6 @@
                                 <asp:LinkButton ID="btn_next_formandos" runat="server" CssClass="btn btn-dark m-1" OnClick="btn_next_formandos_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" style="margin: 13px;">
-                        <asp:Label ID="lbl_mensagem" runat="server" Text=""></asp:Label>
                     </div>
                 </div>
             </div>

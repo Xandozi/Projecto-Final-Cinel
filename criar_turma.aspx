@@ -36,11 +36,11 @@
                                             </asp:DropDownList>
                                             <asp:SqlDataSource runat="server" ID="curso" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_curso], [nome_curso] FROM [Cursos] WHERE [ativo] = 1"></asp:SqlDataSource>
                                         </div>
-                                        <div class="col-md-6" style="margin-top: 10px;">
+                                        <div class="col-md-4" style="margin-top: 10px;">
                                             <asp:Label ID="lbl_data_inicio" runat="server" Text="Data de Início"></asp:Label>
                                             <asp:TextBox ID="tb_data_inicio" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
                                         </div>
-                                        <div class="col-md-6" style="margin-top: 10px;">
+                                        <div class="col-md-2" style="margin-top: 10px;">
                                             <asp:Label ID="lbl_regime" runat="server" Text="Regime"></asp:Label>
                                             <asp:DropDownList ID="ddl_regime" runat="server" AppendDataBoundItems="true" CssClass="form-control" DataSourceID="regime" DataTextField="regime" DataValueField="cod_regime">
                                             </asp:DropDownList>
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-12" style="margin-top: 5px;">
-                                            <asp:Button ID="btn_add" CssClass="btn btn-info" runat="server" Text="Adicionar à Turma" OnClick="btn_add_Click" />
+                                            <asp:Button ID="btn_add" CssClass="btn btn-success" runat="server" Text="Adicionar à Turma" OnClick="btn_add_Click" />
                                             <asp:Button ID="btn_remove" CssClass="btn btn-danger" runat="server" Text="Remover da Turma" OnClick="btn_remove_Click" />
                                             <asp:Label ID="lbl_horas_totais_formador" runat="server" Text=""></asp:Label>
                                             <asp:Label ID="lbl_mensagem_formadores_modulos" runat="server" Text=""></asp:Label>
@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-12" style="margin-top: 5px;">
-                                            <asp:Button ID="btn_add_formandos" CssClass="btn btn-info" runat="server" Text="Adicionar à Turma" OnClick="btn_add_formandos_Click" />
+                                            <asp:Button ID="btn_add_formandos" CssClass="btn btn-success" runat="server" Text="Adicionar à Turma" OnClick="btn_add_formandos_Click" />
                                             <asp:Button ID="btn_remove_formandos" CssClass="btn btn-danger" runat="server" Text="Remover da Turma" OnClick="btn_remove_formandos_Click" />
                                             <asp:Label ID="lbl_mensagem_formandos" runat="server" Text=""></asp:Label>
                                         </div>

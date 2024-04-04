@@ -10,13 +10,16 @@
             <div class="col-md-2 bg-light" style="margin-top: 10px;">
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action active">Informações da Turma <%= lbl_nome_turma.Text %></a>
+                    <% if (lbl_estado.Text != "Terminada" && lbl_estado.Text != "Cancelada")
+                        { %>
                     <a href="turmas_adicionar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Adicionar Formandos à Turma</a>
                     <a href="turmas_cancelar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Alterar Estado dos Formandos da Turma</a>
+                    <% } %>
                     <a href="turmas.aspx" class="list-group-item list-group-item-action">Voltar</a>
                 </div>
             </div>
             <!-- Main Content -->
-            <div class="col-md-10" style="margin-top: 10px;">
+            <div class="col-md-7" style="margin-top: 10px;">
                 <div class="card" style="border-color: #333;">
                     <div class="card-header bg-dark text-white">
                         <h2 class="display-4" style="font-size: 40px; color: white;">Informação da Turma <%= lbl_nome_turma.Text %></h2>
@@ -48,7 +51,7 @@
                                     Data Início:
                                 <asp:Label ID="lbl_data_inicio" runat="server" Text=""></asp:Label>
                                 </p>
-                                 <p class="lead">
+                                <p class="lead">
                                     Data Fim (Previsão):
                                 <asp:Label ID="lbl_data_fim" runat="server" Text=""></asp:Label>
                                 </p>
@@ -85,7 +88,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-lg-between mt-3">
-                            <asp:Button ID="btn_cancelar" class="btn btn-danger btn-lg" runat="server" Text="Cancelar Turma" CausesValidation="false" OnClick="btn_cancelar_Click" />
+                            <asp:Button ID="btn_editar" class="btn btn-info btn-lg" runat="server" Text="Editar Turma" CausesValidation="false" OnClick="btn_editar_Click" />
                         </div>
                     </div>
                 </div>

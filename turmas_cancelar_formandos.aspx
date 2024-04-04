@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <!-- Main Content -->
-                    <div class="col-md-10" style="margin-top: 10px;">
+                    <div class="col-md-6" style="margin-top: 10px;">
                         <div class="card" style="border-color: #333;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4" style="font-size: 40px; color: white;">Alterar Estado dos Formandos da <%= lbl_nome_turma.Text %></h2>
@@ -37,7 +37,7 @@
                                             <asp:ListBox ID="lstb_formandos_turma" CssClass="form-control" runat="server"></asp:ListBox>
                                         </div>
                                         <div class="form-group">
-                                            <asp:Button ID="btn_add_formandos" CssClass="btn btn-info" runat="server" Text="Adicionar como Desistente" CausesValidation="false" OnClick="btn_add_formandos_Click" />
+                                            <asp:Button ID="btn_add_formandos" CssClass="btn btn-success" runat="server" Text="Adicionar como Desistente" CausesValidation="false" OnClick="btn_add_formandos_Click" />
                                             <asp:Button ID="btn_remove_formandos" CssClass="btn btn-danger" runat="server" Text="Remover como Desistente" CausesValidation="false" OnClick="btn_remove_formandos_Click" />
                                             <asp:Label ID="lbl_mensagem_formandos" runat="server" Text=""></asp:Label>
                                         </div>
@@ -46,7 +46,7 @@
                                             <asp:ListBox ID="lstb_formandos_desistentes" CssClass="form-control" runat="server"></asp:ListBox>
                                         </div>
                                         <div class="form-group">
-                                            <asp:Button ID="btn_salvar_alteracoes" CssClass="btn btn-success" runat="server" Text="Guardar Alterações" OnClick="btn_salvar_alteracoes_Click" />
+                                            <asp:Button ID="btn_salvar_alteracoes" CssClass="btn btn-primary" runat="server" Text="Guardar Alterações" OnClick="btn_salvar_alteracoes_Click" />
                                             <asp:Label ID="lbl_mensagem" runat="server" Text=""></asp:Label>
                                         </div>
                                     </div>

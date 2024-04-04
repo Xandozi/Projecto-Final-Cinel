@@ -66,10 +66,9 @@ namespace Projeto_Final
                 lstb_formandos.DataBind();
             }
         }
-
-        protected void btn_cancelar_Click(object sender, EventArgs e)
+        protected void btn_editar_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect($"editar_turma.aspx?cod_turma={Convert.ToInt32(Request.QueryString["cod_turma"])}");
         }
     }
 }

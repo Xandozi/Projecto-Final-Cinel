@@ -94,6 +94,7 @@
     <Content Include="editar_curso.aspx" />
     <Content Include="editar_modulo.aspx" />
     <Content Include="editar_sala.aspx" />
+    <Content Include="editar_turma.aspx" />
     <Content Include="editar_utilizador.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -286,6 +287,13 @@
     </Compile>
     <Compile Include="editar_sala.aspx.designer.cs">
       <DependentUpon>editar_sala.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_turma.aspx.cs">
+      <DependentUpon>editar_turma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_turma.aspx.designer.cs">
+      <DependentUpon>editar_turma.aspx</DependentUpon>
     </Compile>
     <Compile Include="editar_utilizador.aspx.cs">
       <DependentUpon>editar_utilizador.aspx</DependentUpon>

@@ -46,8 +46,8 @@ namespace Projeto_Final
             PagedDataSource pagedData = new PagedDataSource();
             pagedData.DataSource = Inscricoes.GetFormadores_Por_Validar();
             pagedData.AllowPaging = true;
-            pagedData.PageSize = 24;
-            pagedData.CurrentPageIndex = PageNumber;
+            pagedData.PageSize = 12;
+            pagedData.CurrentPageIndex = PageNumber_Formadores;
 
             rpt_formadores.DataSource = pagedData;
             rpt_formadores.DataBind();
@@ -63,8 +63,8 @@ namespace Projeto_Final
             PagedDataSource pagedData = new PagedDataSource();
             pagedData.DataSource = Inscricoes.GetFormandos_Por_Validar();
             pagedData.AllowPaging = true;
-            pagedData.PageSize = 24;
-            pagedData.CurrentPageIndex = PageNumber;
+            pagedData.PageSize = 12;
+            pagedData.CurrentPageIndex = PageNumber_Formandos;
 
             rpt_formandos.DataSource = pagedData;
             rpt_formandos.DataBind();
@@ -75,42 +75,57 @@ namespace Projeto_Final
             btn_next_formandos_top.Enabled = !pagedData.IsLastPage;
         }
 
-        public int PageNumber
+        public int PageNumber_Formandos
         {
             get
             {
-                if (ViewState["PageNumber"] != null)
-                    return Convert.ToInt32(ViewState["PageNumber"]);
+                if (ViewState["PageNumber_Formandos"] != null)
+                    return Convert.ToInt32(ViewState["PageNumber_Formandos"]);
                 else
                     return 0;
             }
             set
             {
-                ViewState["PageNumber"] = value;
+                ViewState["PageNumber_Formandos"] = value;
+            }
+        }
+
+        public int PageNumber_Formadores
+        {
+            get
+            {
+                if (ViewState["PageNumber_Formadores"] != null)
+                    return Convert.ToInt32(ViewState["PageNumber_Formadores"]);
+                else
+                    return 0;
+            }
+            set
+            {
+                ViewState["PageNumber_Formadores"] = value;
             }
         }
 
         protected void btn_previous_formadores_Click(object sender, EventArgs e)
         {
-            PageNumber -= 1;
+            PageNumber_Formadores -= 1;
             BindData_Formadores();
         }
 
         protected void btn_next_formadores_Click(object sender, EventArgs e)
         {
-            PageNumber += 1;
+            PageNumber_Formadores += 1;
             BindData_Formadores();
         }
 
         protected void btn_previous_formandos_Click(object sender, EventArgs e)
         {
-            PageNumber -= 1;
+            PageNumber_Formandos -= 1;
             BindData_Formandos();
         }
 
         protected void btn_next_formandos_Click(object sender, EventArgs e)
         {
-            PageNumber += 1;
+            PageNumber_Formandos += 1;
             BindData_Formandos();
         }
 
@@ -157,17 +172,17 @@ namespace Projeto_Final
 
             if (Inscricoes.Validar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao), Convert.ToInt32(cod_situacao)))
             {
-                lbl_mensagem.Text = "Formador validado com sucesso.";
-                lbl_mensagem.CssClass = "alert alert-success";
+                lbl_mensagem_formadores.Text = "Formador validado com sucesso.";
+                lbl_mensagem_formadores.CssClass = "alert alert-success";
             }
             else
             {
-                lbl_mensagem.Text = "Erro ao validar o formador.";
-                lbl_mensagem.CssClass = "alert alert-danger";
+                lbl_mensagem_formadores.Text = "Erro ao validar o formador.";
+                lbl_mensagem_formadores.CssClass = "alert alert-danger";
             }
 
             BindData_Formadores();
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels9", "$('#" + lbl_mensagem_formadores.ClientID + "').delay(5000).fadeOut('slow');", true);
         }
 
         protected void lb_revogar_formadores_Click(object sender, EventArgs e)
@@ -182,17 +197,17 @@ namespace Projeto_Final
 
             if (Inscricoes.Revogar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao)))
             {
-                lbl_mensagem.Text = "Inscrição de formador revogada com sucesso.";
-                lbl_mensagem.CssClass = "alert alert-success";
+                lbl_mensagem_formadores.Text = "Inscrição de formador revogada com sucesso.";
+                lbl_mensagem_formadores.CssClass = "alert alert-success";
             }
             else
             {
-                lbl_mensagem.Text = "Erro ao revogar a inscrição.";
-                lbl_mensagem.CssClass = "alert alert-danger";
+                lbl_mensagem_formadores.Text = "Erro ao revogar a inscrição.";
+                lbl_mensagem_formadores.CssClass = "alert alert-danger";
             }
 
             BindData_Formadores();
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels9", "$('#" + lbl_mensagem_formadores.ClientID + "').delay(5000).fadeOut('slow');", true);
         }
 
         protected void lb_validar_formandos_Click(object sender, EventArgs e)
@@ -208,17 +223,17 @@ namespace Projeto_Final
 
             if (Inscricoes.Validar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao), Convert.ToInt32(cod_situacao)))
             {
-                lbl_mensagem.Text = "Formando validado com sucesso.";
-                lbl_mensagem.CssClass = "alert alert-success";
+                lbl_mensagem_formandos.Text = "Formando validado com sucesso.";
+                lbl_mensagem_formandos.CssClass = "alert alert-success";
             }
             else
             {
-                lbl_mensagem.Text = "Erro ao validar o formando.";
-                lbl_mensagem.CssClass = "alert alert-danger";
+                lbl_mensagem_formandos.Text = "Erro ao validar o formando.";
+                lbl_mensagem_formandos.CssClass = "alert alert-danger";
             }
 
             BindData_Formandos();
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels9", "$('#" + lbl_mensagem_formandos.ClientID + "').delay(5000).fadeOut('slow');", true);
         }
 
         protected void lb_revogar_formandos_Click(object sender, EventArgs e)
@@ -233,17 +248,17 @@ namespace Projeto_Final
 
             if (Inscricoes.Revogar_Inscricao(Convert.ToInt32(cod_user), Convert.ToInt32(cod_inscricao)))
             {
-                lbl_mensagem.Text = "Inscrição de formando revogada com sucesso.";
-                lbl_mensagem.CssClass = "alert alert-success";
+                lbl_mensagem_formandos.Text = "Inscrição de formando revogada com sucesso.";
+                lbl_mensagem_formandos.CssClass = "alert alert-success";
             }
             else
             {
-                lbl_mensagem.Text = "Erro ao revogar a inscrição.";
-                lbl_mensagem.CssClass = "alert alert-danger";
+                lbl_mensagem_formandos.Text = "Erro ao revogar a inscrição.";
+                lbl_mensagem_formandos.CssClass = "alert alert-danger";
             }
 
             BindData_Formandos();
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeAlert", "$('.alert').delay(5000).fadeOut('slow');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "fadeLabels9", "$('#" + lbl_mensagem_formandos.ClientID + "').delay(5000).fadeOut('slow');", true);
         }
     }
 }
