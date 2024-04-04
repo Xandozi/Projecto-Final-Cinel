@@ -23,6 +23,7 @@ namespace Projeto_Final.Classes
         public DateTime data_inscricao { get; set; }
         public string situacao { get; set; }
         public string regime { get; set; }
+        public int cod_situacao { get; set; }
 
         public static bool Inserir_Formando_Turma(int cod_formando, int cod_turma)
         {
@@ -140,12 +141,12 @@ namespace Projeto_Final.Classes
         {
             List<Formandos> lst_formandos = new List<Formandos>();
 
-            string query = $"select Formandos.cod_formando, Formandos.cod_inscricao, Users.nome_proprio, Users.apelido from Formandos " +
+            string query = $"select Formandos.cod_formando, Formandos.cod_inscricao, Users.nome_proprio, Users.apelido, Inscricoes_Situacao.cod_situacao from Formandos " +
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formandos.cod_inscricao " +
                            $"join Inscricoes_Situacao on Inscricoes_Situacao.cod_inscricao = Inscricoes.cod_inscricao " +
                            $"join Users on Users.cod_user = Inscricoes.cod_user " +
                            $"join Turmas_Formandos on Turmas_Formandos.cod_formando = Formandos.cod_formando " +
-                           $"where Turmas_Formandos.cod_turma = {cod_turma} and Inscricoes_Situacao.cod_situacao = 1";
+                           $"where Turmas_Formandos.cod_turma = {cod_turma} and Inscricoes_Situacao.cod_situacao = 1 or Inscricoes_Situacao.cod_situacao = 2 or Inscricoes_Situacao.cod_situacao = 3";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -162,7 +163,11 @@ namespace Projeto_Final.Classes
                 informacao.cod_inscricao = !dr.IsDBNull(1) ? dr.GetInt32(1) : 000;
                 informacao.nome_proprio = !dr.IsDBNull(2) ? dr.GetString(2) : null;
                 informacao.apelido = !dr.IsDBNull(3) ? dr.GetString(3) : null;
-                informacao.nome_completo = informacao.nome_proprio + " " + informacao.apelido;
+                informacao.cod_situacao = !dr.IsDBNull(4) ? dr.GetInt32(4) : 000;
+                if (informacao.cod_situacao == 3)
+                    informacao.nome_completo = informacao.nome_proprio + " " + informacao.apelido + " - Desistente";
+                else
+                    informacao.nome_completo = informacao.nome_proprio + " " + informacao.apelido;
 
                 lst_formandos.Add(informacao);
             }

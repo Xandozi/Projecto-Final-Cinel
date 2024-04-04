@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4" style="margin-left: 10px; margin-top: 12px;">
-                        <asp:Button ID="btn_editar" CssClass="btn btn-info py-2 px-4 ml-2" runat="server" Text="Gravar Alterações" OnClick="btn_editar_Click" />
+                        <asp:Button ID="btn_editar" CssClass="btn btn-info py-2 px-4 ml-2" runat="server" Text="Guardar Alterações" OnClick="btn_editar_Click" />
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4" style="margin-left: 10px; margin-top: 12px;">
                         <div style="margin-bottom: 30px;">

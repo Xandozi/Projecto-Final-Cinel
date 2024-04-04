@@ -68,10 +68,10 @@ namespace Projeto_Final
             int cod_turma_estado = Convert.ToInt32(ddl_estado.SelectedValue);
 
             DateTime inicio_data_inicio = DateTime.MinValue;
-            DateTime fim_data_inicio = DateTime.Today;
+            DateTime fim_data_inicio = DateTime.MaxValue;
 
             DateTime inicio_data_fim = DateTime.MinValue;
-            DateTime fim_data_fim = DateTime.Today;
+            DateTime fim_data_fim = DateTime.MaxValue;
 
             if (DateTime.TryParse(tb_data_inicio_inicio.Text, out DateTime inicio))
                 inicio_data_inicio = inicio;

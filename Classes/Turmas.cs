@@ -137,7 +137,7 @@ namespace Projeto_Final.Classes
             }
             if (inicio_data_fim != null && fim_data_fim != null)
             {
-                conditions.Add($"Turmas.data_inicio >= '{inicio_data_fim}' and Turmas.data_inicio <= '{fim_data_fim}'");
+                conditions.Add($"Turmas.data_fim >= '{inicio_data_fim}' and Turmas.data_fim <= '{fim_data_fim}'");
             }
             if (cod_area != 0)
             {
@@ -262,6 +262,27 @@ namespace Projeto_Final.Classes
                 myConn.Open();
                 myCommand.ExecuteNonQuery();
                 myConn.Close();
+            }
+        }
+
+        public static void Editar_Turma(int cod_turma, int cod_regime, int cod_turmas_estado)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
+                myCommand.Parameters.AddWithValue("@cod_regime", cod_regime);
+                myCommand.Parameters.AddWithValue("@cod_turmas_estado", cod_turmas_estado);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Editar_Turma";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                myConn.Close();
+                myCommand.Parameters.Clear();
             }
         }
     }
