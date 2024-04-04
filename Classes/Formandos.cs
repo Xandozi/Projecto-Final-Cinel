@@ -146,7 +146,7 @@ namespace Projeto_Final.Classes
                            $"join Inscricoes_Situacao on Inscricoes_Situacao.cod_inscricao = Inscricoes.cod_inscricao " +
                            $"join Users on Users.cod_user = Inscricoes.cod_user " +
                            $"join Turmas_Formandos on Turmas_Formandos.cod_formando = Formandos.cod_formando " +
-                           $"where Turmas_Formandos.cod_turma = {cod_turma} and Inscricoes_Situacao.cod_situacao = 1 or Inscricoes_Situacao.cod_situacao = 2 or Inscricoes_Situacao.cod_situacao = 3";
+                           $"where Turmas_Formandos.cod_turma = {cod_turma} and (Inscricoes_Situacao.cod_situacao = 1 or Inscricoes_Situacao.cod_situacao = 2 or Inscricoes_Situacao.cod_situacao = 3)";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
