@@ -266,15 +266,7 @@
                         // Add the event to the calendar
                         calendar.addEvent(eventToAdd);
 
-                        // Unselect the event
                         calendar.unselect();
-
-                        // Remove the unselected event from the selectedSlots array
-                        calendar.setOption('unselect', function (info) {
-                            selectedSlots = selectedSlots.filter(function (slot) {
-                                return !(slot.start === info.event.start && slot.end === info.event.end);
-                            });
-                        });
                     },
                     contentHeight: 'auto',
                     aspectRatio: 1.5,
@@ -286,11 +278,26 @@
                 });
 
                 calendar.setOption('eventClick', function (info) {
+                    // Get the start time components
+                    var start = info.event.start;
+                    var startString = start.getUTCFullYear() + '-' + ('0' + (start.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + start.getUTCDate()).slice(-2) + 'T' +
+                        ('0' + start.getUTCHours()).slice(-2) + ':' + ('0' + start.getUTCMinutes()).slice(-2) + ':' + ('0' + start.getUTCSeconds()).slice(-2);
+
+                    // Get the end time components
+                    var end = info.event.end;
+                    var endString = end.getUTCFullYear() + '-' + ('0' + (end.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + end.getUTCDate()).slice(-2) + 'T' +
+                        ('0' + end.getUTCHours()).slice(-2) + ':' + ('0' + end.getUTCMinutes()).slice(-2) + ':' + ('0' + end.getUTCSeconds()).slice(-2);
+
+                    console.log(startString); // Log the start time in the desired format
+                    console.log(endString); // Log the end time in the desired format
+                    console.log(info.event.title);
+
                     selectedSlots = selectedSlots.filter(function (slot) {
-                        return !(slot.startStr === info.event.startStr && slot.endStr === info.event.endStr);
+                        return !(slot.start === startString && slot.end === endString);
                     });
                     info.event.remove();
                 });
+
 
                 selectedSlots.forEach(function (slot) {
                     calendar.addEvent({
