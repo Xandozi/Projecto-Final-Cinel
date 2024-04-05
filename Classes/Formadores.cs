@@ -138,11 +138,13 @@ namespace Projeto_Final.Classes
             return lst_formador;
         }
 
-        public static List<Formadores> Ler_Formadores(string nome_turma, string nome_formando, int cod_curso, int cod_regime, string ordenacao_nome_turma, string ordenacao_nome_formando, int cod_inscricao_situacao)
+        public static List<Formadores> Ler_Formadores(string nome_turma, string nome_formando, int cod_curso, int cod_regime, int cod_modulos, string ordenacao_nome_turma, string ordenacao_nome_formando, int cod_inscricao_situacao)
         {
             List<Formadores> lst_formadores = new List<Formadores>();
 
             List<string> conditions = new List<string>();
+
+            conditions.Add($"Users_Perfis.cod_perfil = 3");
 
             string query = $"select Formadores.cod_formador, Formadores.cod_inscricao, Users.nome_proprio, Users.apelido, Turmas.nome_turma, Cursos.nome_curso, Situacao.situacao, Users.cod_user, Regime.regime, Modulos.cod_modulo, Modulos.nome_modulo, Modulos.cod_ufcd from Formadores " +
                            $"join Modulos_Turmas_Formadores on Modulos_Turmas_Formadores.cod_formador = Formadores.cod_formador " +
@@ -154,8 +156,7 @@ namespace Projeto_Final.Classes
                            $"join Inscricoes_Situacao on Inscricoes_Situacao.cod_inscricao = Inscricoes.cod_inscricao " +
                            $"join Situacao on Situacao.cod_situacao = Inscricoes_Situacao.cod_situacao " +
                            $"join Turmas on Turmas.cod_turma = Modulos_Turmas_Formadores.cod_turma " +
-                           $"join Regime on Regime.cod_regime = Turmas.cod_regime " +
-                           $"where Users_Perfis.cod_perfil = 3";
+                           $"join Regime on Regime.cod_regime = Turmas.cod_regime ";
 
             // Decisões para colocar ou não os filtros dentro da string query
             if (!string.IsNullOrEmpty(nome_turma))
@@ -178,15 +179,19 @@ namespace Projeto_Final.Classes
             {
                 conditions.Add($"Inscricoes_Situacao.cod_situacao = {cod_inscricao_situacao}");
             }
+            if (cod_modulos != 0)
+            {
+                conditions.Add($"Modulos.cod_modulo = {cod_modulos}");
+            }
             if (conditions.Count > 0)
             {
                 query += " WHERE " + string.Join(" AND ", conditions);
             }
-            if (ordenacao_nome_turma != "Nenhuma" && string.IsNullOrEmpty(ordenacao_nome_formando))
+            if (ordenacao_nome_turma != "Nenhuma" && ordenacao_nome_formando == "Nenhuma")
             {
                 query += " ORDER BY Turmas.nome_turma " + ordenacao_nome_turma;
             }
-            if (string.IsNullOrEmpty(ordenacao_nome_turma) && ordenacao_nome_formando != "Nenhuma")
+            if (ordenacao_nome_turma == "Nenhuma" && ordenacao_nome_formando != "Nenhuma")
             {
                 query += " ORDER BY Users.nome_proprio " + ordenacao_nome_formando;
             }

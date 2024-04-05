@@ -268,6 +268,13 @@
 
                         // Unselect the event
                         calendar.unselect();
+
+                        // Remove the unselected event from the selectedSlots array
+                        calendar.setOption('unselect', function (info) {
+                            selectedSlots = selectedSlots.filter(function (slot) {
+                                return !(slot.start === info.event.start && slot.end === info.event.end);
+                            });
+                        });
                     },
                     contentHeight: 'auto',
                     aspectRatio: 1.5,

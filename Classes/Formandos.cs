@@ -203,6 +203,8 @@ namespace Projeto_Final.Classes
 
             List<string> conditions = new List<string>();
 
+            conditions.Add($"Users_Perfis.cod_perfil = 4");
+
             string query = $"select Formandos.cod_formando, Formandos.cod_inscricao, Users.nome_proprio, Users.apelido, Turmas.nome_turma, Cursos.nome_curso, Situacao.situacao, Users.cod_user, Regime.regime from Formandos " +
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formandos.cod_inscricao " +
                            $"join Cursos on Cursos.cod_curso = Inscricoes.cod_curso " +
@@ -212,8 +214,7 @@ namespace Projeto_Final.Classes
                            $"join Situacao on Situacao.cod_situacao = Inscricoes_Situacao.cod_situacao " +
                            $"join Turmas_Formandos on Turmas_Formandos.cod_formando = Formandos.cod_formando " +
                            $"join Turmas on Turmas.cod_turma = Turmas_Formandos.cod_turma " +
-                           $"join Regime on Regime.cod_regime = Turmas.cod_regime " +
-                           $"where Users_Perfis.cod_perfil = 4";
+                           $"join Regime on Regime.cod_regime = Turmas.cod_regime ";
 
             // Decisões para colocar ou não os filtros dentro da string query
             if (!string.IsNullOrEmpty(nome_turma))
@@ -240,11 +241,11 @@ namespace Projeto_Final.Classes
             {
                 query += " WHERE " + string.Join(" AND ", conditions);
             }
-            if (ordenacao_nome_turma != "Nenhuma" && string.IsNullOrEmpty(ordenacao_nome_formando))
+            if (ordenacao_nome_turma != "Nenhuma" && ordenacao_nome_formando == "Nenhuma")
             {
                 query += " ORDER BY Turmas.nome_turma " + ordenacao_nome_turma;
             }
-            if (string.IsNullOrEmpty(ordenacao_nome_turma) && ordenacao_nome_formando != "Nenhuma")
+            if (ordenacao_nome_turma == "Nenhuma" && ordenacao_nome_formando != "Nenhuma")
             {
                 query += " ORDER BY Users.nome_proprio " + ordenacao_nome_formando;
             }

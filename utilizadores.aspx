@@ -129,6 +129,7 @@
                                                     <a href="utilizadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>" style="text-decoration: none;">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><b><%# Eval("username") %></b></h5>
+                                                            <p class="card-text" style="color: black;">Código Utilizador: <span style="color: orangered"><%# Eval("cod_user") %></span></p>
                                                             <p class="card-text" style="color: black;">Nome Completo: <span style="color: orangered"><%# Eval("nome_proprio") + " " + Eval("apelido") %></span></p>
                                                             <p class="card-text" style="color: black;">Email: <span style="color: orangered"><%# Eval("email") %></span></p>
                                                             <p class="card-text" style="color: black;">Data de Nascimento: <span style="color: orangered"><%# Eval("data_nascimento", "{0:dd/MM/yyyy}") %></span></p>

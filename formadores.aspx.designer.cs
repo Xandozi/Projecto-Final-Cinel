@@ -96,6 +96,24 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.SqlDataSource regimes;
 
         /// <summary>
+        /// ddl_modulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_modulos;
+
+        /// <summary>
+        /// modulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource modulos;
+
+        /// <summary>
         /// ddl_ordem_nome_formador control.
         /// </summary>
         /// <remarks>

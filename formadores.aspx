@@ -39,6 +39,13 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
+                                <label>Módulo:</label>
+                                <asp:DropDownList ID="ddl_modulos" CssClass="form-control" AppendDataBoundItems="true" runat="server" DataSourceID="modulos" DataTextField="nome_modulo" DataValueField="cod_modulo"></asp:DropDownList>
+                                <asp:SqlDataSource runat="server" ID="modulos" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [nome_modulo], [cod_modulo] FROM [Modulos]"></asp:SqlDataSource>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
                                 <label>Ordenação Nome Formador:</label>
                                 <asp:DropDownList ID="ddl_ordem_nome_formador" CssClass="form-control" runat="server" Style="margin-left: 5px;">
                                     <asp:ListItem>Nenhuma</asp:ListItem>
@@ -47,7 +54,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Ordenação Nome Turma:</label>
                                 <asp:DropDownList ID="ddl_ordem_nome_turma" CssClass="form-control" runat="server" Style="margin-left: 5px;">
