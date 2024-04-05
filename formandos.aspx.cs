@@ -28,11 +28,9 @@ namespace Projeto_Final
 
                     ddl_curso.Items.Insert(0, new ListItem("Todos", "0"));
                     ddl_regime.Items.Insert(0, new ListItem("Todos", "0"));
-                    ddl_regime.Items.Insert(0, new ListItem("Todos", "0"));
                     ddl_estado_inscricao.Items.Insert(0, new ListItem("Todos", "0"));
 
                     ddl_curso.SelectedIndex = 0;
-                    ddl_regime.SelectedIndex = 0;
                     ddl_regime.SelectedIndex = 0;
                     ddl_estado_inscricao.SelectedIndex = 0;
                 }

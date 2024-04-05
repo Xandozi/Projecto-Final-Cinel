@@ -28,11 +28,10 @@ namespace Projeto_Final
 
                     ddl_curso.Items.Insert(0, new ListItem("Todos", "0"));
                     ddl_regime.Items.Insert(0, new ListItem("Todos", "0"));
-                    ddl_regime.Items.Insert(0, new ListItem("Todos", "0"));
+                    ddl_modulos.Items.Insert(0, new ListItem("Todos", "0"));
                     ddl_estado_inscricao.Items.Insert(0, new ListItem("Todos", "0"));
 
                     ddl_curso.SelectedIndex = 0;
-                    ddl_regime.SelectedIndex = 0;
                     ddl_regime.SelectedIndex = 0;
                     ddl_estado_inscricao.SelectedIndex = 0;
                 }
@@ -47,12 +46,13 @@ namespace Projeto_Final
             string nome_formando = tb_nome_formador.Text;
             int cod_curso = Convert.ToInt32(ddl_curso.SelectedValue);
             int cod_regime = Convert.ToInt32(ddl_regime.SelectedValue);
+            int cod_modulo = Convert.ToInt32(ddl_modulos.SelectedValue);
             string ordenacao_nome_turma = ddl_ordem_nome_turma.SelectedValue;
             string ordenacao_nome_formando = ddl_ordem_nome_formador.SelectedValue;
             int cod_inscricao_situacao = Convert.ToInt32(ddl_estado_inscricao.SelectedValue);
 
             PagedDataSource pagedData = new PagedDataSource();
-            pagedData.DataSource = Formadores.Ler_Formadores(nome_turma, nome_formando, cod_curso, cod_regime, ordenacao_nome_turma, ordenacao_nome_formando, cod_inscricao_situacao);
+            pagedData.DataSource = Formadores.Ler_Formadores(nome_turma, nome_formando, cod_curso, cod_regime, cod_modulo, ordenacao_nome_turma, ordenacao_nome_formando, cod_inscricao_situacao);
             pagedData.AllowPaging = true;
             pagedData.PageSize = 9;
             pagedData.CurrentPageIndex = PageNumber;

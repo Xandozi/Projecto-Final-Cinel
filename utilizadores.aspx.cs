@@ -104,14 +104,6 @@ namespace Projeto_Final
         protected void btn_aplicar_filtros_Click(object sender, EventArgs e)
         {
             filterForm.Style["display"] = "block";
-
-            //int index = ddl_perfil.SelectedIndex;
-
-            //ddl_perfil.Items.Clear();
-            //ddl_perfil.Items.Insert(0, "Todos");
-            //ddl_perfil.DataBind();
-            //perfis.DataBind();
-            //ddl_perfil.SelectedIndex = index;
         }
     }
 }
