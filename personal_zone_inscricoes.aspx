@@ -21,7 +21,7 @@
             <div class="container">
                 <div class="row">
                     <div id="div_inscricoes" class="col-md-10" runat="server">
-                        <div id="card_formadores" class="card" style="border-color: #333; margin-top: 10px;" runat="server">
+                        <div id="card_formadores" class="card" style="border-color: #333; background-color: antiquewhite; margin-top: 10px;" runat="server">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Módulos como Formador</h2>
                             </div>
@@ -32,8 +32,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <table class="table table-bordered">
-                                            <thead>
+                                        <table class="table table-bordered bg-light">
+                                            <thead class="bg-dark" style="color: white;">
                                                 <tr>
                                                     <th>Turma</th>
                                                     <th>Curso</th>

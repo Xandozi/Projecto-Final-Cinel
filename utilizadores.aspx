@@ -6,7 +6,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div id="filterForm" runat="server" style="display: none; margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
+                <div id="filterForm" runat="server" class="border-dark" style="display: none; margin-bottom: 10px; background-color:antiquewhite; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -108,15 +108,15 @@
                         </script>
                     </div>
                     <div class="col-md-10">
-                        <div class="card" style="border-color: #333;">
+                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
                             <div class="card-header bg-dark text-white">
-                                <h2 class="display-4" style="font-size: 30px; color: white;">Consulta de Utilizadores</h2>
+                                <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consulta de Utilizadores</h2>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:LinkButton ID="btn_previous_top" CssClass="btn btn-dark m-2" runat="server" OnClick="btn_previous_Click">
+                                <asp:LinkButton ID="btn_previous_top" CssClass="btn btn-light m-2" runat="server" OnClick="btn_previous_Click">
                                     <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>
-                                <asp:LinkButton ID="btn_next_top" runat="server" CssClass="btn btn-dark m-2" OnClick="btn_next_Click">
+                                <asp:LinkButton ID="btn_next_top" runat="server" CssClass="btn btn-light m-2" OnClick="btn_next_Click">
                                     <i class="fas fa-arrow-right"></i>
                                 </asp:LinkButton>
                             </div>
@@ -125,7 +125,7 @@
                                     <asp:Repeater ID="rpt_users" runat="server">
                                         <ItemTemplate>
                                             <div class="col-md-4">
-                                                <div class="card" style="margin: 5px;">
+                                                <div class="card border-dark" style="margin: 5px;">
                                                     <a href="utilizadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>" style="text-decoration: none;">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><b><%# Eval("username") %></b></h5>
@@ -149,10 +149,10 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:LinkButton ID="btn_previous" CssClass="btn btn-dark m-2" runat="server" OnClick="btn_previous_Click">
+                                <asp:LinkButton ID="btn_previous" CssClass="btn btn-light m-2" runat="server" OnClick="btn_previous_Click">
                                     <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>
-                                <asp:LinkButton ID="btn_next" runat="server" CssClass="btn btn-dark m-2" OnClick="btn_next_Click">
+                                <asp:LinkButton ID="btn_next" runat="server" CssClass="btn btn-light m-2" OnClick="btn_next_Click">
                                     <i class="fas fa-arrow-right"></i>
                                 </asp:LinkButton>
                             </div>

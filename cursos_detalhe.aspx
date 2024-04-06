@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card" style="border-color: #333;">
+                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4" style="font-size: 40px; color: white;">Curso <%= lbl_cod_qualificacao.Text %></h2>
                             </div>

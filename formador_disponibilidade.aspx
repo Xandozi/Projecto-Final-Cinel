@@ -4,18 +4,17 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container-fluid">
-        <div class="card" style="border-color: #333; margin-top: 30px; margin-bottom: 30px;">
+        <div class="card" style="border-color: #333; background-color: antiquewhite; margin-top: 30px; margin-bottom: 30px;">
             <div class="card-header bg-dark text-white">
                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Disponibilidade Formador</h2>
             </div>
-            <div class="card" style="margin: 5px;">
-                <div class="card-body">
-                    <div id='calendar' style="margin-top: 30px; margin-bottom: 10px;"></div>
+            <div class="card-body">
+                    <div id='calendar' class="bg-light border-dark" style="padding:10px; margin-top: 30px; margin-bottom: 10px;"></div>
                     <div class="row justify-content-between">
                         <div class="form-group" style="margin: 10px;">
                             <asp:Label ID="lbl_sabados" runat="server" Text="Selecionar como Indisponível"></asp:Label>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="margin-top: 10px;">
                                     <button id="btn_SelecionarSabados" class="btn btn-dark">Sábados</button>
                                     <button id="btn_SelecionarSabadosManha" class="btn btn-dark">Sábados de manhã</button>
                                     <button id="btn_SelecionarSabadosTarde" class="btn btn-dark">Sábados de tarde</button>
@@ -33,7 +32,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
         <div class="row justify-content-between" style="margin: 10px;">
             <button class="btn btn-success" id="btn_SaveSelectedSlots">Submeter Disponibilidade</button>

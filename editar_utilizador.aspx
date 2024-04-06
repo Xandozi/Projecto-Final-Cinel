@@ -15,7 +15,7 @@
             </div>
             <!-- Main Content -->
             <div class="col-md-10">
-                <div class="card" style="border-color: #333;">
+                <div class="card" style="border-color: #333; background-color:antiquewhite;">
                     <div class="card-header bg-dark text-white">
                         <h2 class="display-4" style="font-size: 40px; color: white;">Informação pessoal de <%= tb_nome_proprio.Text + " " + tb_apelido.Text %></h2>
                     </div>
