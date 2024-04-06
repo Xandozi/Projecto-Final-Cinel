@@ -106,6 +106,8 @@
     <Content Include="formandos.aspx" />
     <Content Include="gestao.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="horarios.aspx" />
+    <Content Include="horarios_detalhe.aspx" />
     <Content Include="img\ciberseguranca.jpg" />
     <Content Include="img\cinel_logo_horizontal.png" />
     <Content Include="img\logo-cinel.JPG" />
@@ -343,6 +345,20 @@
     </Compile>
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="horarios.aspx.cs">
+      <DependentUpon>horarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="horarios.aspx.designer.cs">
+      <DependentUpon>horarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="horarios_detalhe.aspx.cs">
+      <DependentUpon>horarios_detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="horarios_detalhe.aspx.designer.cs">
+      <DependentUpon>horarios_detalhe.aspx</DependentUpon>
     </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
