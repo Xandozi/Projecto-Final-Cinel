@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4">
-                        <div class="card" style="border-color: #333;">
+                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4" style="font-size: 40px; color: white;">Criação de Módulo</h2>
                             </div>

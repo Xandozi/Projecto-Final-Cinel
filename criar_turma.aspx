@@ -18,7 +18,7 @@
                     </div>
                     <!-- Form to create a new course -->
                     <div class="col-md-10" style="margin-top: 10px;">
-                        <div class="card" style="border-color: #333;">
+                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Criar Nova Turma</h2>
                             </div>

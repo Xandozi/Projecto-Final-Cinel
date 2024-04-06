@@ -15,7 +15,7 @@
             </div>
             <!-- Main Content -->
             <div class="col-md-4" style="margin-top: 10px;">
-                <div class="card" style="border-color: #333;">
+                <div class="card" style="border-color: #333; background-color:antiquewhite;">
                     <div class="card-header bg-dark text-white">
                         <h2 class="display-4" style="font-size: 40px; color: white;">Informação da Turma <%= lbl_nome_turma.Text %></h2>
                     </div>

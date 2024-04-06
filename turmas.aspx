@@ -7,7 +7,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div id="filterForm" runat="server" style="display: none; margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
+                <div id="filterForm" runat="server" class="border-dark" style="display: none; margin-bottom: 10px; margin-top: 10px; background-color:antiquewhite; border: 1px solid #ccc; padding: 10px;">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -145,20 +145,20 @@
                         </script>
                     </div>
                     <div id="div_turmas" class="col-md-10" runat="server">
-                        <div id="card_turmas" class="card" style="border-color: #333; margin-top: 10px;" runat="server">
+                        <div id="card_turmas" class="card" style="border-color: #333; background-color:antiquewhite; margin-top: 10px;" runat="server">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consultar Turmas</h2>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:LinkButton ID="btn_previous_turmas_top" CssClass="btn btn-dark m-1" runat="server" OnClick="btn_previous_turmas_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
-                                <asp:LinkButton ID="btn_next_turmas_top" runat="server" CssClass="btn btn-dark m-1" OnClick="btn_next_turmas_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btn_previous_turmas_top" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_turmas_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btn_next_turmas_top" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_turmas_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <asp:Repeater ID="rpt_turmas" runat="server">
                                         <ItemTemplate>
                                             <div class="col-md-3">
-                                                <div class="card" style="margin: 5px;">
+                                                <div class="card border-dark" style="margin: 5px;">
                                                     <a href="turmas_detalhe.aspx?cod_turma=<%# Eval("cod_turma") %>" style="text-decoration: none;">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><b><%# Eval("nome_turma") %></b></h5>
@@ -178,8 +178,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:LinkButton ID="btn_previous_turmas" CssClass="btn btn-dark m-1" runat="server" OnClick="btn_previous_turmas_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
-                                <asp:LinkButton ID="btn_next_turmas" runat="server" CssClass="btn btn-dark m-1" OnClick="btn_next_turmas_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btn_previous_turmas" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_turmas_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btn_next_turmas" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_turmas_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
                         </div>
                     </div>

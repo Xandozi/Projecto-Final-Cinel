@@ -10,7 +10,7 @@
             <div class="container mt-5" style="margin-bottom:40px;">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <div class="card border-primary">
+                        <div class="card border-primary" style="background-color: antiquewhite;">
                             <div class="card-header bg-primary text-white text-center">
                                 <h4 class="mb-0" style="color: white;">Formulário de Registo</h4>
                             </div>
