@@ -149,7 +149,7 @@
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consultar Turmas</h2>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-top: 10px;">
                                 <asp:LinkButton ID="btn_previous_turmas_top" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_turmas_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
                                 <asp:LinkButton ID="btn_next_turmas_top" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_turmas_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
@@ -177,7 +177,7 @@
                                     </asp:Repeater>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-bottom: 10px;">
                                 <asp:LinkButton ID="btn_previous_turmas" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_turmas_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
                                 <asp:LinkButton ID="btn_next_turmas" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_turmas_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>

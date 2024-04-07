@@ -112,11 +112,11 @@
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consulta de Utilizadores</h2>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:LinkButton ID="btn_previous_top" CssClass="btn btn-light m-2" runat="server" OnClick="btn_previous_Click">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-top: 10px;">
+                                <asp:LinkButton ID="btn_previous_top" CssClass="btn btn-light m-2 btn-outline-dark" runat="server" OnClick="btn_previous_Click">
                                     <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>
-                                <asp:LinkButton ID="btn_next_top" runat="server" CssClass="btn btn-light m-2" OnClick="btn_next_Click">
+                                <asp:LinkButton ID="btn_next_top" runat="server" CssClass="btn btn-light m-2 btn-outline-dark" OnClick="btn_next_Click">
                                     <i class="fas fa-arrow-right"></i>
                                 </asp:LinkButton>
                             </div>
@@ -148,11 +148,11 @@
                                     </asp:Repeater>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
-                                <asp:LinkButton ID="btn_previous" CssClass="btn btn-light m-2" runat="server" OnClick="btn_previous_Click">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-bottom: 10px;">
+                                <asp:LinkButton ID="btn_previous" CssClass="btn btn-light m-2 btn-outline-dark" runat="server" OnClick="btn_previous_Click">
                                     <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>
-                                <asp:LinkButton ID="btn_next" runat="server" CssClass="btn btn-light m-2" OnClick="btn_next_Click">
+                                <asp:LinkButton ID="btn_next" runat="server" CssClass="btn btn-light m-2 btn-outline-dark" OnClick="btn_next_Click">
                                     <i class="fas fa-arrow-right"></i>
                                 </asp:LinkButton>
                             </div>

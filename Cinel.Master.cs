@@ -41,7 +41,7 @@ namespace Projeto_Final
             }
             else if (Session["logged"] != null)
             {
-                return $"{Session["username"]}";
+                return $"<i class='fas fa-user'></i> {Session["username"]}";
             }
             else
             {

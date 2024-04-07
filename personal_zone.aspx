@@ -9,20 +9,20 @@
             <!-- Sidebar -->
             <div class="col-md-2 bg-light" style=" margin-top: 10px;">
                 <div class="list-group">
-                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action active">Área Pessoal</a>
-                    <a href="personal_zone_inscricoes.aspx" class="list-group-item list-group-item-action">Minhas Inscrições</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeUsernameModal">Mudar o Username</a>
+                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action active"><i class="fas fa-user-cog"></i> Área Pessoal</a>
+                    <a href="personal_zone_inscricoes.aspx" class="list-group-item list-group-item-action"><i class="fas fa-clipboard-list"></i> Minhas Inscrições</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeUsernameModal"><i class="fas fa-file-signature"></i> Mudar o Username</a>
                     <% if (Session["googlefb_log"] != "yes")
                         { %>
-                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changePasswordModal">Mudar a Password</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeEmailModal">Mudar o Email</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changePasswordModal"><i class="fas fa-lock"></i> Mudar a Password</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#changeEmailModal"><i class="fas fa-envelope"></i> Mudar o Email</a>
                     <% } %>
                     <% if (Session["perfil"].ToString().Contains("Staff") || Session["perfil"].ToString().Contains("Super Admin"))
                         { %>
-                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action">Dados Estatísticos</a>
-                    <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão</a>
+                    <a href="dados_estatisticos.aspx" class="list-group-item list-group-item-action"><i class="fas fa-list-ol"></i> Dados Estatísticos</a>
+                    <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
                     <% } %>
-                    <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="Terminar Sessão" OnClick="btn_logout2_Click" />
+                    <asp:LinkButton ID="lb_logout2" class="list-group-item list-group-item-action" runat="server" OnClick="btn_logout2_Click"><i class="fas fa-power-off"></i> Terminar Sessão</asp:LinkButton>
                 </div>
             </div>
             <!-- Main Content -->

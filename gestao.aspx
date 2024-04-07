@@ -28,7 +28,7 @@
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Formadores por Validar Inscrição</h2>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true"style="margin-top: 10px;">
                                 <asp:LinkButton ID="btn_previous_formadores_top" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_formadores_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
                                 <asp:LinkButton ID="btn_next_formadores_top" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_formadores_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-bottom: 10px;">
                                 <asp:LinkButton ID="btn_previous_formadores" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_formadores_Click">
                 <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>
@@ -81,7 +81,7 @@
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Formandos por Validar Inscrição</h2>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true"style="margin-top: 10px;">
                                 <asp:LinkButton ID="btn_previous_formandos_top" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_formandos_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
                                 <asp:LinkButton ID="btn_next_formandos_top" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_formandos_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-bottom: 10px;">
                                 <asp:LinkButton ID="btn_previous_formandos" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_formandos_Click"><i class="fas fa-arrow-left"></i> </asp:LinkButton>
                                 <asp:LinkButton ID="btn_next_formandos" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_formandos_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
