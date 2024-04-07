@@ -127,7 +127,6 @@
                     <div class="col-md-2 bg-light" style="margin-top: 10px;">
                         <div class="list-group">
                             <a href="#" class="list-group-item list-group-item-action active">Horários</a>
-                            <a href="criar_horario.aspx" class="list-group-item list-group-item-action">Criar Horário</a>
                             <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
                         </div>
                         <asp:LinkButton ID="btn_filtros" runat="server" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;">
@@ -149,7 +148,7 @@
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consultar Horários</h2>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-top: 10px;">
                                 <asp:LinkButton ID="btn_previous_horarios_top" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_horarios_Click"><i class="fas fa-arrow-left"></i></asp:LinkButton>
                                 <asp:LinkButton ID="btn_next_horarios_top" runat="server" CssClass="btn btn-light border-dark m-1" OnClick="btn_next_horarios_Click"><i class="fas fa-arrow-right"></i></asp:LinkButton>
                             </div>
@@ -172,13 +171,13 @@
                                                     <asp:Repeater ID="rpt_horarios" runat="server" OnItemDataBound="rpt_horarios_ItemDataBound">
                                                         <ItemTemplate>
                                                             <tr>
-                                                                <td><%# Eval("nome_turma") %></a></td>
+                                                                <td><asp:LinkButton ID="lb_turma" CssClass="fas fa-info fa-sm" runat="server" OnClick="lb_turma_Click"></asp:LinkButton> <%# Eval("nome_turma") %></a></td>
                                                                 <td><%# Eval("nome_curso") %></td>
                                                                 <td><%# Eval("regime") %></td>
                                                                 <td><%# Eval("data_inicio", "{0:dd/MM/yyyy}") %></td>
                                                                 <td><%# Eval("estado") %></td>
                                                                 <td>
-                                                                    <asp:LinkButton ID="lb_horarios" runat="server" Style="margin-right: 5px;" OnClick="lb_horarios_Click"><i class="fas fa-calendar fa-lg"></i></asp:LinkButton>
+                                                                    <asp:LinkButton ID="lb_horarios" CssClass="fas fa-calendar fa-lg" runat="server" Style="margin-right: 5px;" OnClick="lb_horarios_Click"></asp:LinkButton>
                                                                 </td>
                                                             </tr>
                                                         </ItemTemplate>
@@ -187,12 +186,9 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="cod-md-12" style="margin: 13px;">
-                                        <asp:Label ID="lbl_mensagem_formadores" runat="server" Text=""></asp:Label>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-bottom: 10px;">
                                 <asp:LinkButton ID="btn_previous_horarios" CssClass="btn btn-light border-dark m-1" runat="server" OnClick="btn_previous_horarios_Click">
                 <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>

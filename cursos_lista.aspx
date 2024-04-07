@@ -101,7 +101,7 @@
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Lista de Cursos do Cinel</h2>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-top: 10px;">
                                 <asp:LinkButton ID="btn_previous_top" CssClass="btn btn-light border-dark m-2" runat="server" OnClick="btn_previous_Click">
                                     <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>
@@ -134,7 +134,7 @@
                                     </asp:Repeater>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center" causesvalidation="true">
+                            <div class="d-flex justify-content-center" causesvalidation="true" style="margin-bottom: 10px;">
                                 <asp:LinkButton ID="btn_previous" CssClass="btn btn-light border-dark m-2" runat="server" OnClick="btn_previous_Click">
                                     <i class="fas fa-arrow-left"></i>
                                 </asp:LinkButton>

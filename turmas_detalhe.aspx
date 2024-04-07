@@ -15,6 +15,7 @@
                     <a href="turmas_adicionar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Adicionar Formandos à Turma</a>
                     <a href="turmas_cancelar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Alterar Estado dos Formandos da Turma</a>
                     <% } %>
+                    <a href="horarios_detalhe.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Consultar Horário</a>
                     <a href="turmas.aspx" class="list-group-item list-group-item-action">Voltar</a>
                 </div>
             </div>

@@ -138,12 +138,23 @@ namespace Projeto_Final
 
                 LinkButton lb_horarios = (LinkButton)e.Item.FindControl("lb_horarios");
                 lb_horarios.CommandArgument = cod_turma;
+
+                LinkButton lb_turma = (LinkButton)e.Item.FindControl("lb_turma");
+                lb_turma.CommandArgument = cod_turma;
             }
         }
 
         protected void btn_aplicar_filtros_Click(object sender, EventArgs e)
         {
             filterForm.Style["display"] = "block";
+        }
+
+        protected void lb_turma_Click(object sender, EventArgs e)
+        {
+            LinkButton lb_turma = (LinkButton)sender;
+            string cod_turma = lb_turma.CommandArgument;
+
+            Response.Redirect($"turmas_detalhe.aspx?cod_turma={cod_turma}");
         }
     }
 }
