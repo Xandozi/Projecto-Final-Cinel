@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="horarios_detalhe.aspx.cs" Inherits="Projeto_Final.horarios_detalhe" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="editar_horario.aspx.cs" Inherits="Projeto_Final.editar_horario" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -10,21 +10,38 @@
                     <asp:Label ID="lbl_nome_turma" runat="server" Text=""></asp:Label></h2>
             </div>
             <div class="card-body">
+                <div class="row border-dark">
+                    <div class="col-md-2">
+                        <label class="col-form-label">Módulo</label>
+                        <asp:DropDownList ID="ddl_modulo" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="modulos" DataTextField="nome_modulo" DataValueField="cod_modulo"></asp:DropDownList>
+                        <asp:SqlDataSource runat="server" ID="modulos" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_modulo], [nome_modulo], [cod_ufcd] FROM [Modulos]"></asp:SqlDataSource>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-form-label">Formador</label>
+                        <asp:Label ID="lbl_nome_formador" CssClass="form-control" runat="server" Text=""></asp:Label>
+                        <asp:HiddenField ID="hf_cod_formador" runat="server" />
+                        <asp:HiddenField ID="hf_regime" runat="server" />
+                    </div>
+                    <div class="col-md-1">
+                        <label class="col-form-label">Côr do Evento</label>
+                        <input class="form-control" type="color" id="colorPicker" value="000000">
+                    </div>
+                </div>
                 <div id='calendar' class="bg-light border-dark" style="padding: 10px; margin-top: 30px; margin-bottom: 10px;"></div>
             </div>
         </div>
         <div class="row justify-content-between" style="margin: 10px;">
-            <asp:Button ID="btn_editar" CssClass="btn btn-dark" runat="server" Text="Editar Horário" OnClick="btn_editar_Click" />
+            <button class="btn btn-success" id="btn_SaveSelectedSlots">Submeter Horário</button>
             <asp:HiddenField ID="hf_cod_user" runat="server" />
             <a href="horarios.aspx" class="btn btn-info">Voltar para a página Horários</a>
         </div>
     </div>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
-        // Define the codTurmaValue variable
+        // Define the codUserValue variable
         var codTurmaValue;
 
-        // Function to parse the URL and extract the value of the cod_turma variable
+        // Function to parse the URL and extract the value of the cod_user variable
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -32,12 +49,12 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to set the cod_turma value received from server-side
+        // Function to set the cod_user value received from server-side
         function setCodTurma(cod_turma) {
             codTurmaValue = cod_turma;
         }
 
-        // Call setCodTurma function with the value of the cod_turma URL variable
+        // Call setCodUser function with the value of the cod_user URL variable
         var codTurmaFromUrl = getUrlParameter('cod_turma');
         setCodTurma(codTurmaFromUrl);
 
@@ -133,6 +150,18 @@
                 });
             }
 
+            // Function to add events to the selectedSlots array
+            function addEventsToSelectedSlots(eventData) {
+                eventData.forEach(function (event) {
+                    selectedSlots.push({
+                        title: event.title,
+                        start: event.start,
+                        end: event.end,
+                        color: event.color
+                    });
+                });
+            }
+
             $.ajax({
                 type: "POST",
                 url: "/Horarios_WebService.asmx/GetHorarios_JSON",
@@ -181,14 +210,20 @@
                     slotMinTime: '08:00:00',
                     slotMaxTime: '23:00:00',
                     allDaySlot: true,
-                    selectable: false, // Disable selecting slots
+                    selectable: true,
                     timeZone: 'UTC',
                     select: function (info) {
                         var isAllDay = info.allDay;
 
+                        // Determine start and end times based on regime
+                        var regime = $('#<%= hf_regime.ClientID %>').val();
+                        var selectedStartTime = regime === 'Laboral' ? '08:00:00' : '16:00:00';
+                        var selectedEndTime = regime === 'Laboral' ? '16:00:00' : '23:00:00';
+
                         if (isAllDay) {
-                            var selectedDateStart = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), 8, 0, 0));
-                            var selectedDateEnd = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), 23, 0, 0));
+                            // If it's an all-day event, set the start and end times accordingly
+                            var selectedDateStart = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), selectedStartTime.split(':')[0], selectedStartTime.split(':')[1], 0));
+                            var selectedDateEnd = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), selectedEndTime.split(':')[0], selectedEndTime.split(':')[1], 0));
 
                             info.start = selectedDateStart.toISOString();
                             info.end = selectedDateEnd.toISOString();
@@ -202,12 +237,22 @@
                             return;
                         }
 
+                        // Get the selected values from dropdown lists
+                        var selectedModulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
+                        var selectedFormador = $('#<%= lbl_nome_formador.ClientID %>').text();
+
+                        // Get the selected color from the color picker
+                        var selectedColor = $('#colorPicker').val();
+
+                        // Create the event title by concatenating the selected values
+                        var eventTitle = selectedModulo + " | " + selectedFormador;
+
                         var eventToAdd = {
-                            title: info.title,
+                            title: eventTitle,
                             start: info.start,
                             end: info.end,
                             rendering: 'background',
-                            color: info.color
+                            color: selectedColor
                         };
 
                         // Push the event object to selectedSlots array
@@ -223,9 +268,50 @@
                     initialDate: currentYear + '-01-01',
                     validRange: {
                         start: currentYear + '-01-01',
-                        end: (currentYear + 3) + '-01-01'
+                        end: (currentYear + 2) + '-01-01'
                     }
                 });
+
+                // Function to update slotMinTime and slotMaxTime based on hf_regime value
+                function updateSlotTimes(regime) {
+                    if (regime === 'Laboral') {
+                        calendar.setOption('slotMinTime', '08:00:00');
+                        calendar.setOption('slotMaxTime', '16:00:00');
+                    } else if (regime === 'Pós-Laboral') {
+                        calendar.setOption('slotMinTime', '16:00:00');
+                        calendar.setOption('slotMaxTime', '23:00:00');
+                    }
+                }
+
+                // Initial call to update slot times based on hf_regime value
+                updateSlotTimes($('#<%= hf_regime.ClientID %>').val());
+
+                // Event listener to update slot times when hf_regime value changes
+                $('#<%= hf_regime.ClientID %>').change(function () {
+                    updateSlotTimes($(this).val());
+                });
+
+                calendar.setOption('eventClick', function (info) {
+                    // Get the start time components
+                    var start = info.event.start;
+                    var startString = start.getUTCFullYear() + '-' + ('0' + (start.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + start.getUTCDate()).slice(-2) + 'T' +
+                        ('0' + start.getUTCHours()).slice(-2) + ':' + ('0' + start.getUTCMinutes()).slice(-2) + ':' + ('0' + start.getUTCSeconds()).slice(-2);
+
+                    // Get the end time components
+                    var end = info.event.end;
+                    var endString = end.getUTCFullYear() + '-' + ('0' + (end.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + end.getUTCDate()).slice(-2) + 'T' +
+                        ('0' + end.getUTCHours()).slice(-2) + ':' + ('0' + end.getUTCMinutes()).slice(-2) + ':' + ('0' + end.getUTCSeconds()).slice(-2);
+
+                    console.log(startString); // Log the start time in the desired format
+                    console.log(endString); // Log the end time in the desired format
+                    console.log(info.event.title);
+
+                    selectedSlots = selectedSlots.filter(function (slot) {
+                        return !(slot.start === startString && slot.end === endString);
+                    });
+                    info.event.remove();
+                });
+
 
                 selectedSlots.forEach(function (slot) {
                     calendar.addEvent({
@@ -238,7 +324,47 @@
                 });
 
                 calendar.render();
+
+                document.getElementById('btn_SaveSelectedSlots').addEventListener('click', function (event) {
+                    // Ensure selectedSlots array is properly structured
+                    var formattedSlots = selectedSlots.map(function (slot) {
+                        return {
+                            title: slot.title,
+                            start: slot.start,
+                            end: slot.end,
+                            color: slot.color
+                        };
+                    });
+
+                    // Call the server-side method using AJAX
+                    $.ajax({
+                        type: "POST",
+                        url: "editar_horario.aspx/ProcessSelectedSlots",
+                        data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue }), // Pass formattedSlots with all properties
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            // Handle success response if needed
+                            if (response.d) {
+                                // Show success message
+                                alert("Horário submetido com sucesso! Será redirecionado para outra página.");
+                                // Redirect to another page
+                                window.location.href = "horarios.aspx"; // Change "new_page.aspx" to the desired page
+                            } else {
+                                // Show error message
+                                alert("Ocorreu um erro ao submeter o horário da turma.");
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            // Handle error
+                            console.error("Error occurred while sending data to server.");
+                        }
+                    });
+                    event.preventDefault(); // Prevent default button behavior
+                });
+
             }
         });
+
     </script>
 </asp:Content>

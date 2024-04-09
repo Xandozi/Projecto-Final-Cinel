@@ -87,5 +87,52 @@ namespace Projeto_Final.Classes
                 return cod_timeslot;
             }
         }
+
+        public static void Insert_Horario_Turma(int cod_turma, int cod_modulo, int cod_formador, int cod_sala, int cod_timeslot, string data, string titulo, string color)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
+                myCommand.Parameters.AddWithValue("@cod_modulo", cod_modulo);
+                myCommand.Parameters.AddWithValue("@cod_formador", cod_formador);
+                myCommand.Parameters.AddWithValue("@cod_sala", cod_sala);
+                myCommand.Parameters.AddWithValue("@cod_timeslot", cod_timeslot);
+                myCommand.Parameters.AddWithValue("@data", data);
+                myCommand.Parameters.AddWithValue("@titulo", titulo);
+                myCommand.Parameters.AddWithValue("@color", color);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Insert_Horario_Turma";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+                myConn.Close();
+            }
+        }
+
+        public static void Delete_Horario_Turma(int cod_turma)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Delete_Horario_Turma";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+                myConn.Close();
+            }
+        }
     }
 }
