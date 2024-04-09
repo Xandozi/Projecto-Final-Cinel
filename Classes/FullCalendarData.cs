@@ -11,6 +11,7 @@ namespace Projeto_Final.Classes
         public DateTime Data { get; set; }
         public TimeSpan TimeSlot_Inicio { get; set; }
         public TimeSpan TimeSlot_Fim { get; set; }
+        public string color { get; set; }
         public string start => $"{Data:yyyy-MM-dd}T{TimeSlot_Inicio}";
         public string end => $"{Data:yyyy-MM-dd}T{TimeSlot_Fim}";
     }

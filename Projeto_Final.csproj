@@ -92,6 +92,7 @@
     <Content Include="cursos_lista_detalhe.aspx" />
     <Content Include="Disponibilidade_WebService.asmx" />
     <Content Include="editar_curso.aspx" />
+    <Content Include="editar_horario.aspx" />
     <Content Include="editar_modulo.aspx" />
     <Content Include="editar_sala.aspx" />
     <Content Include="editar_turma.aspx" />
@@ -108,6 +109,7 @@
     <Content Include="home.aspx" />
     <Content Include="horarios.aspx" />
     <Content Include="horarios_detalhe.aspx" />
+    <Content Include="Horarios_WebService.asmx" />
     <Content Include="img\ciberseguranca.jpg" />
     <Content Include="img\cinel_logo_horizontal.png" />
     <Content Include="img\logo-cinel.JPG" />
@@ -276,6 +278,13 @@
     <Compile Include="editar_curso.aspx.designer.cs">
       <DependentUpon>editar_curso.aspx</DependentUpon>
     </Compile>
+    <Compile Include="editar_horario.aspx.cs">
+      <DependentUpon>editar_horario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_horario.aspx.designer.cs">
+      <DependentUpon>editar_horario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_modulo.aspx.cs">
       <DependentUpon>editar_modulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -359,6 +368,10 @@
     </Compile>
     <Compile Include="horarios_detalhe.aspx.designer.cs">
       <DependentUpon>horarios_detalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Horarios_WebService.asmx.cs">
+      <DependentUpon>Horarios_WebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>

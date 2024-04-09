@@ -232,5 +232,40 @@ namespace Projeto_Final.Classes
 
             return lst_formadores;
         }
+
+        public static List<Formadores> Check_Formador_Modulo (int cod_turma, int cod_modulo)
+        {
+            List<Formadores> lst_formador = new List<Formadores>();
+
+            string query = $"select Formadores.cod_formador, Formadores.cod_inscricao, Users.nome_proprio, Users.apelido from Formadores " +
+                           $"join Inscricoes on Inscricoes.cod_inscricao = Formadores.cod_inscricao " +
+                           $"join Users on Users.cod_user = Inscricoes.cod_user " +
+                           $"join Modulos_Turmas_Formadores on Modulos_Turmas_Formadores.cod_formador = Formadores.cod_formador " +
+                           $"join Modulos on Modulos.cod_modulo = Modulos_Turmas_Formadores.cod_modulo " +
+                           $"where Modulos_Turmas_Formadores.cod_modulo = {cod_modulo} and Modulos_Turmas_Formadores.cod_turma = {cod_turma}";
+
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            SqlCommand myCommand = new SqlCommand(query, myConn);
+
+            myConn.Open();
+
+            SqlDataReader dr = myCommand.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Formadores informacao = new Formadores();
+                informacao.cod_formador = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
+                informacao.nome_proprio = !dr.IsDBNull(2) ? dr.GetString(2) : null;
+                informacao.apelido = !dr.IsDBNull(3) ? dr.GetString(3) : null;
+                informacao.nome_completo = informacao.nome_proprio + " " + informacao.apelido;
+
+                lst_formador.Add(informacao);
+            }
+
+            myConn.Close();
+
+            return lst_formador;
+        }
     }
 }

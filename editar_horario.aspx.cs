@@ -1,20 +1,15 @@
-﻿using System;
+﻿using Projeto_Final.Classes;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Web.Services;
-using System.Web.Script.Serialization;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Projeto_Final.Classes;
 
 namespace Projeto_Final
 {
-    public partial class formador_disponibilidade : System.Web.UI.Page
+    public partial class editar_horario : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,27 +17,48 @@ namespace Projeto_Final
             {
                 Response.Redirect("login.aspx");
             }
-            else if ((Request.QueryString["cod_user"].ToString() != Session["cod_user"].ToString()))
+            else if (!Validation.Check_IsStaff(Session["username"].ToString()))
             {
                 Response.Redirect("personal_zone.aspx");
             }
             else
             {
-                int cod_user = Convert.ToInt32(Request.QueryString["cod_user"]);
-                hf_cod_user.Value = cod_user.ToString();
+                if (Request.QueryString["cod_turma"] != null && Request.QueryString["nome_turma"] != null && Request.QueryString["regime"] != null)
+                {
+                    int cod_turma;
+                    if (int.TryParse(Request.QueryString["cod_turma"], out cod_turma))
+                    {
+                        string nome_turma = Request.QueryString["nome_turma"];
 
-                // RegisterStartupScript is used to call the JavaScript function from server-side
-                ScriptManager.RegisterStartupScript(this, GetType(), "SetCodUser", $"setCodUser({cod_user});", true);
+                        lbl_nome_turma.Text = nome_turma;
+
+                        if (!Page.IsPostBack)
+                        {
+                            modulos.SelectCommand = $"select Modulos.cod_modulo, Modulos.nome_modulo, Modulos.cod_ufcd, Modulos.duracao from Modulos " +
+                                                    $"join Cursos_Modulos on Cursos_Modulos.cod_modulo = Modulos.cod_modulo " +
+                                                    $"join Cursos on Cursos.cod_curso = Cursos_Modulos.cod_curso " +
+                                                    $"join Turmas on Turmas.cod_curso = Cursos.cod_curso " +
+                                                    $"where Turmas.cod_turma = {cod_turma}";
+
+                            ddl_modulo.DataBind();
+                        }
+
+                        List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));
+                        lbl_nome_formador.Text = formador[0].nome_completo;
+                        hf_cod_formador.Value = formador[0].cod_formador.ToString();
+                        hf_regime.Value = Request.QueryString["regime"];
+                    }
+                }
             }
         }
 
         // Method to receive data from client-side
         [WebMethod]
-        public static bool ProcessSelectedSlots(SlotData[] selectedSlots, int cod_user)
+        public static bool ProcessSelectedSlots(SlotData[] selectedSlots, int cod_turma)
         {
             try
             {
-                Horarios.Delete_Disponibilidade_Formador(cod_user);
+                Horarios.Insert_Horario_Turma(cod_turma);
 
                 foreach (var slot in selectedSlots)
                 {
@@ -108,6 +124,7 @@ namespace Projeto_Final
             public string title { get; set; }
             public string start { get; set; }
             public string end { get; set; }
+            public string color { get; set; }
         }
     }
 }

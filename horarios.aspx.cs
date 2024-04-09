@@ -124,9 +124,12 @@ namespace Projeto_Final
         protected void lb_horarios_Click(object sender, EventArgs e)
         {
             LinkButton lb_horarios = (LinkButton)sender;
-            string cod_turma = lb_horarios.CommandArgument;
+            string[] partes = lb_horarios.CommandArgument.Split('|');
+            string cod_turma = partes[0];
+            string nome_turma = partes[1];
+            string regime = partes[2];
 
-            Response.Redirect($"horarios_detalhe.aspx?cod_turma={cod_turma}");
+            Response.Redirect($"horarios_detalhe.aspx?cod_turma={cod_turma}&nome_turma={nome_turma}&regime={regime}");
         }
 
         protected void rpt_horarios_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -135,9 +138,11 @@ namespace Projeto_Final
             {
                 Projeto_Final.Classes.Turmas turma = (Projeto_Final.Classes.Turmas)e.Item.DataItem;
                 string cod_turma = turma.cod_turma.ToString();
+                string nome_turma = turma.nome_turma;
+                string regime = turma.regime;
 
                 LinkButton lb_horarios = (LinkButton)e.Item.FindControl("lb_horarios");
-                lb_horarios.CommandArgument = cod_turma;
+                lb_horarios.CommandArgument = cod_turma + "|" + nome_turma + "|" + regime;
 
                 LinkButton lb_turma = (LinkButton)e.Item.FindControl("lb_turma");
                 lb_turma.CommandArgument = cod_turma;

@@ -62,15 +62,20 @@ namespace Projeto_Final.Classes
 
                 if (resposta_sp == 1)
                 {
+                    int ordem = 1;
+
                     foreach (int cod_ufcd in ufcds)
-                        Cursos.Inserir_Curso_Modulos(resposta_cod_curso, Modulos.Extract_Cod_Modulo_Via_Cod_UFCD(cod_ufcd));
+                    {
+                        Cursos.Inserir_Curso_Modulos(resposta_cod_curso, Modulos.Extract_Cod_Modulo_Via_Cod_UFCD(cod_ufcd), ordem);
+                        ordem++;
+                    } 
                 } 
 
                 return resposta_sp;
             }
         }
 
-        public static void Inserir_Curso_Modulos(int cod_curso, int cod_modulo)
+        public static void Inserir_Curso_Modulos(int cod_curso, int cod_modulo, int ordem)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -78,6 +83,7 @@ namespace Projeto_Final.Classes
             {
                 myCommand.Parameters.AddWithValue("@cod_curso", cod_curso);
                 myCommand.Parameters.AddWithValue("@cod_modulo", cod_modulo);
+                myCommand.Parameters.AddWithValue("@ordem", ordem);
 
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.CommandText = "Insert_Curso_Modulo";
@@ -281,8 +287,12 @@ namespace Projeto_Final.Classes
 
                 if (resposta_sp == 1)
                 {
+                    int ordem = 1;
                     foreach (int cod_ufcd in ufcds)
-                        Cursos.Inserir_Curso_Modulos(cod_curso, Modulos.Extract_Cod_Modulo_Via_Cod_UFCD(cod_ufcd));
+                    {
+                        Cursos.Inserir_Curso_Modulos(cod_curso, Modulos.Extract_Cod_Modulo_Via_Cod_UFCD(cod_ufcd), ordem);
+                        ordem++;
+                    }
                 }
 
                 return resposta_sp;

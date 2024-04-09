@@ -117,12 +117,12 @@
                                                 <div class="card border-dark" style="margin: 5px;">
                                                     <a href="cursos_lista_detalhe.aspx?cod_curso=<%# Eval("cod_curso") %>" style="text-decoration: none;">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><%# Eval("nome_curso") %></h5>
-                                                            <p class="card-text">Área: <%# Eval("area") %></p>
-                                                            <p class="card-text">Duração: <%# Eval("duracao_curso") %> horas</p>
-                                                            <p class="card-text">Data de Criação: <%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></p>
-                                                            <p class="card-text">Código Qualificação: <%# Eval("cod_qualificacao") %></p>
-                                                            <p class="card-text">Último Update: <%# Eval("ultimo_update") %></p>
+                                                            <h5 class="card-title"><b><%# Eval("nome_curso") %></b></h5>
+                                                            <p class="card-text" style="color: black;">Área: <span style="color: orangered"><%# Eval("area") %></span></p>
+                                                            <p class="card-text" style="color: black;">Duração: <span style="color: orangered"><%# Eval("duracao_curso") %> horas</span></p>
+                                                            <p class="card-text" style="color: black;">Data de Criação: <span style="color: orangered"><%# Eval("data_criacao", "{0:dd/MM/yyyy}") %></span></p>
+                                                            <p class="card-text" style="color: black;">Código Qualificação: <span style="color: orangered"><%# Eval("cod_qualificacao") %></span></p>
+                                                            <p class="card-text" style="color: black;">Último Update: <span style="color: orangered"><%# Eval("ultimo_update") %></span></p>
                                                         </div>
                                                     </a>
                                                     <div class="card-body">
