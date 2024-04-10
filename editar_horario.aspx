@@ -31,7 +31,7 @@
                         </asp:SqlDataSource>
                     </div>
                     <div class="col-md-1">
-                        <label class="col-form-label">Côr do Evento</label>
+                        <label class="col-form-label">Cor do Evento</label>
                         <input class="form-control" type="color" id="colorPicker" value="000000">
                     </div>
                 </div>
@@ -276,12 +276,19 @@
             function renderCalendar() {
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
+                    locale: 'pt',
                     hiddenDays: [0],
                     initialView: 'dayGridMonth',
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    buttonText: {
+                        today: 'Hoje',
+                        timeGridDay: 'Dia',
+                        dayGridMonth: 'Mês',
+                        timeGridWeek: 'Semana'
                     },
                     slotLabelFormat: {
                         hour: '2-digit',
