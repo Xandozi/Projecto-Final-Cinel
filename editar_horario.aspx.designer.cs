@@ -15,6 +15,15 @@ namespace Projeto_Final
     {
 
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
         /// lbl_nome_turma control.
         /// </summary>
         /// <remarks>
@@ -60,6 +69,15 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.HiddenField hf_cod_formador;
 
         /// <summary>
+        /// hf_cod_user control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_cod_user;
+
+        /// <summary>
         /// hf_regime control.
         /// </summary>
         /// <remarks>
@@ -69,12 +87,21 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.HiddenField hf_regime;
 
         /// <summary>
-        /// hf_cod_user control.
+        /// ddl_sala control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_cod_user;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_sala;
+
+        /// <summary>
+        /// salas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource salas;
     }
 }

@@ -237,7 +237,7 @@ namespace Projeto_Final.Classes
         {
             List<Formadores> lst_formador = new List<Formadores>();
 
-            string query = $"select Formadores.cod_formador, Formadores.cod_inscricao, Users.nome_proprio, Users.apelido from Formadores " +
+            string query = $"select Formadores.cod_formador, Formadores.cod_inscricao, Users.nome_proprio, Users.apelido, Users.cod_user from Formadores " +
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formadores.cod_inscricao " +
                            $"join Users on Users.cod_user = Inscricoes.cod_user " +
                            $"join Modulos_Turmas_Formadores on Modulos_Turmas_Formadores.cod_formador = Formadores.cod_formador " +
@@ -259,6 +259,7 @@ namespace Projeto_Final.Classes
                 informacao.nome_proprio = !dr.IsDBNull(2) ? dr.GetString(2) : null;
                 informacao.apelido = !dr.IsDBNull(3) ? dr.GetString(3) : null;
                 informacao.nome_completo = informacao.nome_proprio + " " + informacao.apelido;
+                informacao.cod_user = !dr.IsDBNull(4) ? dr.GetInt32(4) : 000;
 
                 lst_formador.Add(informacao);
             }

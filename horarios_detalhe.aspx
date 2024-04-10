@@ -46,6 +46,7 @@
             console.log("DOMContentLoaded event fired."); // Log DOMContentLoaded event
 
             var selectedSlots = []; // Array to store selected time slots
+            var Sundays_Holidays = []; // Array to store holidays and sundays
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
             var currentYear = new Date().getFullYear(); // Get the current year
 
@@ -124,11 +125,26 @@
             // Function to add holidays and Sundays to the selectedSlots array
             function addHolidaysAndSundaysToSelectedSlots() {
                 holidays.forEach(function (holiday) {
-                    selectedSlots.push({
+                    Sundays_Holidays.push({
                         title: holiday.title,
                         start: holiday.start,
                         end: holiday.end,
                         color: '#ff0000'
+                    });
+                });
+            }
+
+            // Function to add events to the selectedSlots array
+            function addEventsToSelectedSlots(eventData) {
+                eventData.forEach(function (event) {
+                    selectedSlots.push({
+                        title: event.title,
+                        start: event.start,
+                        end: event.end,
+                        cod_modulo: event.cod_modulo,
+                        cod_formador: event.cod_formador,
+                        cod_sala: event.cod_sala,
+                        color: event.color
                     });
                 });
             }
@@ -142,13 +158,8 @@
                 success: function (response) {
                     var eventData = JSON.parse(response.d); // Extract the data array from the response
 
-                    if (eventData.length === 0) {
-                        // If no events found, add holidays and Sundays to selectedSlots array
-                        addHolidaysAndSundaysToSelectedSlots();
-                    } else {
-                        // If events found, add only eventData to selectedSlots array
-                        addEventsToSelectedSlots(eventData);
-                    }
+                    addHolidaysAndSundaysToSelectedSlots();
+                    addEventsToSelectedSlots(eventData);
 
                     // Render calendar after adding events to selectedSlots array
                     renderCalendar();
@@ -225,6 +236,16 @@
                         start: currentYear + '-01-01',
                         end: (currentYear + 3) + '-01-01'
                     }
+                });
+
+                Sundays_Holidays.forEach(function (slot) {
+                    calendar.addEvent({
+                        title: slot.title,
+                        start: slot.start,
+                        end: slot.end,
+                        rendering: 'background',
+                        color: slot.color
+                    });
                 });
 
                 selectedSlots.forEach(function (slot) {

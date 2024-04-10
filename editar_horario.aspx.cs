@@ -40,12 +40,16 @@ namespace Projeto_Final
                                                     $"join Turmas on Turmas.cod_curso = Cursos.cod_curso " +
                                                     $"where Turmas.cod_turma = {cod_turma}";
 
+                            salas.SelectCommand = $"select nome_sala, cod_sala, ativo from Salas where ativo = 1";
+
+                            ddl_sala.DataBind();
                             ddl_modulo.DataBind();
                         }
 
                         List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));
                         lbl_nome_formador.Text = formador[0].nome_completo;
                         hf_cod_formador.Value = formador[0].cod_formador.ToString();
+                        hf_cod_user.Value = formador[0].cod_user.ToString();
                         hf_regime.Value = Request.QueryString["regime"];
                     }
                 }
@@ -58,7 +62,7 @@ namespace Projeto_Final
         {
             try
             {
-                Horarios.Insert_Horario_Turma(cod_turma);
+                Horarios.Delete_Horario_Turma(cod_turma);
 
                 foreach (var slot in selectedSlots)
                 {
@@ -66,6 +70,10 @@ namespace Projeto_Final
                     string titulo = slot.title;
                     string inicio_data_str = slot.start;
                     string fim_data_str = slot.end;
+                    int cod_modulo = slot.cod_modulo;
+                    int cod_formador = slot.cod_formador;
+                    int cod_sala = slot.cod_sala;
+                    string color = slot.color;
 
                     // Append default times if only date is provided
                     if (!inicio_data_str.Contains("T"))
@@ -98,13 +106,13 @@ namespace Projeto_Final
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot, inicio_data_slot.AddHours(1));
 
-                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo);
+                            Horarios.Insert_Horario_Turma(cod_turma, cod_modulo, cod_formador, cod_sala, cod_timeslot, data_inicio, titulo, color);
                         }
                         else
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot.AddHours(k), inicio_data_slot.AddHours(1 + k));
 
-                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo);
+                            Horarios.Insert_Horario_Turma(cod_turma, cod_modulo, cod_formador, cod_sala, cod_timeslot, data_inicio, titulo, color);
                         }
                     }
                 }
@@ -124,7 +132,23 @@ namespace Projeto_Final
             public string title { get; set; }
             public string start { get; set; }
             public string end { get; set; }
+            public int cod_modulo { get; set; }
+            public int cod_formador { get; set; }
+            public int cod_sala { get; set; }
             public string color { get; set; }
+        }
+
+        protected void ddl_modulo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int cod_turma = Convert.ToInt32(Request.QueryString["cod_turma"]);
+
+            List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));
+            lbl_nome_formador.Text = formador[0].nome_completo;
+            hf_cod_formador.Value = formador[0].cod_formador.ToString();
+            hf_cod_user.Value = formador[0].cod_user.ToString();
+            hf_regime.Value = Request.QueryString["regime"];
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "DropdownChangedScript", "dropdownChanged();", true);
         }
     }
 }

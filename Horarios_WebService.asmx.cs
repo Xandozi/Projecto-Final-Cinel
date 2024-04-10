@@ -38,16 +38,17 @@ namespace Projeto_Final
             List<FullCalendarData> lst_horario = new List<FullCalendarData>();
 
             string query = $"WITH ContiguousSlots AS (" +
-                           $"SELECT cod_timeslot, dataa, cod_mod_tur_for, cod_turma, cod_modulo, cod_formador, hora_inicio, hora_fim, titulo, color, ROW_NUMBER() OVER (ORDER BY dataa, hora_inicio) AS rn " +
+                           $"SELECT cod_timeslot, dataa, cod_mod_tur_for, cod_turma, cod_modulo, cod_formador, cod_sala, hora_inicio, hora_fim, titulo, color, ROW_NUMBER() OVER (ORDER BY dataa, hora_inicio) AS rn " +
                            $"FROM (SELECT Horarios.cod_timeslot, Horarios.dataa, Horarios.cod_mod_tur_for, Horarios.cod_sala, Horarios.titulo, Horarios.color, Timeslots.hora_inicio, Timeslots.hora_fim, Turmas.cod_turma, Modulos.cod_modulo, Formadores.cod_formador " +
                            $"FROM Horarios " +
-                           $"JOIN Timeslots ON Timeslots.cod_timeslot = Horarios.cod_timeslot " +
+                           $"join Salas on Salas.cod_sala = Horarios.cod_sala " +
+                           $"join Timeslots on Timeslots.cod_timeslot = Horarios.cod_timeslot " +
                            $"join Modulos_Turmas_Formadores on Modulos_Turmas_Formadores.cod_mod_tur_for = Horarios.cod_mod_tur_for " +
                            $"join Turmas on Turmas.cod_turma = Modulos_Turmas_Formadores.cod_turma " +
                            $"join Modulos on Modulos.cod_modulo = Modulos_Turmas_Formadores.cod_modulo " +
                            $"join Formadores on Formadores.cod_formador = Modulos_Turmas_Formadores.cod_formador " +
-                           $"WHERE Turmas.cod_turma = {cod_turma}) AS Horario) " +
-                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color " +
+                           $"where Turmas.cod_turma = {cod_turma}) AS Horario) " +
+                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color, cod_modulo, cod_formador, cod_sala FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color, cod_modulo, cod_formador, cod_sala " +
                            $"ORDER BY dataa, start_time;";
 
 
@@ -66,6 +67,10 @@ namespace Projeto_Final
                             eventData.TimeSlot_Inicio = !dr.IsDBNull(0) ? dr.GetTimeSpan(0) : default(TimeSpan);
                             eventData.TimeSlot_Fim = !dr.IsDBNull(1) ? dr.GetTimeSpan(1) : default(TimeSpan);
                             eventData.title = !dr.IsDBNull(3) ? dr.GetString(3) : null;
+                            eventData.color = !dr.IsDBNull(4) ? dr.GetString(4) : null;
+                            eventData.cod_modulo = !dr.IsDBNull(5) ? dr.GetInt32(5) : 000;
+                            eventData.cod_formador = !dr.IsDBNull(6) ? dr.GetInt32(6) : 000;
+                            eventData.cod_sala = !dr.IsDBNull(7) ? dr.GetInt32(7) : 000;
 
                             lst_horario.Add(eventData);
                         }
