@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="container-fluid">
         <div class="card" style="border-color: #333; background-color: antiquewhite; margin-top: 30px; margin-bottom: 30px;">
             <div class="card-header bg-dark text-white">
@@ -13,14 +14,21 @@
                 <div class="row border-dark">
                     <div class="col-md-2">
                         <label class="col-form-label">Módulo</label>
-                        <asp:DropDownList ID="ddl_modulo" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="modulos" DataTextField="nome_modulo" DataValueField="cod_modulo"></asp:DropDownList>
+                        <asp:DropDownList ID="ddl_modulo" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="modulos" DataTextField="nome_modulo" DataValueField="cod_modulo" OnSelectedIndexChanged="ddl_modulo_SelectedIndexChanged"></asp:DropDownList>
                         <asp:SqlDataSource runat="server" ID="modulos" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_modulo], [nome_modulo], [cod_ufcd] FROM [Modulos]"></asp:SqlDataSource>
                     </div>
                     <div class="col-md-2">
                         <label class="col-form-label">Formador</label>
                         <asp:Label ID="lbl_nome_formador" CssClass="form-control" runat="server" Text=""></asp:Label>
                         <asp:HiddenField ID="hf_cod_formador" runat="server" />
+                        <asp:HiddenField ID="hf_cod_user" runat="server" />
                         <asp:HiddenField ID="hf_regime" runat="server" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-form-label">Sala</label>
+                        <asp:DropDownList ID="ddl_sala" CssClass="form-control" runat="server" DataSourceID="salas" DataTextField="nome_sala" DataValueField="cod_sala"></asp:DropDownList>
+                        <asp:SqlDataSource runat="server" ID="salas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_sala], [nome_sala], [ativo] FROM [Salas]">
+                        </asp:SqlDataSource>
                     </div>
                     <div class="col-md-1">
                         <label class="col-form-label">Côr do Evento</label>
@@ -32,7 +40,6 @@
         </div>
         <div class="row justify-content-between" style="margin: 10px;">
             <button class="btn btn-success" id="btn_SaveSelectedSlots">Submeter Horário</button>
-            <asp:HiddenField ID="hf_cod_user" runat="server" />
             <a href="horarios.aspx" class="btn btn-info">Voltar para a página Horários</a>
         </div>
     </div>
@@ -63,6 +70,8 @@
             console.log("DOMContentLoaded event fired."); // Log DOMContentLoaded event
 
             var selectedSlots = []; // Array to store selected time slots
+            var Sundays_Holidays = []; // Array to store holidays and sundays
+            var Disponibilidade_Formador = []; // Array to store availability of trainer
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
             var currentYear = new Date().getFullYear(); // Get the current year
 
@@ -138,13 +147,65 @@
                 );
             }
 
+            // Function called server side when the ddl_modulo changes its selected index
+            function dropdownChanged() {
+                // Ensure selectedSlots array is properly structured
+                var formattedSlots = selectedSlots.map(function (slot) {
+                    return {
+                        title: slot.title,
+                        start: slot.start,
+                        end: slot.end,
+                        cod_modulo: slot.cod_modulo,
+                        cod_formador: slot.cod_formador,
+                        cod_sala: slot.cod_sala,
+                        color: slot.color
+                    };
+                });
+
+                // Call the server-side method using AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "editar_horario.aspx/ProcessSelectedSlots",
+                    data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue }), // Pass formattedSlots with all properties
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        // Handle success response if needed
+                        if (response.d) {
+                            // Render the calendar
+                            renderCalendar();
+                        } else {
+                            // Show error message
+                            alert("Ocorreu um erro ao submeter o horário da turma.");
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle error
+                        console.error("Error occurred while sending data to server.");
+                    }
+                });
+            }
+
+
             // Function to add holidays and Sundays to the selectedSlots array
             function addHolidaysAndSundaysToSelectedSlots() {
                 holidays.forEach(function (holiday) {
-                    selectedSlots.push({
+                    Sundays_Holidays.push({
                         title: holiday.title,
                         start: holiday.start,
                         end: holiday.end,
+                        color: '#ff0000'
+                    });
+                });
+            }
+
+            // Function to add events to the selectedSlots array
+            function addAvailabilityToSelectedSlots(eventData) {
+                eventData.forEach(function (event) {
+                    Disponibilidade_Formador.push({
+                        title: event.title,
+                        start: event.start,
+                        end: event.end,
                         color: '#ff0000'
                     });
                 });
@@ -157,10 +218,37 @@
                         title: event.title,
                         start: event.start,
                         end: event.end,
+                        cod_modulo: event.cod_modulo,
+                        cod_formador: event.cod_formador,
+                        cod_sala: event.cod_sala,
                         color: event.color
                     });
                 });
             }
+
+            $.ajax({
+                type: "POST",
+                url: "/Disponibilidade_WebService.asmx/GetDisponibilidade_JSON",
+                data: JSON.stringify({ cod_user: $('#<%= hf_cod_user.ClientID %>').val() }), // Retrieve the value of hf_cod_formador
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var eventData = JSON.parse(response.d); // Extract the data array from the response
+
+                    addAvailabilityToSelectedSlots(eventData);
+
+                    // Render calendar after adding events to selectedSlots array
+                    renderCalendar();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error occurred while fetching event data. WEBSERVICE");
+                    // If AJAX call fails, add holidays and Sundays to selectedSlots array
+                    addHolidaysAndSundaysToSelectedSlots();
+
+                    // Render calendar after adding events to selectedSlots array
+                    renderCalendar();
+                }
+            });
 
             $.ajax({
                 type: "POST",
@@ -171,13 +259,7 @@
                 success: function (response) {
                     var eventData = JSON.parse(response.d); // Extract the data array from the response
 
-                    if (eventData.length === 0) {
-                        // If no events found, add holidays and Sundays to selectedSlots array
-                        addHolidaysAndSundaysToSelectedSlots();
-                    } else {
-                        // If events found, add only eventData to selectedSlots array
-                        addEventsToSelectedSlots(eventData);
-                    }
+                    addEventsToSelectedSlots(eventData);
 
                     // Render calendar after adding events to selectedSlots array
                     renderCalendar();
@@ -237,21 +319,35 @@
                             return;
                         }
 
+                        // Check if the selected event conflicts with any existing events
+                        if (isEventConflict(info, Disponibilidade_Formador) || isEventConflict(info, Sundays_Holidays)) {
+                            console.log(info.start)
+                            alert("Selected time conflicts with existing events.");
+                            return;
+                        }
+
                         // Get the selected values from dropdown lists
                         var selectedModulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
+                        var selectedModuloValue = $('#<%= ddl_modulo.ClientID %> option:selected').val();
                         var selectedFormador = $('#<%= lbl_nome_formador.ClientID %>').text();
+                        var selectedFormadorValue = $('#<%= hf_cod_formador.ClientID %>').val();
+                        var selectedSala = $('#<%= ddl_sala.ClientID %> option:selected').text();
+                        var selectedSalaValue = $('#<%= ddl_sala.ClientID %> option:selected').val();
 
                         // Get the selected color from the color picker
                         var selectedColor = $('#colorPicker').val();
 
                         // Create the event title by concatenating the selected values
-                        var eventTitle = selectedModulo + " | " + selectedFormador;
+                        var eventTitle = selectedModulo + " | " + selectedFormador + " | " + selectedSala;
 
                         var eventToAdd = {
                             title: eventTitle,
                             start: info.start,
                             end: info.end,
                             rendering: 'background',
+                            cod_modulo: selectedModuloValue,
+                            cod_formador: selectedFormadorValue,
+                            cod_sala: selectedSalaValue,
                             color: selectedColor
                         };
 
@@ -271,6 +367,33 @@
                         end: (currentYear + 2) + '-01-01'
                     }
                 });
+
+                // Function to check if there is a conflict between the selected event and existing events
+                function isEventConflict(selectedEvent, eventsArray) {
+                    for (var i = 0; i < eventsArray.length; i++) {
+                        var event = eventsArray[i];
+                        var selectedEventStartString = selectedEvent.start.toISOString().slice(0, -5); // Trim milliseconds
+                        var selectedEventEndString = selectedEvent.end.toISOString().slice(0, -5); // Trim milliseconds
+                        console.log(i)
+                        console.log(event.start)
+                        console.log(event.end)
+                        console.log('-')
+                        console.log(selectedEventStartString)
+                        console.log(selectedEventEndString)
+                        if ((selectedEventStartString >= event.start && selectedEventStartString < event.end) ||
+                            (selectedEventEndString > event.start && selectedEventEndString < event.end) ||
+                            (selectedEventStartString <= event.start && selectedEventEndString > event.start)) {
+                            console.log('denied')
+                            console.log(i)
+                            return true; // Conflict found
+                        }
+                        console.log('not denied')
+                        console.log(i)
+                    }
+                    return false; // No conflict
+                }
+
+
 
                 // Function to update slotMinTime and slotMaxTime based on hf_regime value
                 function updateSlotTimes(regime) {
@@ -312,6 +435,25 @@
                     info.event.remove();
                 });
 
+                Disponibilidade_Formador.forEach(function (slot) {
+                    calendar.addEvent({
+                        title: slot.title,
+                        start: slot.start,
+                        end: slot.end,
+                        rendering: 'background',
+                        color: slot.color
+                    });
+                });
+
+                Sundays_Holidays.forEach(function (slot) {
+                    calendar.addEvent({
+                        title: slot.title,
+                        start: slot.start,
+                        end: slot.end,
+                        rendering: 'background',
+                        color: slot.color
+                    });
+                });
 
                 selectedSlots.forEach(function (slot) {
                     calendar.addEvent({
@@ -332,6 +474,9 @@
                             title: slot.title,
                             start: slot.start,
                             end: slot.end,
+                            cod_modulo: slot.cod_modulo,
+                            cod_formador: slot.cod_formador,
+                            cod_sala: slot.cod_sala,
                             color: slot.color
                         };
                     });
