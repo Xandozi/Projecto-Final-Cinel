@@ -176,12 +176,19 @@
             function renderCalendar() {
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
+                    locale: 'pt',
                     hiddenDays: [0],
                     initialView: 'dayGridMonth',
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    buttonText: {
+                        today: 'Hoje',
+                        timeGridDay: 'Dia',
+                        dayGridMonth: 'Mês',
+                        timeGridWeek: 'Semana'
                     },
                     slotLabelFormat: {
                         hour: '2-digit',

@@ -80,5 +80,103 @@ namespace Projeto_Final
 
             return lst_horario;
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetDisponibilidade_JSON(int cod_user)
+        {
+            List<FullCalendarData> lst_disponibilidade = GetDisponibilidade_DB(cod_user);
+
+            string json = JsonConvert.SerializeObject(lst_disponibilidade, Formatting.None);
+
+            return json;
+        }
+
+        public List<FullCalendarData> GetDisponibilidade_DB(int cod_user)
+        {
+            List<FullCalendarData> lst_disponibilidade = new List<FullCalendarData>();
+
+            string query = $"WITH ContiguousSlots AS (" +
+                           $"SELECT cod_timeslot, dataa, cod_user, available, hora_inicio, hora_fim, titulo, color, ROW_NUMBER() OVER (ORDER BY dataa, hora_inicio) AS rn " +
+                           $"FROM (SELECT Disponibilidade.cod_timeslot, Disponibilidade.dataa, Disponibilidade.cod_user, Disponibilidade.available, Timeslots.hora_inicio, Timeslots.hora_fim, Disponibilidade.titulo, Disponibilidade.color " +
+                           $"FROM Disponibilidade JOIN Timeslots ON Timeslots.cod_timeslot = Disponibilidade.cod_timeslot WHERE Disponibilidade.cod_user = {cod_user} AND Disponibilidade.available = 0) AS Availability) " +
+                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color " +
+                           $"ORDER BY dataa, start_time;";
+
+
+            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString))
+            {
+                using (SqlCommand myCommand = new SqlCommand(query, myConn))
+                {
+                    myConn.Open();
+
+                    using (SqlDataReader dr = myCommand.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            FullCalendarData eventData = new FullCalendarData();
+                            eventData.Data = !dr.IsDBNull(2) ? dr.GetDateTime(2) : default(DateTime); // Set dataa
+                            eventData.TimeSlot_Inicio = !dr.IsDBNull(0) ? dr.GetTimeSpan(0) : default(TimeSpan);
+                            eventData.TimeSlot_Fim = !dr.IsDBNull(1) ? dr.GetTimeSpan(1) : default(TimeSpan);
+                            eventData.title = !dr.IsDBNull(3) ? dr.GetString(3) : null;
+                            eventData.color = !dr.IsDBNull(4) ? dr.GetString(4) : null;
+
+                            lst_disponibilidade.Add(eventData);
+                        }
+                    }
+                }
+            }
+
+            return lst_disponibilidade;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetDisponibilidade_Sala_JSON(int cod_sala)
+        {
+            List<FullCalendarData> lst_disponibilidade_sala = GetDisponibilidade_Sala_DB(cod_sala);
+
+            string json = JsonConvert.SerializeObject(lst_disponibilidade_sala, Formatting.None);
+
+            return json;
+        }
+
+        public List<FullCalendarData> GetDisponibilidade_Sala_DB(int cod_sala)
+        {
+            List<FullCalendarData> lst_disponibilidade_sala = new List<FullCalendarData>();
+
+            string query = $"WITH ContiguousSlots AS (" +
+                           $"SELECT cod_timeslot, dataa, cod_sala, available, hora_inicio, hora_fim, titulo, color, ROW_NUMBER() OVER (ORDER BY dataa, hora_inicio) AS rn " +
+                           $"FROM (SELECT Disponibilidade_Salas.cod_timeslot, Disponibilidade_Salas.dataa, Disponibilidade_Salas.cod_sala, Disponibilidade_Salas.available, Timeslots.hora_inicio, Timeslots.hora_fim, Disponibilidade_Salas.titulo, Disponibilidade_Salas.color " +
+                           $"FROM Disponibilidade_Salas JOIN Timeslots ON Timeslots.cod_timeslot = Disponibilidade_Salas.cod_timeslot WHERE Disponibilidade_Salas.cod_sala = {cod_sala} AND Disponibilidade_Salas.available = 0) AS Availability) " +
+                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color " +
+                           $"ORDER BY dataa, start_time;";
+
+
+            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString))
+            {
+                using (SqlCommand myCommand = new SqlCommand(query, myConn))
+                {
+                    myConn.Open();
+
+                    using (SqlDataReader dr = myCommand.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            FullCalendarData eventData = new FullCalendarData();
+                            eventData.Data = !dr.IsDBNull(2) ? dr.GetDateTime(2) : default(DateTime); // Set dataa
+                            eventData.TimeSlot_Inicio = !dr.IsDBNull(0) ? dr.GetTimeSpan(0) : default(TimeSpan);
+                            eventData.TimeSlot_Fim = !dr.IsDBNull(1) ? dr.GetTimeSpan(1) : default(TimeSpan);
+                            eventData.title = !dr.IsDBNull(3) ? dr.GetString(3) : null;
+                            eventData.color = !dr.IsDBNull(4) ? dr.GetString(4) : null;
+
+                            lst_disponibilidade_sala.Add(eventData);
+                        }
+                    }
+                }
+            }
+
+            return lst_disponibilidade_sala;
+        }
     }
 }

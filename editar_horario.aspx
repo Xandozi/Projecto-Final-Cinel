@@ -26,12 +26,13 @@
                     </div>
                     <div class="col-md-2">
                         <label class="col-form-label">Sala</label>
-                        <asp:DropDownList ID="ddl_sala" CssClass="form-control" runat="server" DataSourceID="salas" DataTextField="nome_sala" DataValueField="cod_sala"></asp:DropDownList>
+                        <asp:DropDownList ID="ddl_sala" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="salas" DataTextField="nome_sala" DataValueField="cod_sala"></asp:DropDownList>
                         <asp:SqlDataSource runat="server" ID="salas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_sala], [nome_sala], [ativo] FROM [Salas]">
                         </asp:SqlDataSource>
+                        <asp:HiddenField ID="hf_cod_sala" runat="server" />
                     </div>
                     <div class="col-md-1">
-                        <label class="col-form-label">Côr do Evento</label>
+                        <label class="col-form-label">Cor do Evento</label>
                         <input class="form-control" type="color" id="colorPicker" value="000000">
                     </div>
                 </div>
@@ -72,8 +73,17 @@
             var selectedSlots = []; // Array to store selected time slots
             var Sundays_Holidays = []; // Array to store holidays and sundays
             var Disponibilidade_Formador = []; // Array to store availability of trainer
+            var Disponibilidade_Sala = []; // Array to store availability of classrooms
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
             var currentYear = new Date().getFullYear(); // Get the current year
+
+            // Get the selected values from dropdown lists
+            var selectedModulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
+            var selectedModuloValue = $('#<%= ddl_modulo.ClientID %> option:selected').val();
+            var selectedFormador = $('#<%= lbl_nome_formador.ClientID %>').text();
+            var selectedFormadorValue = $('#<%= hf_cod_formador.ClientID %>').val();
+            var selectedSala = $('#<%= ddl_sala.ClientID %> option:selected').text();
+            var selectedSalaValue = $('#<%= ddl_sala.ClientID %> option:selected').val();
 
             // Function to check if the selected slot duration meets the minimum requirement and starts and ends on the hour
             function isSlotDurationValid(info) {
@@ -147,45 +157,12 @@
                 );
             }
 
-            // Function called server side when the ddl_modulo changes its selected index
-            function dropdownChanged() {
-                // Ensure selectedSlots array is properly structured
-                var formattedSlots = selectedSlots.map(function (slot) {
-                    return {
-                        title: slot.title,
-                        start: slot.start,
-                        end: slot.end,
-                        cod_modulo: slot.cod_modulo,
-                        cod_formador: slot.cod_formador,
-                        cod_sala: slot.cod_sala,
-                        color: slot.color
-                    };
-                });
-
-                // Call the server-side method using AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "editar_horario.aspx/ProcessSelectedSlots",
-                    data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue }), // Pass formattedSlots with all properties
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        // Handle success response if needed
-                        if (response.d) {
-                            // Render the calendar
-                            renderCalendar();
-                        } else {
-                            // Show error message
-                            alert("Ocorreu um erro ao submeter o horário da turma.");
-                        }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        // Handle error
-                        console.error("Error occurred while sending data to server.");
-                    }
-                });
+            function formatDateToISOString(dateString) {
+                var date = new Date(dateString);
+                var utcString = date.toUTCString();
+                var isoString = new Date(utcString).toISOString();
+                return isoString.slice(0, 10) + 'T' + isoString.slice(11, 19);
             }
-
 
             // Function to add holidays and Sundays to the selectedSlots array
             function addHolidaysAndSundaysToSelectedSlots() {
@@ -194,7 +171,8 @@
                         title: holiday.title,
                         start: holiday.start,
                         end: holiday.end,
-                        color: '#ff0000'
+                        color: '#ff0000',
+                        dataType: 'non_unselectable'
                     });
                 });
             }
@@ -206,7 +184,21 @@
                         title: event.title,
                         start: event.start,
                         end: event.end,
-                        color: '#ff0000'
+                        color: '#ff0000',
+                        dataType: 'non_unselectable'
+                    });
+                });
+            }
+
+            // Function to add events to the selectedSlots array
+            function addAvailabilityClassroomsToSelectedSlots(eventData) {
+                eventData.forEach(function (event) {
+                    Disponibilidade_Sala.push({
+                        title: event.title,
+                        start: event.start,
+                        end: event.end,
+                        color: event.color,
+                        dataType: 'non_unselectable'
                     });
                 });
             }
@@ -221,14 +213,15 @@
                         cod_modulo: event.cod_modulo,
                         cod_formador: event.cod_formador,
                         cod_sala: event.cod_sala,
-                        color: event.color
+                        color: event.color,
+                        dataType: 'unselectable'
                     });
                 });
             }
 
             $.ajax({
                 type: "POST",
-                url: "/Disponibilidade_WebService.asmx/GetDisponibilidade_JSON",
+                url: "/Horarios_WebService.asmx/GetDisponibilidade_JSON",
                 data: JSON.stringify({ cod_user: $('#<%= hf_cod_user.ClientID %>').val() }), // Retrieve the value of hf_cod_formador
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -236,6 +229,30 @@
                     var eventData = JSON.parse(response.d); // Extract the data array from the response
 
                     addAvailabilityToSelectedSlots(eventData);
+
+                    // Render calendar after adding events to selectedSlots array
+                    renderCalendar();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error occurred while fetching event data. WEBSERVICE");
+                    // If AJAX call fails, add holidays and Sundays to selectedSlots array
+                    addHolidaysAndSundaysToSelectedSlots();
+
+                    // Render calendar after adding events to selectedSlots array
+                    renderCalendar();
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/Horarios_WebService.asmx/GetDisponibilidade_Sala_JSON",
+                data: JSON.stringify({ cod_sala: $('#<%= hf_cod_sala.ClientID %>').val() }), // Retrieve the value of hf_cod_sala
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var eventData = JSON.parse(response.d); // Extract the data array from the response
+
+                    addAvailabilityClassroomsToSelectedSlots(eventData);
 
                     // Render calendar after adding events to selectedSlots array
                     renderCalendar();
@@ -260,6 +277,7 @@
                     var eventData = JSON.parse(response.d); // Extract the data array from the response
 
                     addEventsToSelectedSlots(eventData);
+                    addHolidaysAndSundaysToSelectedSlots();
 
                     // Render calendar after adding events to selectedSlots array
                     renderCalendar();
@@ -276,12 +294,19 @@
             function renderCalendar() {
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
+                    locale: 'pt',
                     hiddenDays: [0],
                     initialView: 'dayGridMonth',
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    buttonText: {
+                        today: 'Hoje',
+                        timeGridDay: 'Dia',
+                        dayGridMonth: 'Mês',
+                        timeGridWeek: 'Semana'
                     },
                     slotLabelFormat: {
                         hour: '2-digit',
@@ -296,6 +321,12 @@
                     timeZone: 'UTC',
                     select: function (info) {
                         var isAllDay = info.allDay;
+                        var currentDate = new Date(); // Get the current date
+
+                        // Check if the selected date is before the current date
+                        if (info.start < currentDate) {
+                            return;
+                        }
 
                         // Determine start and end times based on regime
                         var regime = $('#<%= hf_regime.ClientID %>').val();
@@ -320,19 +351,10 @@
                         }
 
                         // Check if the selected event conflicts with any existing events
-                        if (isEventConflict(info, Disponibilidade_Formador) || isEventConflict(info, Sundays_Holidays)) {
-                            console.log(info.start)
+                        if (isEventConflict(info, Disponibilidade_Formador) || isEventConflict(info, Sundays_Holidays) || isEventConflict(info, Disponibilidade_Sala)) {
                             alert("Selected time conflicts with existing events.");
                             return;
                         }
-
-                        // Get the selected values from dropdown lists
-                        var selectedModulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
-                        var selectedModuloValue = $('#<%= ddl_modulo.ClientID %> option:selected').val();
-                        var selectedFormador = $('#<%= lbl_nome_formador.ClientID %>').text();
-                        var selectedFormadorValue = $('#<%= hf_cod_formador.ClientID %>').val();
-                        var selectedSala = $('#<%= ddl_sala.ClientID %> option:selected').text();
-                        var selectedSalaValue = $('#<%= ddl_sala.ClientID %> option:selected').val();
 
                         // Get the selected color from the color picker
                         var selectedColor = $('#colorPicker').val();
@@ -342,13 +364,14 @@
 
                         var eventToAdd = {
                             title: eventTitle,
-                            start: info.start,
-                            end: info.end,
+                            start: formatDateToISOString(info.start),
+                            end: formatDateToISOString(info.end),
                             rendering: 'background',
                             cod_modulo: selectedModuloValue,
                             cod_formador: selectedFormadorValue,
                             cod_sala: selectedSalaValue,
-                            color: selectedColor
+                            color: selectedColor,
+                            dataType: 'unselectable'
                         };
 
                         // Push the event object to selectedSlots array
@@ -356,6 +379,41 @@
 
                         // Add the event to the calendar
                         calendar.addEvent(eventToAdd);
+
+                        // Ensure selectedSlots array is properly structured
+                        var formattedSlots = selectedSlots.map(function (slot) {
+                            return {
+                                title: slot.title,
+                                start: slot.start,
+                                end: slot.end,
+                                cod_modulo: slot.cod_modulo,
+                                cod_formador: slot.cod_formador,
+                                cod_sala: slot.cod_sala,
+                                color: slot.color
+                            };
+                        });
+
+                        // Call the server-side method using AJAX
+                        $.ajax({
+                            type: "POST",
+                            url: "editar_horario.aspx/Gravar_Horario_Turma",
+                            data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue, cod_formador: selectedFormadorValue, cod_sala: selectedSalaValue }), // Pass formattedSlots with all properties
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (response) {
+                                // Handle success response if needed
+                                if (response.d) {
+                                    renderCalendar()
+                                } else {
+                                    // Show error message
+                                    alert("Ocorreu um erro ao submeter o horário da turma.");
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                // Handle error
+                                console.error("Error occurred while sending data to server.");
+                            }
+                        });
 
                         calendar.unselect();
                     },
@@ -374,26 +432,14 @@
                         var event = eventsArray[i];
                         var selectedEventStartString = selectedEvent.start.toISOString().slice(0, -5); // Trim milliseconds
                         var selectedEventEndString = selectedEvent.end.toISOString().slice(0, -5); // Trim milliseconds
-                        console.log(i)
-                        console.log(event.start)
-                        console.log(event.end)
-                        console.log('-')
-                        console.log(selectedEventStartString)
-                        console.log(selectedEventEndString)
                         if ((selectedEventStartString >= event.start && selectedEventStartString < event.end) ||
                             (selectedEventEndString > event.start && selectedEventEndString < event.end) ||
                             (selectedEventStartString <= event.start && selectedEventEndString > event.start)) {
-                            console.log('denied')
-                            console.log(i)
                             return true; // Conflict found
                         }
-                        console.log('not denied')
-                        console.log(i)
                     }
                     return false; // No conflict
                 }
-
-
 
                 // Function to update slotMinTime and slotMaxTime based on hf_regime value
                 function updateSlotTimes(regime) {
@@ -415,25 +461,66 @@
                 });
 
                 calendar.setOption('eventClick', function (info) {
-                    // Get the start time components
-                    var start = info.event.start;
-                    var startString = start.getUTCFullYear() + '-' + ('0' + (start.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + start.getUTCDate()).slice(-2) + 'T' +
-                        ('0' + start.getUTCHours()).slice(-2) + ':' + ('0' + start.getUTCMinutes()).slice(-2) + ':' + ('0' + start.getUTCSeconds()).slice(-2);
+                    // Check if the clicked event is unselectable
+                    if (info.event.extendedProps.dataType === 'unselectable') {
+                        // Get the start time components of the clicked event
+                        var start = info.event.start;
+                        var startString = start.getUTCFullYear() + '-' + ('0' + (start.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + start.getUTCDate()).slice(-2) + 'T' +
+                            ('0' + start.getUTCHours()).slice(-2) + ':' + ('0' + start.getUTCMinutes()).slice(-2) + ':' + ('0' + start.getUTCSeconds()).slice(-2);
 
-                    // Get the end time components
-                    var end = info.event.end;
-                    var endString = end.getUTCFullYear() + '-' + ('0' + (end.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + end.getUTCDate()).slice(-2) + 'T' +
-                        ('0' + end.getUTCHours()).slice(-2) + ':' + ('0' + end.getUTCMinutes()).slice(-2) + ':' + ('0' + end.getUTCSeconds()).slice(-2);
+                        // Get the end time components of the clicked event
+                        var end = info.event.end;
+                        var endString = end.getUTCFullYear() + '-' + ('0' + (end.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + end.getUTCDate()).slice(-2) + 'T' +
+                            ('0' + end.getUTCHours()).slice(-2) + ':' + ('0' + end.getUTCMinutes()).slice(-2) + ':' + ('0' + end.getUTCSeconds()).slice(-2);
 
-                    console.log(startString); // Log the start time in the desired format
-                    console.log(endString); // Log the end time in the desired format
-                    console.log(info.event.title);
+                        // Remove the event from the selectedSlots array
+                        selectedSlots = selectedSlots.filter(function (slot) {
+                            return !(slot.start === startString && slot.end === endString);
+                        });
 
-                    selectedSlots = selectedSlots.filter(function (slot) {
-                        return !(slot.start === startString && slot.end === endString);
-                    });
-                    info.event.remove();
+                        // Remove the event from the calendar
+                        info.event.remove();
+
+                        // Ensure selectedSlots array is properly structured
+                        var formattedSlots = selectedSlots.map(function (slot) {
+                            return {
+                                title: slot.title,
+                                start: slot.start,
+                                end: slot.end,
+                                cod_modulo: slot.cod_modulo,
+                                cod_formador: slot.cod_formador,
+                                cod_sala: slot.cod_sala,
+                                color: slot.color
+                            };
+                        });
+
+                        // Call the server-side method using AJAX
+                        $.ajax({
+                            type: "POST",
+                            url: "editar_horario.aspx/Gravar_Horario_Turma",
+                            data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue, cod_formador: selectedFormadorValue, cod_sala: selectedSalaValue }), // Pass formattedSlots with all properties
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (response) {
+                                // Handle success response if needed
+                                if (response.d) {
+
+                                } else {
+                                    // Show error message
+                                    alert("Ocorreu um erro ao submeter o horário da turma.");
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                // Handle error
+                                console.error("Error occurred while sending data to server.");
+                            }
+                        });
+                    } else {
+                        // If the event is non-unselectable, show an alert or handle it accordingly
+                        alert("Não pode remover este evento.");
+                    }
                 });
+
 
                 Disponibilidade_Formador.forEach(function (slot) {
                     calendar.addEvent({
@@ -441,7 +528,19 @@
                         start: slot.start,
                         end: slot.end,
                         rendering: 'background',
-                        color: slot.color
+                        color: slot.color,
+                        dataType: 'non_unselectable'
+                    });
+                });
+
+                Disponibilidade_Sala.forEach(function (slot) {
+                    calendar.addEvent({
+                        title: slot.title,
+                        start: slot.start,
+                        end: slot.end,
+                        rendering: 'background',
+                        color: slot.color,
+                        dataType: 'non_unselectable'
                     });
                 });
 
@@ -451,7 +550,8 @@
                         start: slot.start,
                         end: slot.end,
                         rendering: 'background',
-                        color: slot.color
+                        color: slot.color,
+                        dataType: 'non_unselectable'
                     });
                 });
 
@@ -461,7 +561,8 @@
                         start: slot.start,
                         end: slot.end,
                         rendering: 'background',
-                        color: slot.color
+                        color: slot.color,
+                        dataType: 'unselectable'
                     });
                 });
 
@@ -484,8 +585,8 @@
                     // Call the server-side method using AJAX
                     $.ajax({
                         type: "POST",
-                        url: "editar_horario.aspx/ProcessSelectedSlots",
-                        data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue }), // Pass formattedSlots with all properties
+                        url: "editar_horario.aspx/Gravar_Horario_Turma",
+                        data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue, cod_formador: selectedFormadorValue, cod_sala: selectedSalaValue }), // Pass formattedSlots with all properties
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (response) {

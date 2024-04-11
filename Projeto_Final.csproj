@@ -90,7 +90,6 @@
     <Content Include="cursos_detalhe.aspx" />
     <Content Include="cursos_lista.aspx" />
     <Content Include="cursos_lista_detalhe.aspx" />
-    <Content Include="Disponibilidade_WebService.asmx" />
     <Content Include="editar_curso.aspx" />
     <Content Include="editar_horario.aspx" />
     <Content Include="editar_modulo.aspx" />
@@ -266,10 +265,6 @@
     </Compile>
     <Compile Include="cursos_lista_detalhe.aspx.designer.cs">
       <DependentUpon>cursos_lista_detalhe.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Disponibilidade_WebService.asmx.cs">
-      <DependentUpon>Disponibilidade_WebService.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="editar_curso.aspx.cs">
       <DependentUpon>editar_curso.aspx</DependentUpon>
