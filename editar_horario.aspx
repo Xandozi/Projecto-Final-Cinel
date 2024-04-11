@@ -14,7 +14,7 @@
                 <div class="row border-dark">
                     <div class="col-md-2">
                         <label class="col-form-label">Módulo</label>
-                        <asp:DropDownList ID="ddl_modulo" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="modulos" DataTextField="nome_modulo" DataValueField="cod_modulo" OnSelectedIndexChanged="ddl_modulo_SelectedIndexChanged"></asp:DropDownList>
+                        <asp:DropDownList ID="ddl_modulo" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="modulos" DataTextField="nome_modulo" DataValueField="cod_modulo"></asp:DropDownList>
                         <asp:SqlDataSource runat="server" ID="modulos" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_modulo], [nome_modulo], [cod_ufcd] FROM [Modulos]"></asp:SqlDataSource>
                     </div>
                     <div class="col-md-2">
@@ -30,6 +30,7 @@
                         <asp:SqlDataSource runat="server" ID="salas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_sala], [nome_sala], [ativo] FROM [Salas]">
                         </asp:SqlDataSource>
                         <asp:HiddenField ID="hf_cod_sala" runat="server" />
+                        <asp:HiddenField ID="hf_cod_turma" runat="server" />
                     </div>
                     <div class="col-md-1">
                         <label class="col-form-label">Cor do Evento</label>
@@ -84,6 +85,8 @@
             var selectedFormadorValue = $('#<%= hf_cod_formador.ClientID %>').val();
             var selectedSala = $('#<%= ddl_sala.ClientID %> option:selected').text();
             var selectedSalaValue = $('#<%= ddl_sala.ClientID %> option:selected').val();
+            var nomeTurma = $('#<%= lbl_nome_turma.ClientID %>').text();
+            var codTurma = $('#<%= hf_cod_turma.ClientID %>').val();
 
             // Function to check if the selected slot duration meets the minimum requirement and starts and ends on the hour
             function isSlotDurationValid(info) {
@@ -185,6 +188,7 @@
                         start: event.start,
                         end: event.end,
                         color: '#ff0000',
+                        cod_turma: event.cod_turma,
                         dataType: 'non_unselectable'
                     });
                 });
@@ -198,6 +202,7 @@
                         start: event.start,
                         end: event.end,
                         color: event.color,
+                        cod_turma: event.cod_turma,
                         dataType: 'non_unselectable'
                     });
                 });
@@ -214,6 +219,7 @@
                         cod_formador: event.cod_formador,
                         cod_sala: event.cod_sala,
                         color: event.color,
+                        cod_turma: event.cod_turma,
                         dataType: 'unselectable'
                     });
                 });
@@ -360,7 +366,7 @@
                         var selectedColor = $('#colorPicker').val();
 
                         // Create the event title by concatenating the selected values
-                        var eventTitle = selectedModulo + " | " + selectedFormador + " | " + selectedSala;
+                        var eventTitle = nomeTurma + " | " + selectedModulo + " | " + selectedFormador + " | " + selectedSala;
 
                         var eventToAdd = {
                             title: eventTitle,
@@ -371,6 +377,7 @@
                             cod_formador: selectedFormadorValue,
                             cod_sala: selectedSalaValue,
                             color: selectedColor,
+                            cod_turma: codTurma,
                             dataType: 'unselectable'
                         };
 
@@ -403,7 +410,6 @@
                             success: function (response) {
                                 // Handle success response if needed
                                 if (response.d) {
-                                    renderCalendar()
                                 } else {
                                     // Show error message
                                     alert("Ocorreu um erro ao submeter o horário da turma.");
@@ -521,27 +527,49 @@
                     }
                 });
 
-
-                Disponibilidade_Formador.forEach(function (slot) {
+                selectedSlots.forEach(function (slot) {
                     calendar.addEvent({
                         title: slot.title,
                         start: slot.start,
                         end: slot.end,
                         rendering: 'background',
                         color: slot.color,
-                        dataType: 'non_unselectable'
+                        dataType: 'unselectable'
                     });
                 });
 
-                Disponibilidade_Sala.forEach(function (slot) {
-                    calendar.addEvent({
-                        title: slot.title,
-                        start: slot.start,
-                        end: slot.end,
-                        rendering: 'background',
-                        color: slot.color,
-                        dataType: 'non_unselectable'
+                Disponibilidade_Formador.forEach(function (slot) {
+                    const existingEvent = calendar.getEvents().find(event => {
+                        return formatDateToISOString(event.start) == slot.start && formatDateToISOString(event.end) == slot.end;
                     });
+
+                    if (!existingEvent) {
+                        calendar.addEvent({
+                            title: slot.title,
+                            start: slot.start,
+                            end: slot.end,
+                            rendering: 'background',
+                            color: slot.color,
+                            dataType: 'non_unselectable'
+                        });
+                    }
+                });
+
+                Disponibilidade_Sala.forEach(function (slot) {
+                    const existingEvent = calendar.getEvents().find(event => {
+                        return formatDateToISOString(event.start) == slot.start && formatDateToISOString(event.end) == slot.end;
+                    });
+
+                    if (!existingEvent) {
+                        calendar.addEvent({
+                            title: slot.title,
+                            start: slot.start,
+                            end: slot.end,
+                            rendering: 'background',
+                            color: slot.color,
+                            dataType: 'non_unselectable'
+                        });
+                    }
                 });
 
                 Sundays_Holidays.forEach(function (slot) {
@@ -552,17 +580,6 @@
                         rendering: 'background',
                         color: slot.color,
                         dataType: 'non_unselectable'
-                    });
-                });
-
-                selectedSlots.forEach(function (slot) {
-                    calendar.addEvent({
-                        title: slot.title,
-                        start: slot.start,
-                        end: slot.end,
-                        rendering: 'background',
-                        color: slot.color,
-                        dataType: 'unselectable'
                     });
                 });
 

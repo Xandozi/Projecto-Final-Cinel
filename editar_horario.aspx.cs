@@ -51,22 +51,11 @@ namespace Projeto_Final
                         hf_cod_formador.Value = formador[0].cod_formador.ToString();
                         hf_cod_user.Value = formador[0].cod_user.ToString();
                         hf_cod_sala.Value = ddl_sala.SelectedValue;
+                        hf_cod_turma.Value = cod_turma.ToString();
                         hf_regime.Value = Request.QueryString["regime"];
                     }
                 }
             }
-        }
-
-        protected void ddl_modulo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int cod_turma = Convert.ToInt32(Request.QueryString["cod_turma"]);
-
-            List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));
-            lbl_nome_formador.Text = formador[0].nome_completo;
-            hf_cod_formador.Value = formador[0].cod_formador.ToString();
-            hf_cod_user.Value = formador[0].cod_user.ToString();
-            hf_cod_sala.Value = ddl_sala.SelectedValue;
-            hf_regime.Value = Request.QueryString["regime"];
         }
 
         // Method to receive data from client-side

@@ -97,10 +97,10 @@ namespace Projeto_Final
             List<FullCalendarData> lst_disponibilidade = new List<FullCalendarData>();
 
             string query = $"WITH ContiguousSlots AS (" +
-                           $"SELECT cod_timeslot, dataa, cod_user, available, hora_inicio, hora_fim, titulo, color, ROW_NUMBER() OVER (ORDER BY dataa, hora_inicio) AS rn " +
-                           $"FROM (SELECT Disponibilidade.cod_timeslot, Disponibilidade.dataa, Disponibilidade.cod_user, Disponibilidade.available, Timeslots.hora_inicio, Timeslots.hora_fim, Disponibilidade.titulo, Disponibilidade.color " +
+                           $"SELECT cod_timeslot, dataa, cod_user, available, hora_inicio, hora_fim, titulo, color, cod_turma, ROW_NUMBER() OVER (ORDER BY titulo, dataa, hora_inicio) AS rn " +
+                           $"FROM (SELECT Disponibilidade.cod_timeslot, Disponibilidade.dataa, Disponibilidade.cod_user, Disponibilidade.available, Timeslots.hora_inicio, Timeslots.hora_fim, Disponibilidade.titulo, Disponibilidade.color, Disponibilidade.cod_turma " +
                            $"FROM Disponibilidade JOIN Timeslots ON Timeslots.cod_timeslot = Disponibilidade.cod_timeslot WHERE Disponibilidade.cod_user = {cod_user} AND Disponibilidade.available = 0) AS Availability) " +
-                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color " +
+                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color, cod_turma FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color, cod_turma " +
                            $"ORDER BY dataa, start_time;";
 
 
@@ -120,6 +120,7 @@ namespace Projeto_Final
                             eventData.TimeSlot_Fim = !dr.IsDBNull(1) ? dr.GetTimeSpan(1) : default(TimeSpan);
                             eventData.title = !dr.IsDBNull(3) ? dr.GetString(3) : null;
                             eventData.color = !dr.IsDBNull(4) ? dr.GetString(4) : null;
+                            eventData.cod_turma = !dr.IsDBNull(5) ? dr.GetInt32(5) : 000;
 
                             lst_disponibilidade.Add(eventData);
                         }
@@ -146,10 +147,10 @@ namespace Projeto_Final
             List<FullCalendarData> lst_disponibilidade_sala = new List<FullCalendarData>();
 
             string query = $"WITH ContiguousSlots AS (" +
-                           $"SELECT cod_timeslot, dataa, cod_sala, available, hora_inicio, hora_fim, titulo, color, ROW_NUMBER() OVER (ORDER BY dataa, hora_inicio) AS rn " +
-                           $"FROM (SELECT Disponibilidade_Salas.cod_timeslot, Disponibilidade_Salas.dataa, Disponibilidade_Salas.cod_sala, Disponibilidade_Salas.available, Timeslots.hora_inicio, Timeslots.hora_fim, Disponibilidade_Salas.titulo, Disponibilidade_Salas.color " +
+                           $"SELECT cod_timeslot, dataa, cod_sala, available, hora_inicio, hora_fim, titulo, color, cod_turma, ROW_NUMBER() OVER (ORDER BY titulo, dataa, hora_inicio) AS rn " +
+                           $"FROM (SELECT Disponibilidade_Salas.cod_timeslot, Disponibilidade_Salas.dataa, Disponibilidade_Salas.cod_sala, Disponibilidade_Salas.available, Timeslots.hora_inicio, Timeslots.hora_fim, Disponibilidade_Salas.titulo, Disponibilidade_Salas.color, Disponibilidade_Salas.cod_turma " +
                            $"FROM Disponibilidade_Salas JOIN Timeslots ON Timeslots.cod_timeslot = Disponibilidade_Salas.cod_timeslot WHERE Disponibilidade_Salas.cod_sala = {cod_sala} AND Disponibilidade_Salas.available = 0) AS Availability) " +
-                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color " +
+                           $"SELECT MIN(hora_inicio) AS start_time, MAX(hora_fim) AS end_time, dataa, titulo, color, cod_turma FROM ContiguousSlots GROUP BY dataa, DATEADD(hour, -rn, hora_inicio), titulo, color, cod_turma " +
                            $"ORDER BY dataa, start_time;";
 
 
@@ -169,6 +170,7 @@ namespace Projeto_Final
                             eventData.TimeSlot_Fim = !dr.IsDBNull(1) ? dr.GetTimeSpan(1) : default(TimeSpan);
                             eventData.title = !dr.IsDBNull(3) ? dr.GetString(3) : null;
                             eventData.color = !dr.IsDBNull(4) ? dr.GetString(4) : null;
+                            eventData.cod_turma = !dr.IsDBNull(5) ? dr.GetInt32(5) : 000;
 
                             lst_disponibilidade_sala.Add(eventData);
                         }
