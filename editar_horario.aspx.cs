@@ -50,19 +50,34 @@ namespace Projeto_Final
                         lbl_nome_formador.Text = formador[0].nome_completo;
                         hf_cod_formador.Value = formador[0].cod_formador.ToString();
                         hf_cod_user.Value = formador[0].cod_user.ToString();
+                        hf_cod_sala.Value = ddl_sala.SelectedValue;
                         hf_regime.Value = Request.QueryString["regime"];
                     }
                 }
             }
         }
 
+        protected void ddl_modulo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int cod_turma = Convert.ToInt32(Request.QueryString["cod_turma"]);
+
+            List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));
+            lbl_nome_formador.Text = formador[0].nome_completo;
+            hf_cod_formador.Value = formador[0].cod_formador.ToString();
+            hf_cod_user.Value = formador[0].cod_user.ToString();
+            hf_cod_sala.Value = ddl_sala.SelectedValue;
+            hf_regime.Value = Request.QueryString["regime"];
+        }
+
         // Method to receive data from client-side
         [WebMethod]
-        public static bool ProcessSelectedSlots(SlotData[] selectedSlots, int cod_turma)
+        public static bool Gravar_Horario_Turma(SlotData[] selectedSlots, int cod_turma, int cod_formador, int cod_sala)
         {
             try
             {
                 Horarios.Delete_Horario_Turma(cod_turma);
+                Horarios.Delete_Disponibilidade_Formador_Turma(cod_turma, cod_formador);
+                Horarios.Delete_Disponibilidade_Sala_Turma(cod_turma);
 
                 foreach (var slot in selectedSlots)
                 {
@@ -71,8 +86,8 @@ namespace Projeto_Final
                     string inicio_data_str = slot.start;
                     string fim_data_str = slot.end;
                     int cod_modulo = slot.cod_modulo;
-                    int cod_formador = slot.cod_formador;
-                    int cod_sala = slot.cod_sala;
+                    int cod_formador_slot = slot.cod_formador;
+                    int cod_sala_slot = slot.cod_sala;
                     string color = slot.color;
 
                     // Append default times if only date is provided
@@ -106,13 +121,13 @@ namespace Projeto_Final
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot, inicio_data_slot.AddHours(1));
 
-                            Horarios.Insert_Horario_Turma(cod_turma, cod_modulo, cod_formador, cod_sala, cod_timeslot, data_inicio, titulo, color);
+                            Horarios.Insert_Horario_Turma(cod_turma, cod_modulo, cod_formador_slot, cod_sala_slot, cod_timeslot, data_inicio, titulo, color);
                         }
                         else
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot.AddHours(k), inicio_data_slot.AddHours(1 + k));
 
-                            Horarios.Insert_Horario_Turma(cod_turma, cod_modulo, cod_formador, cod_sala, cod_timeslot, data_inicio, titulo, color);
+                            Horarios.Insert_Horario_Turma(cod_turma, cod_modulo, cod_formador_slot, cod_sala_slot, cod_timeslot, data_inicio, titulo, color);
                         }
                     }
                 }
@@ -136,19 +151,6 @@ namespace Projeto_Final
             public int cod_formador { get; set; }
             public int cod_sala { get; set; }
             public string color { get; set; }
-        }
-
-        protected void ddl_modulo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int cod_turma = Convert.ToInt32(Request.QueryString["cod_turma"]);
-
-            List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));
-            lbl_nome_formador.Text = formador[0].nome_completo;
-            hf_cod_formador.Value = formador[0].cod_formador.ToString();
-            hf_cod_user.Value = formador[0].cod_user.ToString();
-            hf_regime.Value = Request.QueryString["regime"];
-
-            ScriptManager.RegisterStartupScript(this, GetType(), "DropdownChangedScript", "dropdownChanged();", true);
         }
     }
 }

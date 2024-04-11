@@ -134,5 +134,46 @@ namespace Projeto_Final.Classes
                 myConn.Close();
             }
         }
+
+        public static void Delete_Disponibilidade_Formador_Turma(int cod_turma, int cod_formador)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
+                myCommand.Parameters.AddWithValue("@cod_formador", cod_formador);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Delete_Disponibilidade_Formador_Turma";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+                myConn.Close();
+            }
+        }
+
+        public static void Delete_Disponibilidade_Sala_Turma(int cod_turma)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Delete_Disponibilidade_Sala_Turma";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+                myConn.Close();
+            }
+        }
     }
 }

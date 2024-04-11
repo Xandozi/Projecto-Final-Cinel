@@ -38,7 +38,7 @@ namespace Projeto_Final
 
         // Method to receive data from client-side
         [WebMethod]
-        public static bool ProcessSelectedSlots(SlotData[] selectedSlots, int cod_user)
+        public static bool Gravar_Disponibilidade_Formador(SlotData[] selectedSlots, int cod_user)
         {
             try
             {
@@ -108,6 +108,10 @@ namespace Projeto_Final
             public string title { get; set; }
             public string start { get; set; }
             public string end { get; set; }
+            public int cod_modulo { get; set; }
+            public int cod_formador { get; set; }
+            public int cod_sala { get; set; }
+            public string color { get; set; }
         }
     }
 }

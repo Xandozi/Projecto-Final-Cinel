@@ -22,11 +22,22 @@
                             </div>
                         </div>
                         <div class="form-group" style="margin: 10px;">
-                            <asp:Label ID="Label1" runat="server" Text="Selecionar como Indisponível"></asp:Label>
+                            <asp:Label ID="lbl_dias_semana" runat="server" Text="Selecionar como Indisponível"></asp:Label>
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 10px;">
                                     <button id="btn_SelecionarDiasSemanaManha" class="btn btn-dark">Dias de semana manhã</button>
                                     <button id="btn_SelecionarDiasSemanaTarde" class="btn btn-dark">Dias de semana de tarde</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin: 10px;">
+                            <asp:Label ID="lbl_limpar" runat="server" Text="Limpar"></asp:Label>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 10px;">
+                                    <button id="btn_limpar" class="btn btn-dark">Limpar Tudo</button>
+                                    <button id="btn_limpar_manhas" class="btn btn-dark">Limpar Manhãs</button>
+                                    <button id="btn_limpar_tardes" class="btn btn-dark">Limpar Tardes</button>
+                                    <button id="btn_limpar_sabados" class="btn btn-dark">Limpar Sabados</button>
                                 </div>
                             </div>
                         </div>
@@ -67,6 +78,7 @@
             console.log("DOMContentLoaded event fired."); // Log DOMContentLoaded event
 
             var selectedSlots = []; // Array to store selected time slots
+            var Sundays_Holidays = [];
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
             var currentYear = new Date().getFullYear(); // Get the current year
 
@@ -151,7 +163,7 @@
             // Function to add holidays and Sundays to the selectedSlots array
             function addHolidaysAndSundaysToSelectedSlots() {
                 holidays.forEach(function (holiday) {
-                    selectedSlots.push({
+                    Sundays_Holidays.push({
                         title: holiday.title,
                         start: holiday.start,
                         end: holiday.end,
@@ -163,7 +175,7 @@
 
                 var sundays = generateSundays();
                 sundays.forEach(function (sunday) {
-                    selectedSlots.push({
+                    Sundays_Holidays.push({
                         title: sunday.title,
                         start: sunday.start,
                         end: sunday.end,
@@ -184,20 +196,15 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Disponibilidade_WebService.asmx/GetDisponibilidade_JSON",
+                url: "/Horarios_WebService.asmx/GetDisponibilidade_JSON",
                 data: JSON.stringify({ cod_user: codUserValue }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     var eventData = JSON.parse(response.d); // Extract the data array from the response
 
-                    if (eventData.length === 0) {
-                        // If no events found, add holidays and Sundays to selectedSlots array
-                        addHolidaysAndSundaysToSelectedSlots();
-                    } else {
-                        // If events found, add only eventData to selectedSlots array
-                        addEventsToSelectedSlots(eventData);
-                    }
+                    addHolidaysAndSundaysToSelectedSlots();
+                    addEventsToSelectedSlots(eventData);
 
                     // Render calendar after adding events to selectedSlots array
                     renderCalendar();
@@ -240,6 +247,12 @@
                     timeZone: 'UTC',
                     select: function (info) {
                         var isAllDay = info.allDay;
+                        var currentDate = new Date(); // Get the current date
+
+                        // Check if the selected date is before the current date
+                        if (info.start < currentDate) {
+                            return;
+                        }
 
                         if (isAllDay) {
                             var selectedDateStart = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), 8, 0, 0));
@@ -303,6 +316,15 @@
                     info.event.remove();
                 });
 
+                Sundays_Holidays.forEach(function (slot) {
+                    calendar.addEvent({
+                        title: slot.title,
+                        start: slot.start,
+                        end: slot.end,
+                        rendering: 'background',
+                        color: '#ff0000'
+                    });
+                });
 
                 selectedSlots.forEach(function (slot) {
                     calendar.addEvent({
@@ -316,6 +338,69 @@
 
                 calendar.render();
 
+                function Limpar_Disponibilidade() {
+                    // Remove events from the calendar
+                    calendar.getEvents().forEach(function (event) {
+                        if (event.title.includes('Tarde Não Disponível') ||
+                            event.title.includes('Manhã Não Disponível') ||
+                            event.title.includes('Sábado Não Disponível') ||
+                            event.title.includes('Não Disponível')) {
+                            event.remove();
+                        }
+                    });
+
+                    // Remove events from the selectedSlots array
+                    selectedSlots = selectedSlots.filter(function (slot) {
+                        return !(slot.title.includes('Tarde Não Disponível') ||
+                            slot.title.includes('Manhã Não Disponível') ||
+                            slot.title.includes('Sábado Não Disponível') ||
+                            slot.title.includes('Não Disponível'));
+                    });
+                }
+
+                function Limpar_Disponibilidade_Manhas() {
+                    // Remove events from the calendar
+                    calendar.getEvents().forEach(function (event) {
+                        if (event.title.includes('Manhã Não Disponível')) {
+                            event.remove();
+                        }
+                    });
+
+                    // Remove events from the selectedSlots array
+                    selectedSlots = selectedSlots.filter(function (slot) {
+                        return !(slot.title.includes('Manhã Não Disponível'));
+                    });
+                }
+
+                function Limpar_Disponibilidade_Tardes() {
+                    // Remove events from the calendar
+                    calendar.getEvents().forEach(function (event) {
+                        if (event.title.includes('Tarde Não Disponível')) {
+                            event.remove();
+                        }
+                    });
+
+                    // Remove events from the selectedSlots array
+                    selectedSlots = selectedSlots.filter(function (slot) {
+                        return !(slot.title.includes('Tarde Não Disponível'));
+                    });
+                }
+
+                function Limpar_Disponibilidade_Sabados() {
+                    // Remove events from the calendar
+                    calendar.getEvents().forEach(function (event) {
+                        if (event.title.includes('Sábado Não Disponível')) {
+                            event.remove();
+                        }
+                    });
+
+                    // Remove events from the selectedSlots array
+                    selectedSlots = selectedSlots.filter(function (slot) {
+                        return !(slot.title.includes('Sábado Não Disponível'));
+                    });
+                }
+
+
                 function SelecionarDiasSemanaManha() {
                     var currentDate = new Date();
                     var currentYear = currentDate.getFullYear(); // Get the current year
@@ -325,8 +410,8 @@
 
                     // Loop through each day of the current year
                     while (currentDate.getFullYear() === currentYear) {
-                        // Check if the current day is not Saturday or Sunday
-                        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+                        // Check if the current day is not Saturday or Sunday and not in Sundays_Holidays array
+                        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6 && !isDateInArray(currentDate, Sundays_Holidays)) {
                             console.log("Marking:", currentDate);
                             // Add the time slot from 8:00 to 16:00 as "Não Disponível"
                             calendar.addEvent({
@@ -356,8 +441,8 @@
 
                     // Loop through each day of the current year
                     while (currentDate.getFullYear() === currentYear) {
-                        // Check if the current day is not Saturday or Sunday
-                        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+                        // Check if the current day is not Saturday or Sunday and not in Sundays_Holidays array
+                        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6 && !isDateInArray(currentDate, Sundays_Holidays)) {
                             console.log("Marking:", currentDate);
                             // Add the time slot from 8:00 to 16:00 as "Não Disponível"
                             calendar.addEvent({
@@ -378,29 +463,32 @@
                     }
                 }
 
-                // Function to select all Saturdays and mark them as "Não Disponível"
                 function SelecionarSabados() {
                     var currentDate = new Date();
                     var currentYear = currentDate.getFullYear(); // Get the current year
                     currentDate.setDate(currentDate.getDate() + (6 - currentDate.getDay())); // Move to the next Saturday
 
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
-                        console.log("Marking:", currentDate);
-                        calendar.addEvent({
-                            title: 'Sábado Não Disponível',
-                            start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
-                            end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
-                            rendering: 'background',
-                            color: '#ff0000'
-                        });
-                        selectedSlots.push({
-                            title: 'Sábado Não Disponível',
-                            start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                            end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
-                        });
+                        // Check if the current day is not in Sundays_Holidays array
+                        if (!isDateInArray(currentDate, Sundays_Holidays)) {
+                            console.log("Marking:", currentDate);
+                            calendar.addEvent({
+                                title: 'Sábado Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
+                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
+                                rendering: 'background',
+                                color: '#ff0000'
+                            });
+                            selectedSlots.push({
+                                title: 'Sábado Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                            });
+                        }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
                 }
+
 
                 function SelecionarSabadosManha() {
                     var currentDate = new Date();
@@ -408,19 +496,22 @@
                     currentDate.setDate(currentDate.getDate() + (6 - currentDate.getDay())); // Move to the next Saturday
 
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
-                        console.log("Marking:", currentDate);
-                        calendar.addEvent({
-                            title: 'Manhã Não Disponível',
-                            start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
-                            end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
-                            rendering: 'background',
-                            color: '#ff0000'
-                        });
-                        selectedSlots.push({
-                            title: 'Manhã Não Disponível',
-                            start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                            end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
-                        });
+                        // Check if the current day is not in Sundays_Holidays array
+                        if (!isDateInArray(currentDate, Sundays_Holidays)) {
+                            console.log("Marking:", currentDate);
+                            calendar.addEvent({
+                                title: 'Manhã Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
+                                end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
+                                rendering: 'background',
+                                color: '#ff0000'
+                            });
+                            selectedSlots.push({
+                                title: 'Manhã Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                                end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                            });
+                        }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
                 }
@@ -431,22 +522,37 @@
                     currentDate.setDate(currentDate.getDate() + (6 - currentDate.getDay())); // Move to the next Saturday
 
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
-                        console.log("Marking:", currentDate);
-                        calendar.addEvent({
-                            title: 'Tarde Não Disponível',
-                            start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
-                            end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
-                            rendering: 'background',
-                            color: '#ff0000'
-                        });
-                        selectedSlots.push({
-                            title: 'Tarde Não Disponível',
-                            start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
-                            end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
-                        });
+                        // Check if the current day is not in Sundays_Holidays array
+                        if (!isDateInArray(currentDate, Sundays_Holidays)) {
+                            console.log("Marking:", currentDate);
+                            calendar.addEvent({
+                                title: 'Tarde Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
+                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
+                                rendering: 'background',
+                                color: '#ff0000'
+                            });
+                            selectedSlots.push({
+                                title: 'Tarde Não Disponível',
+                                start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
+                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                            });
+                        }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
                 }
+
+                // Function to check if a date exists in the given array
+                function isDateInArray(date, array) {
+                    var dateString = date.toISOString().slice(0, 10); // Get date string without time
+                    for (var i = 0; i < array.length; i++) {
+                        if (array[i].start.slice(0, 10) === dateString) {
+                            return true; // Date found in array
+                        }
+                    }
+                    return false; // Date not found in array
+                }
+
 
                 // Button click event handler to select all Saturdays
                 document.getElementById('btn_SelecionarDiasSemanaManha').addEventListener('click', function (event) {
@@ -478,6 +584,30 @@
                     event.preventDefault(); // Prevent default button behavior (e.g., form submission or postback)
                 });
 
+                // Button click event handler to select all Saturdays
+                document.getElementById('btn_limpar').addEventListener('click', function (event) {
+                    Limpar_Disponibilidade();
+                    event.preventDefault(); // Prevent default button behavior (e.g., form submission or postback)
+                });
+
+                // Button click event handler to select all Saturdays
+                document.getElementById('btn_limpar_manhas').addEventListener('click', function (event) {
+                    Limpar_Disponibilidade_Manhas();
+                    event.preventDefault(); // Prevent default button behavior (e.g., form submission or postback)
+                });
+
+                // Button click event handler to select all Saturdays
+                document.getElementById('btn_limpar_tardes').addEventListener('click', function (event) {
+                    Limpar_Disponibilidade_Tardes();
+                    event.preventDefault(); // Prevent default button behavior (e.g., form submission or postback)
+                });
+
+                // Button click event handler to select all Saturdays
+                document.getElementById('btn_limpar_sabados').addEventListener('click', function (event) {
+                    Limpar_Disponibilidade_Sabados();
+                    event.preventDefault(); // Prevent default button behavior (e.g., form submission or postback)
+                });
+
                 document.getElementById('btn_SaveSelectedSlots').addEventListener('click', function (event) {
                     // Ensure selectedSlots array is properly structured
                     var formattedSlots = selectedSlots.map(function (slot) {
@@ -491,7 +621,7 @@
                     // Call the server-side method using AJAX
                     $.ajax({
                         type: "POST",
-                        url: "formador_disponibilidade.aspx/ProcessSelectedSlots",
+                        url: "formador_disponibilidade.aspx/Gravar_Disponibilidade_Formador",
                         data: JSON.stringify({ selectedSlots: formattedSlots, cod_user: codUserValue }), // Pass formattedSlots with all properties
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",

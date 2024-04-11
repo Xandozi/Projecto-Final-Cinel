@@ -24,13 +24,22 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.Label lbl_sabados;
 
         /// <summary>
-        /// Label1 control.
+        /// lbl_dias_semana control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lbl_dias_semana;
+
+        /// <summary>
+        /// lbl_limpar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_limpar;
 
         /// <summary>
         /// hf_cod_user control.
