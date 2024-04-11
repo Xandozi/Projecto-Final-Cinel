@@ -167,10 +167,8 @@
                         title: holiday.title,
                         start: holiday.start,
                         end: holiday.end,
+                        dataType: 'non_unselectable'
                     });
-                    console.log(holiday.title);
-                    console.log(holiday.start);
-                    console.log(holiday.end);
                 });
 
                 var sundays = generateSundays();
@@ -179,6 +177,7 @@
                         title: sunday.title,
                         start: sunday.start,
                         end: sunday.end,
+                        dataType: 'non_unselectable'
                     });
                 });
             }
@@ -186,11 +185,28 @@
             // Function to add events to the selectedSlots array
             function addEventsToSelectedSlots(eventData) {
                 eventData.forEach(function (event) {
-                    selectedSlots.push({
-                        title: event.title,
-                        start: event.start,
-                        end: event.end
-                    });
+                    console.log(event.start)
+                    console.log(event.cod_turma)
+                    console.log(event.cod_turma == 0)
+                    if (event.cod_turma == 0) {
+                        selectedSlots.push({
+                            title: event.title,
+                            start: event.start,
+                            end: event.end,
+                            cod_turma: event.cod_turma,
+                            color: event.color,
+                            dataType: 'unselectable'
+                        });
+                    } else {
+                        selectedSlots.push({
+                            title: event.title,
+                            start: event.start,
+                            end: event.end,
+                            cod_turma: event.cod_turma,
+                            color: event.color,
+                            dataType: 'non_unselectable'
+                        });
+                    }
                 });
             }
 
@@ -270,12 +286,20 @@
                             return;
                         }
 
+                        // Check if the selected event conflicts with any existing events
+                        if (isEventConflict(info, selectedSlots) || isEventConflict(info, Sundays_Holidays)) {
+                            alert("Selected time conflicts with existing events.");
+                            return;
+                        }
+
                         var eventToAdd = {
                             title: 'Não Disponível',
                             start: info.start,
                             end: info.end,
                             rendering: 'background',
-                            color: '#ff0000'
+                            color: '#ff0000',
+                            cod_turma: 0,
+                            dataType: 'unselectable'
                         };
 
                         // Push the event object to selectedSlots array
@@ -295,25 +319,52 @@
                     }
                 });
 
+                // Function to check if there is a conflict between the selected event and existing events
+                function isEventConflict(selectedEvent, eventsArray) {
+                    for (var i = 0; i < eventsArray.length; i++) {
+                        var event = eventsArray[i];
+                        var selectedEventStartString = selectedEvent.start.toISOString().slice(0, -5); // Trim milliseconds
+                        var selectedEventEndString = selectedEvent.end.toISOString().slice(0, -5); // Trim milliseconds
+                        if ((selectedEventStartString >= event.start && selectedEventStartString < event.end) ||
+                            (selectedEventEndString > event.start && selectedEventEndString < event.end) ||
+                            (selectedEventStartString <= event.start && selectedEventEndString > event.start)) {
+                            return true; // Conflict found
+                        }
+                    }
+                    return false; // No conflict
+                }
+
                 calendar.setOption('eventClick', function (info) {
-                    // Get the start time components
-                    var start = info.event.start;
-                    var startString = start.getUTCFullYear() + '-' + ('0' + (start.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + start.getUTCDate()).slice(-2) + 'T' +
-                        ('0' + start.getUTCHours()).slice(-2) + ':' + ('0' + start.getUTCMinutes()).slice(-2) + ':' + ('0' + start.getUTCSeconds()).slice(-2);
+                    // Check if the clicked event is unselectable
+                    console.log(info.event.extendedProps.dataType)
+                    if (info.event.extendedProps.dataType === 'unselectable') {
+                        // Get the start time components of the clicked event
+                        var start = info.event.start;
+                        var startString = start.getUTCFullYear() + '-' + ('0' + (start.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + start.getUTCDate()).slice(-2) + 'T' +
+                            ('0' + start.getUTCHours()).slice(-2) + ':' + ('0' + start.getUTCMinutes()).slice(-2) + ':' + ('0' + start.getUTCSeconds()).slice(-2);
 
-                    // Get the end time components
-                    var end = info.event.end;
-                    var endString = end.getUTCFullYear() + '-' + ('0' + (end.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + end.getUTCDate()).slice(-2) + 'T' +
-                        ('0' + end.getUTCHours()).slice(-2) + ':' + ('0' + end.getUTCMinutes()).slice(-2) + ':' + ('0' + end.getUTCSeconds()).slice(-2);
+                        // Get the end time components of the clicked event
+                        var end = info.event.end;
+                        var endString = end.getUTCFullYear() + '-' + ('0' + (end.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + end.getUTCDate()).slice(-2) + 'T' +
+                            ('0' + end.getUTCHours()).slice(-2) + ':' + ('0' + end.getUTCMinutes()).slice(-2) + ':' + ('0' + end.getUTCSeconds()).slice(-2);
 
-                    console.log(startString); // Log the start time in the desired format
-                    console.log(endString); // Log the end time in the desired format
-                    console.log(info.event.title);
+                        // Remove the event from the selectedSlots array
+                        selectedSlots = selectedSlots.filter(function (slot) {
+                            console.log(slot.start)
+                            console.log(slot.end)
+                            console.log('---')
+                            console.log(startString)
+                            console.log(endString)
+                            console.log(!(slot.start === startString && slot.end === endString))
+                            return !(slot.start === startString && slot.end === endString);
+                        });
 
-                    selectedSlots = selectedSlots.filter(function (slot) {
-                        return !(slot.start === startString && slot.end === endString);
-                    });
-                    info.event.remove();
+                        // Remove the event from the calendar
+                        info.event.remove();
+                    } else {
+                        // If the event is non-unselectable, show an alert or handle it accordingly
+                        alert("Não pode remover este evento.");
+                    }
                 });
 
                 Sundays_Holidays.forEach(function (slot) {
@@ -322,18 +373,33 @@
                         start: slot.start,
                         end: slot.end,
                         rendering: 'background',
-                        color: '#ff0000'
+                        color: '#ff0000',
+                        dataType: 'non_unselectable'
                     });
                 });
 
                 selectedSlots.forEach(function (slot) {
-                    calendar.addEvent({
-                        title: slot.title,
-                        start: slot.start,
-                        end: slot.end,
-                        rendering: 'background',
-                        color: '#ff0000'
-                    });
+                    if (slot.cod_turma == 0) {
+                        calendar.addEvent({
+                            title: slot.title,
+                            start: slot.start,
+                            end: slot.end,
+                            rendering: 'background',
+                            cod_turma: slot.cod_turma,
+                            color: slot.color,
+                            dataType: 'unselectable'
+                        });
+                    } else {
+                        calendar.addEvent({
+                            title: slot.title,
+                            start: slot.start,
+                            end: slot.end,
+                            rendering: 'background',
+                            cod_turma: slot.cod_turma,
+                            color: slot.color,
+                            dataType: 'non_unselectable'
+                        });
+                    }
                 });
 
                 calendar.render();
@@ -425,6 +491,8 @@
                                 title: 'Manhã Não Disponível',
                                 start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
                                 end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                                color: '#ff0000',
+                                cod_turma: 0
                             });
                         }
                         // Move to the next day
@@ -456,6 +524,8 @@
                                 title: 'Tarde Não Disponível',
                                 start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
                                 end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                                color: '#ff0000',
+                                cod_turma: 0
                             });
                         }
                         // Move to the next day
@@ -483,6 +553,8 @@
                                 title: 'Sábado Não Disponível',
                                 start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
                                 end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                                color: '#ff0000',
+                                cod_turma: 0
                             });
                         }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
@@ -510,6 +582,8 @@
                                 title: 'Manhã Não Disponível',
                                 start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
                                 end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                                color: '#ff0000',
+                                cod_turma: 0
                             });
                         }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
@@ -536,6 +610,8 @@
                                 title: 'Tarde Não Disponível',
                                 start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
                                 end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                                color: '#ff0000',
+                                cod_turma: 0
                             });
                         }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
@@ -614,7 +690,9 @@
                         return {
                             title: slot.title,
                             start: slot.start,
-                            end: slot.end
+                            end: slot.end,
+                            color: slot.color,
+                            cod_turma: slot.cod_turma
                         };
                     });
 

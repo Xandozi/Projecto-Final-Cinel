@@ -14,6 +14,7 @@ namespace Projeto_Final.Classes
         public int cod_modulo { get; set; }
         public int cod_formador { get; set; }
         public int cod_sala { get; set; }
+        public int cod_turma { get; set; }
         public string color { get; set; }
         public string start => $"{Data:yyyy-MM-dd}T{TimeSlot_Inicio}";
         public string end => $"{Data:yyyy-MM-dd}T{TimeSlot_Fim}";

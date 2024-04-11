@@ -15,7 +15,7 @@ namespace Projeto_Final.Classes
         public DateTime data_inicio { get; set; }
         public DateTime data_fim { get; set; }
 
-        public static void Insert_Disponibilidade_Formador(int cod_user, int cod_timeslot, string data, string titulo)
+        public static void Insert_Disponibilidade_Formador(int cod_user, int cod_timeslot, string data, string titulo, string color, int cod_turma)
         {
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -25,6 +25,8 @@ namespace Projeto_Final.Classes
                 myCommand.Parameters.AddWithValue("@cod_timeslot", cod_timeslot);
                 myCommand.Parameters.AddWithValue("@data", data);
                 myCommand.Parameters.AddWithValue("@titulo", titulo);
+                myCommand.Parameters.AddWithValue("@color", color);
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
 
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.CommandText = "Insert_Disponibilidade_Formador";

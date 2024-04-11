@@ -50,6 +50,8 @@ namespace Projeto_Final
                     string titulo = slot.title;
                     string inicio_data_str = slot.start;
                     string fim_data_str = slot.end;
+                    string color = slot.color;
+                    int cod_turma = slot.cod_turma;
 
                     // Append default times if only date is provided
                     if (!inicio_data_str.Contains("T"))
@@ -82,13 +84,13 @@ namespace Projeto_Final
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot, inicio_data_slot.AddHours(1));
 
-                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo);
+                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo, color, cod_turma);
                         }
                         else
                         {
                             int cod_timeslot = Horarios.Check_Timeslot(inicio_data_slot.AddHours(k), inicio_data_slot.AddHours(1 + k));
 
-                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo);
+                            Horarios.Insert_Disponibilidade_Formador(cod_user, cod_timeslot, data_inicio, titulo, color, cod_turma);
                         }
                     }
                 }
@@ -111,6 +113,7 @@ namespace Projeto_Final
             public int cod_modulo { get; set; }
             public int cod_formador { get; set; }
             public int cod_sala { get; set; }
+            public int cod_turma { get; set; }
             public string color { get; set; }
         }
     }
