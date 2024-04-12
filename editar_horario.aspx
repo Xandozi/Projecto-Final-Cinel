@@ -36,6 +36,9 @@
                         <label class="col-form-label">Cor do Evento</label>
                         <input class="form-control" type="color" id="colorPicker" value="000000">
                     </div>
+                    <div class="col-md-4">
+                        <label id="lbl_mensagem" style="margin-top: 20px;" ></label>
+                    </div>
                 </div>
                 <div id='calendar' class="bg-light border-dark" style="padding: 10px; margin-top: 30px; margin-bottom: 10px;"></div>
             </div>
@@ -77,6 +80,15 @@
             var Disponibilidade_Sala = []; // Array to store availability of classrooms
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
             var currentYear = new Date().getFullYear(); // Get the current year
+            var currentDate = new Date();
+
+            // Extract the year, month, and day
+            var currentYear = currentDate.getFullYear();
+            var currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because getMonth() returns a zero-based index
+            var currentDay = currentDate.getDate().toString().padStart(2, '0');
+
+            // Construct the initialDate string in the format 'YYYY-MM-DD'
+            var initialDate = currentYear + '-' + currentMonth + '-' + currentDay;
 
             // Get the selected values from dropdown lists
             var selectedModulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
@@ -225,26 +237,27 @@
                 });
             }
 
+            // Chamada á base de dados para ir buscar os dados da disponibilidade do formador
             $.ajax({
                 type: "POST",
-                url: "/Horarios_WebService.asmx/GetDisponibilidade_JSON",
-                data: JSON.stringify({ cod_user: $('#<%= hf_cod_user.ClientID %>').val() }), // Retrieve the value of hf_cod_formador
+                url: "/Horarios_WebService.asmx/GetDisponibilidade_JSON", // Método do WebService utilizado para ir buscar os dados á BD
+                data: JSON.stringify({ cod_user: $('#<%= hf_cod_user.ClientID %>').val() }), // Parâmetro passado no método
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var eventData = JSON.parse(response.d); // Extract the data array from the response
+                    var eventData = JSON.parse(response.d); // Extração do array baseado no ficheiro JSON
 
-                    addAvailabilityToSelectedSlots(eventData);
+                    addAvailabilityToSelectedSlots(eventData); // Execução da função para inserir os dados do eventData para dentro de um array utilizado na renderização do calendário
 
-                    // Render calendar after adding events to selectedSlots array
+                    // Renderizar o calendário
                     renderCalendar();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Error occurred while fetching event data. WEBSERVICE");
-                    // If AJAX call fails, add holidays and Sundays to selectedSlots array
+                    // Se a chamada á BD falhar, adicionar á mesma os domingos e feriados ao array Sundays_Holidays
                     addHolidaysAndSundaysToSelectedSlots();
 
-                    // Render calendar after adding events to selectedSlots array
+                    // Renderizar o calendário
                     renderCalendar();
                 }
             });
@@ -302,7 +315,7 @@
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     locale: 'pt',
                     hiddenDays: [0],
-                    initialView: 'dayGridMonth',
+                    initialView: 'timeGridWeek',
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
@@ -331,6 +344,18 @@
 
                         // Check if the selected date is before the current date
                         if (info.start < currentDate) {
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("Só pode criar eventos a partir da data atual.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
                             return;
                         }
 
@@ -352,13 +377,35 @@
                         }
 
                         if (!isSlotDurationValid(info)) {
-                            alert("Please select a slot of at least 1 hour starting at hour:00.");
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("Por favor introduza um evento de pelo menos 1h e que comece á hora certa.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
                             return;
                         }
 
                         // Check if the selected event conflicts with any existing events
                         if (isEventConflict(info, Disponibilidade_Formador) || isEventConflict(info, Sundays_Holidays) || isEventConflict(info, Disponibilidade_Sala)) {
-                            alert("Selected time conflicts with existing events.");
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("O evento escolhido entra em conflito com outro evento.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
                             return;
                         }
 
@@ -410,14 +457,49 @@
                             success: function (response) {
                                 // Handle success response if needed
                                 if (response.d) {
+                                    // Show error message in lbl_mensagem
+                                    $('#lbl_mensagem').text("Aula inserida com sucesso!");
+                                    $('#lbl_mensagem').addClass('alert alert-success'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').fadeIn();
+
+                                    // Fade out the error message after 3 seconds
+                                    setTimeout(function () {
+                                        $('#lbl_mensagem').fadeOut(function () {
+                                            $(this).removeClass('alert alert-success'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        });
+                                    }, 3000);
+
+                                    return;
                                 } else {
-                                    // Show error message
-                                    alert("Ocorreu um erro ao submeter o horário da turma.");
+                                    // Show error message in lbl_mensagem
+                                    $('#lbl_mensagem').text("Ocorreu um erro ao guardar a aula inserida.");
+                                    $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').fadeIn();
+
+                                    // Fade out the error message after 3 seconds
+                                    setTimeout(function () {
+                                        $('#lbl_mensagem').fadeOut(function () {
+                                            $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        });
+                                    }, 3000);
+
+                                    return;
                                 }
                             },
                             error: function (xhr, textStatus, errorThrown) {
-                                // Handle error
-                                console.error("Error occurred while sending data to server.");
+                                // Show error message in lbl_mensagem
+                                $('#lbl_mensagem').text("Ocorreu um erro ao enviar os dados para a base de dados.");
+                                $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').fadeIn();
+
+                                // Fade out the error message after 3 seconds
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    });
+                                }, 3000);
+
+                                return;
                             }
                         });
 
@@ -425,7 +507,7 @@
                     },
                     contentHeight: 'auto',
                     aspectRatio: 1.5,
-                    initialDate: currentYear + '-01-01',
+                    initialDate: currentDate,
                     validRange: {
                         start: currentYear + '-01-01',
                         end: (currentYear + 2) + '-01-01'
@@ -510,20 +592,65 @@
                             success: function (response) {
                                 // Handle success response if needed
                                 if (response.d) {
+                                    // Show error message in lbl_mensagem
+                                    $('#lbl_mensagem').text("Aula removida e horário guardado com sucesso.");
+                                    $('#lbl_mensagem').addClass('alert alert-success'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').fadeIn();
 
+                                    // Fade out the error message after 3 seconds
+                                    setTimeout(function () {
+                                        $('#lbl_mensagem').fadeOut(function () {
+                                            $(this).removeClass('alert alert-success'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        });
+                                    }, 3000);
+
+                                    return;
                                 } else {
-                                    // Show error message
-                                    alert("Ocorreu um erro ao submeter o horário da turma.");
+                                    // Show error message in lbl_mensagem
+                                    $('#lbl_mensagem').text("Erro ao guardar o horário na base de dados.");
+                                    $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').fadeIn();
+
+                                    // Fade out the error message after 3 seconds
+                                    setTimeout(function () {
+                                        $('#lbl_mensagem').fadeOut(function () {
+                                            $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        });
+                                    }, 3000);
+
+                                    return;
                                 }
                             },
                             error: function (xhr, textStatus, errorThrown) {
-                                // Handle error
-                                console.error("Error occurred while sending data to server.");
+                                // Show error message in lbl_mensagem
+                                $('#lbl_mensagem').text("Erro ao enviar os dados para a base de dados.");
+                                $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').fadeIn();
+
+                                // Fade out the error message after 3 seconds
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    });
+                                }, 3000);
+
+                                return;
                             }
                         });
                     } else {
-                        // If the event is non-unselectable, show an alert or handle it accordingly
-                        alert("Não pode remover este evento.");
+                        // Show error message in lbl_mensagem
+                        $('#lbl_mensagem').text("Não pode remover este evento.");
+                        $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                        $('#lbl_mensagem').fadeIn();
+
+                        // Fade out the error message after 3 seconds
+                        setTimeout(function () {
+                            $('#lbl_mensagem').fadeOut(function () {
+                                $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                            });
+                        }, 3000);
+
+                        return;
                     }
                 });
 
@@ -609,18 +736,49 @@
                         success: function (response) {
                             // Handle success response if needed
                             if (response.d) {
-                                // Show success message
-                                alert("Horário submetido com sucesso! Será redirecionado para outra página.");
-                                // Redirect to another page
-                                window.location.href = "horarios.aspx"; // Change "new_page.aspx" to the desired page
+                                // Show error message in lbl_mensagem
+                                $('#lbl_mensagem').text("Horário guardado com sucesso!");
+                                $('#lbl_mensagem').addClass('alert alert-success'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').fadeIn();
+
+                                // Fade out the error message after 3 seconds
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-success'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    });
+                                }, 3000);
+
+                                return;
                             } else {
-                                // Show error message
-                                alert("Ocorreu um erro ao submeter o horário da turma.");
+                                // Show error message in lbl_mensagem
+                                $('#lbl_mensagem').text("Erro ao guardar o horário da turma.");
+                                $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').fadeIn();
+
+                                // Fade out the error message after 3 seconds
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    });
+                                }, 3000);
+
+                                return;
                             }
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            // Handle error
-                            console.error("Error occurred while sending data to server.");
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("Erro ao enviar os dados para a base de dados.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
+                            return;
                         }
                     });
                     event.preventDefault(); // Prevent default button behavior
