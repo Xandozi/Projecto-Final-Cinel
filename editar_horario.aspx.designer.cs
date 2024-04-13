@@ -51,6 +51,24 @@ namespace Projeto_Final
         protected global::System.Web.UI.WebControls.SqlDataSource modulos;
 
         /// <summary>
+        /// hf_duracao_modulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_duracao_modulo;
+
+        /// <summary>
+        /// hf_data_inicio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_data_inicio;
+
+        /// <summary>
         /// lbl_nome_formador control.
         /// </summary>
         /// <remarks>

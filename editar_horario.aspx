@@ -11,13 +11,19 @@
                     <asp:Label ID="lbl_nome_turma" runat="server" Text=""></asp:Label></h2>
             </div>
             <div class="card-body">
-                <div class="row border-dark">
+                <div class="row">
                     <div class="col-md-2">
                         <label class="col-form-label">Módulo</label>
                         <asp:DropDownList ID="ddl_modulo" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="modulos" DataTextField="nome_modulo" DataValueField="cod_modulo"></asp:DropDownList>
                         <asp:SqlDataSource runat="server" ID="modulos" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_modulo], [nome_modulo], [cod_ufcd] FROM [Modulos]"></asp:SqlDataSource>
+                        <asp:HiddenField ID="hf_duracao_modulo" runat="server" />
+                        <asp:HiddenField ID="hf_data_inicio" runat="server" />
                     </div>
                     <div class="col-md-2">
+                        <label class="col-form-label">Horas do Módulo Alocadas</label>
+                        <label id="lbl_horas_modulo" class="form-control">Alocação de horas do módulo</label>
+                    </div>
+                    <div class="col-md-1">
                         <label class="col-form-label">Formador</label>
                         <asp:Label ID="lbl_nome_formador" CssClass="form-control" runat="server" Text=""></asp:Label>
                         <asp:HiddenField ID="hf_cod_formador" runat="server" />
@@ -27,8 +33,7 @@
                     <div class="col-md-2">
                         <label class="col-form-label">Sala</label>
                         <asp:DropDownList ID="ddl_sala" AutoPostBack="true" CssClass="form-control" runat="server" DataSourceID="salas" DataTextField="nome_sala" DataValueField="cod_sala"></asp:DropDownList>
-                        <asp:SqlDataSource runat="server" ID="salas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_sala], [nome_sala], [ativo] FROM [Salas]">
-                        </asp:SqlDataSource>
+                        <asp:SqlDataSource runat="server" ID="salas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT [cod_sala], [nome_sala], [ativo] FROM [Salas]"></asp:SqlDataSource>
                         <asp:HiddenField ID="hf_cod_sala" runat="server" />
                         <asp:HiddenField ID="hf_cod_turma" runat="server" />
                     </div>
@@ -37,7 +42,7 @@
                         <input class="form-control" type="color" id="colorPicker" value="000000">
                     </div>
                     <div class="col-md-4">
-                        <label id="lbl_mensagem" style="margin-top: 20px;" ></label>
+                        <label id="lbl_mensagem" style="margin-top: 20px;"></label>
                     </div>
                 </div>
                 <div id='calendar' class="bg-light border-dark" style="padding: 10px; margin-top: 30px; margin-bottom: 10px;"></div>
@@ -84,15 +89,11 @@
 
             // Extract the year, month, and day
             var currentYear = currentDate.getFullYear();
-            var currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because getMonth() returns a zero-based index
-            var currentDay = currentDate.getDate().toString().padStart(2, '0');
-
-            // Construct the initialDate string in the format 'YYYY-MM-DD'
-            var initialDate = currentYear + '-' + currentMonth + '-' + currentDay;
 
             // Get the selected values from dropdown lists
             var selectedModulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
             var selectedModuloValue = $('#<%= ddl_modulo.ClientID %> option:selected').val();
+            var totalHoursAllowed = $('#<%= hf_duracao_modulo.ClientID %>').val();
             var selectedFormador = $('#<%= lbl_nome_formador.ClientID %>').text();
             var selectedFormadorValue = $('#<%= hf_cod_formador.ClientID %>').val();
             var selectedSala = $('#<%= ddl_sala.ClientID %> option:selected').text();
@@ -172,6 +173,36 @@
                 );
             }
 
+            // Function to calculate total hours of a modulo in selectedSlots array
+            function calculateTotalHoursOfModulo(moduloId) {
+                let totalHours = 0;
+                selectedSlots.forEach(function (event) {
+                    if (event.cod_modulo == moduloId) {
+                        totalHours += Math.abs(new Date(event.end) - new Date(event.start)) / 36e5;
+                    }
+                });
+                console.log(totalHours)
+                return totalHours;
+            }
+
+            // Function to update lbl_horas_modulo with total hours information
+            function updateHorasModulo() {
+                var totalHoursOfModulo = calculateTotalHoursOfModulo(selectedModuloValue);
+                $('#lbl_horas_modulo').text(`${totalHoursOfModulo} horas de ${totalHoursAllowed} horas`);
+                if (totalHoursOfModulo == totalHoursAllowed) {
+                    $('#lbl_horas_modulo').addClass('form-control border-danger');
+                }
+                else {
+                    $('#lbl_horas_modulo').removeClass('form-control border-danger');
+                    $('#lbl_horas_modulo').addClass('form-control');
+                }
+            }
+
+            // Call updateHorasModulo() when the page is loaded
+            $(document).ready(function () {
+                updateHorasModulo();
+            });
+
             function formatDateToISOString(dateString) {
                 var date = new Date(dateString);
                 var utcString = date.toUTCString();
@@ -235,6 +266,8 @@
                         dataType: 'unselectable'
                     });
                 });
+
+                updateHorasModulo();
             }
 
             // Chamada á base de dados para ir buscar os dados da disponibilidade do formador
@@ -356,7 +389,7 @@
                                 });
                             }, 3000);
 
-                            return;
+                              return;
                         }
 
                         // Determine start and end times based on regime
@@ -396,6 +429,29 @@
                         if (isEventConflict(info, Disponibilidade_Formador) || isEventConflict(info, Sundays_Holidays) || isEventConflict(info, Disponibilidade_Sala)) {
                             // Show error message in lbl_mensagem
                             $('#lbl_mensagem').text("O evento escolhido entra em conflito com outro evento.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
+                            return;
+                        }
+
+                        // Calculate the total hours of the selected modulo
+                        var totalHoursOfModulo = calculateTotalHoursOfModulo(selectedModuloValue);
+
+                        // Get the duration of the selected event
+                        var eventDuration = Math.abs(new Date(info.end) - new Date(info.start)) / 36e5;
+
+                        // Check if adding the event will surpass the total hours allowed for the modulo
+                        if (totalHoursOfModulo + eventDuration > totalHoursAllowed) {
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("Adicionar este evento excederá o total de horas permitidas para o módulo selecionado.");
                             $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
                             $('#lbl_mensagem').fadeIn();
 
@@ -503,6 +559,8 @@
                             }
                         });
 
+                        updateHorasModulo();
+
                         calendar.unselect();
                     },
                     contentHeight: 'auto',
@@ -564,6 +622,16 @@
                         // Remove the event from the selectedSlots array
                         selectedSlots = selectedSlots.filter(function (slot) {
                             return !(slot.start === startString && slot.end === endString);
+                        });
+
+                        // Remove the event from Disponibilidade_Formador array
+                        Disponibilidade_Formador = Disponibilidade_Formador.filter(function (event) {
+                            return !(event.start === startString && event.end === endString);
+                        });
+
+                        // Remove the event from Disponibilidade_Sala array
+                        Disponibilidade_Sala = Disponibilidade_Sala.filter(function (event) {
+                            return !(event.start === startString && event.end === endString);
                         });
 
                         // Remove the event from the calendar
@@ -637,6 +705,9 @@
                                 return;
                             }
                         });
+
+                        updateHorasModulo();
+
                     } else {
                         // Show error message in lbl_mensagem
                         $('#lbl_mensagem').text("Não pode remover este evento.");
