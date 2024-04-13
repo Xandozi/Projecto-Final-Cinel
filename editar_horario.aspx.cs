@@ -44,11 +44,14 @@ namespace Projeto_Final
 
                             ddl_sala.DataBind();
                             ddl_modulo.DataBind();
+                            List<Turmas> turma = Turmas.Ler_Turma(cod_turma);
+                            hf_data_inicio.Value = turma[0].data_inicio.ToString();
                         }
 
                         List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));
                         lbl_nome_formador.Text = formador[0].nome_completo;
                         hf_cod_formador.Value = formador[0].cod_formador.ToString();
+                        hf_duracao_modulo.Value = Modulos.Check_Duracao_Modulo(Convert.ToInt32(ddl_modulo.SelectedValue)).ToString();
                         hf_cod_user.Value = formador[0].cod_user.ToString();
                         hf_cod_sala.Value = ddl_sala.SelectedValue;
                         hf_cod_turma.Value = cod_turma.ToString();
