@@ -63,7 +63,7 @@ namespace Projeto_Final
 
         // Method to receive data from client-side
         [WebMethod]
-        public static bool Gravar_Horario_Turma(SlotData[] selectedSlots, int cod_turma, int cod_formador, int cod_sala)
+        public static bool Gravar_Horario_Turma(SlotData[] Aulas_Turma, int cod_turma, int cod_formador, int cod_sala)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Projeto_Final
                 Horarios.Delete_Disponibilidade_Formador_Turma(cod_turma, cod_formador);
                 Horarios.Delete_Disponibilidade_Sala_Turma(cod_turma);
 
-                foreach (var slot in selectedSlots)
+                foreach (var slot in Aulas_Turma)
                 {
                     // Access the title property for each slot
                     string titulo = slot.title;

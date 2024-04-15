@@ -55,71 +55,67 @@
     </div>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
-        // Define the codUserValue variable
-        var codTurmaValue;
+        // Instancializar a variável que recebe o cod_turma
+        var cod_turma_valor;
 
-        // Function to parse the URL and extract the value of the cod_user variable
-        function getUrlParameter(name) {
+        // Função para extrair um determinado valor do URL da página
+        function get_parametro_url(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
             var results = regex.exec(location.search);
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to set the cod_user value received from server-side
-        function setCodTurma(cod_turma) {
-            codTurmaValue = cod_turma;
+        // Função para determinar o valor de cod_turma
+        function set_cod_turma(cod_turma) {
+            cod_turma_valor = cod_turma;
         }
 
-        // Call setCodUser function with the value of the cod_user URL variable
-        var codTurmaFromUrl = getUrlParameter('cod_turma');
-        setCodTurma(codTurmaFromUrl);
+        // Extrair e definir o cod_turma
+        var cod_turma_url = get_parametro_url('cod_turma');
+        set_cod_turma(cod_turma_url);
 
-        // Ensure the script runs after the DOM is fully loaded
+        // EventListener do page_load
         document.addEventListener('DOMContentLoaded', function () {
-            console.log("DOMContentLoaded event fired."); // Log DOMContentLoaded event
+            var Aulas_Turma = []; // Array para guardar as aulas da turma
+            var Sundays_Holidays = []; // Array para guardar domingos e feriados
+            var Disponibilidade_Formador = []; // Array para guardar a disponibilidade do formador
+            var Disponibilidade_Sala = []; // Array para guardar a disponibilidade das salas
+            var min_duracao_aula = 60 * 60 * 1000; // Duração mínima da aula (1h)
+            var ano_atual = new Date().getFullYear();
+            var dia_atual = new Date();
+            var ano_atual = dia_atual.getFullYear(); // Variável para guardar o ano atual
 
-            var selectedSlots = []; // Array to store selected time slots
-            var Sundays_Holidays = []; // Array to store holidays and sundays
-            var Disponibilidade_Formador = []; // Array to store availability of trainer
-            var Disponibilidade_Sala = []; // Array to store availability of classrooms
-            var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
-            var currentYear = new Date().getFullYear(); // Get the current year
-            var currentDate = new Date();
+            // Ir buscar os valores que estão nas DDLs e HiddenFields
+            var nome_modulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
+            var ddl_cod_modulo = $('#<%= ddl_modulo.ClientID %> option:selected').val();
+            var total_max_horas_modulo = $('#<%= hf_duracao_modulo.ClientID %>').val();
+            var nome_formador = $('#<%= lbl_nome_formador.ClientID %>').text();
+            var ddl_cod_formador = $('#<%= hf_cod_formador.ClientID %>').val();
+            var nome_sala = $('#<%= ddl_sala.ClientID %> option:selected').text();
+            var ddl_cod_sala = $('#<%= ddl_sala.ClientID %> option:selected').val();
+            var nome_turma = $('#<%= lbl_nome_turma.ClientID %>').text();
+            var ddl_cod_turma = $('#<%= hf_cod_turma.ClientID %>').val();
 
-            // Extract the year, month, and day
-            var currentYear = currentDate.getFullYear();
-
-            // Get the selected values from dropdown lists
-            var selectedModulo = $('#<%= ddl_modulo.ClientID %> option:selected').text();
-            var selectedModuloValue = $('#<%= ddl_modulo.ClientID %> option:selected').val();
-            var totalHoursAllowed = $('#<%= hf_duracao_modulo.ClientID %>').val();
-            var selectedFormador = $('#<%= lbl_nome_formador.ClientID %>').text();
-            var selectedFormadorValue = $('#<%= hf_cod_formador.ClientID %>').val();
-            var selectedSala = $('#<%= ddl_sala.ClientID %> option:selected').text();
-            var selectedSalaValue = $('#<%= ddl_sala.ClientID %> option:selected').val();
-            var nomeTurma = $('#<%= lbl_nome_turma.ClientID %>').text();
-            var codTurma = $('#<%= hf_cod_turma.ClientID %>').val();
-
-            // Function to check if the selected slot duration meets the minimum requirement and starts and ends on the hour
-            function isSlotDurationValid(info) {
-                var slotDuration = info.end.getTime() - info.start.getTime();
-                return slotDuration >= MIN_SLOT_DURATION && info.start.getMinutes() === 0 && info.end.getMinutes() === 0;
+            // Função para determinar se o event seleccionado tem a duração mínima da aula
+            function isDuracao_Valida(info) {
+                var duracao_slot = info.end.getTime() - info.start.getTime();
+                return duracao_slot >= min_duracao_aula && info.start.getMinutes() === 0 && info.end.getMinutes() === 0;
             }
 
-            // Define the number of years to include (current year + next two years)
-            var numberOfYears = 3;
+            // Definir o número de anos que o calendário terá
+            var total_anos_calendario = 3;
 
-            // Initialize an empty array to store holidays
-            var holidays = [];
+            // Inicializar array para colocar os feriados manualmente
+            var feriados = [];
 
             // Loop through each year
-            for (var i = 0; i < numberOfYears; i++) {
-                // Calculate the year based on the current year and the loop index
-                var year = currentYear + i;
+            for (var i = 0; i < total_anos_calendario; i++) {
+                // Ano a inserir baseado no ano atual
+                var year = ano_atual + i;
 
-                // Add events for national holidays for each year
-                holidays.push(
+                // Adicionar os feriados ao array
+                feriados.push(
                     {
                         title: 'Ano Novo',
                         start: year + '-01-01T08:00:00',
@@ -173,10 +169,10 @@
                 );
             }
 
-            // Function to calculate total hours of a modulo in selectedSlots array
-            function calculateTotalHoursOfModulo(moduloId) {
+            // Função para calcular as horas que já estão inseridas nas Aulas_Turma com o cod_modulo = moduloId
+            function calcular_total_horas_modulo(moduloId) {
                 let totalHours = 0;
-                selectedSlots.forEach(function (event) {
+                Aulas_Turma.forEach(function (event) {
                     if (event.cod_modulo == moduloId) {
                         totalHours += Math.abs(new Date(event.end) - new Date(event.start)) / 36e5;
                     }
@@ -184,11 +180,11 @@
                 return totalHours;
             }
 
-            // Function to update lbl_horas_modulo with total hours information
-            function updateHorasModulo() {
-                var totalHoursOfModulo = calculateTotalHoursOfModulo(selectedModuloValue);
-                $('#lbl_horas_modulo').text(`${totalHoursOfModulo} horas de ${totalHoursAllowed} horas`);
-                if (totalHoursOfModulo == totalHoursAllowed) {
+            // Função para dar update a lbl_horas_modulo com as horas totais do modulo na turma
+            function update_horas_modulo() {
+                var total_horas_modulo = calcular_total_horas_modulo(ddl_cod_modulo);
+                $('#lbl_horas_modulo').text(`${total_horas_modulo} horas de ${total_max_horas_modulo} horas`);
+                if (total_horas_modulo == total_max_horas_modulo) {
                     $('#lbl_horas_modulo').addClass('form-control border-danger');
                 }
                 else {
@@ -197,21 +193,22 @@
                 }
             }
 
-            // Call updateHorasModulo() when the page is loaded
+            // Chamar a função anterior quando a página for carregada.
             $(document).ready(function () {
-                updateHorasModulo();
+                update_horas_modulo();
             });
 
-            function formatDateToISOString(dateString) {
+            // Função para formatar datas YYYY-MM-DDTHH:MM:SS
+            function formatar_data_iso_string(dateString) {
                 var date = new Date(dateString);
                 var utcString = date.toUTCString();
                 var isoString = new Date(utcString).toISOString();
                 return isoString.slice(0, 10) + 'T' + isoString.slice(11, 19);
             }
 
-            // Function to add holidays and Sundays to the selectedSlots array
-            function addHolidaysAndSundaysToSelectedSlots() {
-                holidays.forEach(function (holiday) {
+            // Função para adicionar os feriados ao array Sundays_Holidays
+            function add_feriados_sundays_holidays() {
+                feriados.forEach(function (holiday) {
                     Sundays_Holidays.push({
                         title: holiday.title,
                         start: holiday.start,
@@ -222,8 +219,8 @@
                 });
             }
 
-            // Function to add events to the selectedSlots array
-            function addAvailabilityToSelectedSlots(eventData) {
+            // Função para adicionar o que vem da BD referente à disponibilidade do formador ao array Disponibilidade_Formador
+            function add_disponibilidadeDB_Disponibilidade_Formador(eventData) {
                 eventData.forEach(function (event) {
                     Disponibilidade_Formador.push({
                         title: event.title,
@@ -236,24 +233,24 @@
                 });
             }
 
-            // Function to add events to the selectedSlots array
-            function addAvailabilityClassroomsToSelectedSlots(eventData) {
+            // Função para adicionar o que vem da BD referente à disponibilidade das salas ao array Disponibilidade_Salas
+            function add_disponibilidadeSalasDB_Disponibilidade_Salas(eventData) {
                 eventData.forEach(function (event) {
                     Disponibilidade_Sala.push({
                         title: event.title,
                         start: event.start,
                         end: event.end,
-                        color: event.color,
+                        color: '#ff0000',
                         cod_turma: event.cod_turma,
                         dataType: 'non_unselectable'
                     });
                 });
             }
 
-            // Function to add events to the selectedSlots array
-            function addEventsToSelectedSlots(eventData) {
+            // Função para adicionar o que vem da DB referente às aulas da turma ao array Aulas_Turma
+            function add_aulasDB_Aulas_Turma(eventData) {
                 eventData.forEach(function (event) {
-                    selectedSlots.push({
+                    Aulas_Turma.push({
                         title: event.title,
                         start: event.start,
                         end: event.end,
@@ -266,7 +263,7 @@
                     });
                 });
 
-                updateHorasModulo();
+                update_horas_modulo();
             }
 
             // Chamada á base de dados para ir buscar os dados da disponibilidade do formador
@@ -279,70 +276,72 @@
                 success: function (response) {
                     var eventData = JSON.parse(response.d); // Extração do array baseado no ficheiro JSON
 
-                    addAvailabilityToSelectedSlots(eventData); // Execução da função para inserir os dados do eventData para dentro de um array utilizado na renderização do calendário
+                    add_disponibilidadeDB_Disponibilidade_Formador(eventData); // Execução da função para inserir os dados do eventData para dentro de um array utilizado na renderização do calendário
 
                     // Renderizar o calendário
-                    renderCalendar();
+                    Render_Calendario();
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    console.error("Error occurred while fetching event data. WEBSERVICE");
+                    console.error("Erro ao extrair dados da BD. WebService");
                     // Se a chamada á BD falhar, adicionar á mesma os domingos e feriados ao array Sundays_Holidays
-                    addHolidaysAndSundaysToSelectedSlots();
+                    add_feriados_sundays_holidays();
 
                     // Renderizar o calendário
-                    renderCalendar();
+                    Render_Calendario();
                 }
             });
 
+            // Chamada á base de dados para ir buscar os dados da disponibilidade das salas
             $.ajax({
                 type: "POST",
-                url: "/Horarios_WebService.asmx/GetDisponibilidade_Sala_JSON",
-                data: JSON.stringify({ cod_sala: $('#<%= hf_cod_sala.ClientID %>').val() }), // Retrieve the value of hf_cod_sala
+                url: "/Horarios_WebService.asmx/GetDisponibilidade_Sala_JSON", // Método do WebService utilizado para ir buscar os dados á BD
+                data: JSON.stringify({ cod_sala: $('#<%= hf_cod_sala.ClientID %>').val() }), // Parâmetro passado no método
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var eventData = JSON.parse(response.d); // Extract the data array from the response
+                    var eventData = JSON.parse(response.d); // Extração do array baseado no ficheiro JSON
 
-                    addAvailabilityClassroomsToSelectedSlots(eventData);
+                    add_disponibilidadeSalasDB_Disponibilidade_Salas(eventData); // Execução da função para inserir os dados do eventData para dentro de um array utilizado na renderização do calendário
 
-                    // Render calendar after adding events to selectedSlots array
-                    renderCalendar();
+                    // Renderizar o calendário
+                    Render_Calendario();
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    console.error("Error occurred while fetching event data. WEBSERVICE");
-                    // If AJAX call fails, add holidays and Sundays to selectedSlots array
-                    addHolidaysAndSundaysToSelectedSlots();
+                    console.error("Erro ao extrair dados da BD. WebService");
+                    // Se a chamada á BD falhar, adicionar á mesma os domingos e feriados ao array Sundays_Holidays
+                    add_feriados_sundays_holidays();
 
-                    // Render calendar after adding events to selectedSlots array
-                    renderCalendar();
+                    // Renderizar o calendário
+                    Render_Calendario();
                 }
             });
 
+            // Chamada á base de dados para ir buscar os dados do horário da turma
             $.ajax({
                 type: "POST",
-                url: "/Horarios_WebService.asmx/GetHorarios_JSON",
-                data: JSON.stringify({ cod_turma: codTurmaValue }),
+                url: "/Horarios_WebService.asmx/GetHorarios_JSON", // Método do WebService utilizado para ir buscar os dados á BD
+                data: JSON.stringify({ cod_turma: cod_turma_valor }), // Parâmetro passado no método
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var eventData = JSON.parse(response.d); // Extract the data array from the response
+                    var eventData = JSON.parse(response.d); // Extração do array baseado no ficheiro JSON
 
-                    addEventsToSelectedSlots(eventData);
-                    addHolidaysAndSundaysToSelectedSlots();
+                    add_aulasDB_Aulas_Turma(eventData); // Execução da função para inserir os dados do eventData para dentro de um array utilizado na renderização do calendário
+                    add_feriados_sundays_holidays(); // Execução da função para inserir os dados referentes aos domingos e feriados
 
-                    // Render calendar after adding events to selectedSlots array
-                    renderCalendar();
+                    // Renderizar o calendário
+                    Render_Calendario();
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    console.error("Error occurred while fetching event data. WEBSERVICE");
-                    // If AJAX call fails, add holidays and Sundays to selectedSlots array
-                    addHolidaysAndSundaysToSelectedSlots();
-                    // Render calendar even if AJAX call fails
-                    renderCalendar();
+                    console.error("Erro ao extrair dados da BD. WebService");
+                    // Se a chamada á BD falhar, adicionar á mesma os domingos e feriados ao array Sundays_Holidays
+                    add_feriados_sundays_holidays();
+                    // Renderizar o calendário
+                    Render_Calendario();
                 }
             });
 
-            function renderCalendar() {
+            function Render_Calendario() {
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     locale: 'pt',
@@ -372,155 +371,147 @@
                     timeZone: 'UTC',
                     select: function (info) {
                         var isAllDay = info.allDay;
-                        var currentDate = new Date(); // Get the current date                       
+                        var dia_atual = new Date(); // Get data atual
 
-                        // Check if the selected date is before the current date
-                        if (info.start < currentDate) {
-                            // Show error message in lbl_mensagem
+                        // Dar check a ver se a data seleccionada é inferior ao dia atual
+                        if (info.start < dia_atual) {
+                            // Mostrar mensagem de erro
                             $('#lbl_mensagem').text("Só pode criar eventos a partir da data atual.");
-                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').addClass('alert alert-danger');
                             $('#lbl_mensagem').fadeIn();
 
-                            // Fade out the error message after 3 seconds
                             setTimeout(function () {
                                 $('#lbl_mensagem').fadeOut(function () {
-                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    $(this).removeClass('alert alert-danger');
                                 });
                             }, 3000);
 
                               return;
                         }
 
-                        // Assuming info.start contains the date string "Wed Apr 17 2024 09:00:00 GMT+0100 (Western European Summer Time)"
-                        var selectedEventDate = new Date(info.start);
+                        // Formatação correta da string de comparação do evento seleccionado
+                        var data_evento_seleccionado = new Date(info.start);
+                        var year = data_evento_seleccionado.getFullYear();
+                        var month = ('0' + (data_evento_seleccionado.getMonth() + 1)).slice(-2);
+                        var day = ('0' + data_evento_seleccionado.getDate()).slice(-2);
+                        var data_formatada = year + '-' + month + '-' + day;
 
-                        // Extract year, month, and day
-                        var year = selectedEventDate.getFullYear();
-                        var month = ('0' + (selectedEventDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
-                        var day = ('0' + selectedEventDate.getDate()).slice(-2); // Add leading zero if needed
+                        // Ir buscar o valor dentro do hidden field referente à data de início da turma
+                        var hf_valor_data_inicio = document.getElementById('<%= hf_data_inicio.ClientID %>').value;
 
-                        // Form the formatted date string
-                        var formattedDate = year + '-' + month + '-' + day;
-
-                        // Retrieve the date stored in the hidden field
-                        var hiddenFieldDateStr = document.getElementById('<%= hf_data_inicio.ClientID %>').value;
-
-                        if (formattedDate < hiddenFieldDateStr) {
-                            // Show error message in lbl_mensagem
+                        // Condição para ver se a data seleccionada é menor que a data de início da turma
+                        if (data_formatada < hf_valor_data_inicio) {
+                            // Mostrar mensagem de erro
                             $('#lbl_mensagem').text("Só pode criar eventos a partir da data de início da turma.");
-                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').addClass('alert alert-danger');
                             $('#lbl_mensagem').fadeIn();
 
-                            // Fade out the error message after 3 seconds
                             setTimeout(function () {
                                 $('#lbl_mensagem').fadeOut(function () {
-                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    $(this).removeClass('alert alert-danger');
                                 });
                             }, 3000);
 
                             return;
                         }
 
-                        // Determine start and end times based on regime
+                        // Determinar os slots visiveis do dia e semana de acordo com o regime que a turma tiver
                         var regime = $('#<%= hf_regime.ClientID %>').val();
-                        var selectedStartTime = regime === 'Laboral' ? '08:00:00' : '16:00:00';
-                        var selectedEndTime = regime === 'Laboral' ? '16:00:00' : '23:00:00';
+                        var primeiro_slot = regime === 'Laboral' ? '08:00:00' : '16:00:00';
+                        var ultimo_slot = regime === 'Laboral' ? '16:00:00' : '23:00:00';
 
                         if (isAllDay) {
-                            // If it's an all-day event, set the start and end times accordingly
-                            var selectedDateStart = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), selectedStartTime.split(':')[0], selectedStartTime.split(':')[1], 0));
-                            var selectedDateEnd = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), selectedEndTime.split(':')[0], selectedEndTime.split(':')[1], 0));
+                            // Se for um evento diário, colocar as horas de inicio e fim de acordo com o regime
+                            var data_seleccionada_inicio = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), primeiro_slot.split(':')[0], primeiro_slot.split(':')[1], 0));
+                            var data_seleccionada_fim = new Date(Date.UTC(info.start.getUTCFullYear(), info.start.getUTCMonth(), info.start.getUTCDate(), ultimo_slot.split(':')[0], ultimo_slot.split(':')[1], 0));
 
-                            info.start = selectedDateStart.toISOString();
-                            info.end = selectedDateEnd.toISOString();
+                            info.start = data_seleccionada_inicio.toISOString();
+                            info.end = data_seleccionada_fim.toISOString();
 
-                            info.start = new Date(selectedDateStart);
-                            info.end = new Date(selectedDateEnd);
+                            info.start = new Date(data_seleccionada_inicio);
+                            info.end = new Date(data_seleccionada_fim);
                         }
 
-                        if (!isSlotDurationValid(info)) {
-                            // Show error message in lbl_mensagem
+                        if (!isDuracao_Valida(info)) {
+                            // Mostrar mensagem de erro
                             $('#lbl_mensagem').text("Por favor introduza um evento de pelo menos 1h e que comece á hora certa.");
-                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').addClass('alert alert-danger');
                             $('#lbl_mensagem').fadeIn();
 
-                            // Fade out the error message after 3 seconds
                             setTimeout(function () {
                                 $('#lbl_mensagem').fadeOut(function () {
-                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    $(this).removeClass('alert alert-danger');
                                 });
                             }, 3000);
 
                             return;
                         }
 
-                        // Check if the selected event conflicts with any existing events
+                        // Dar check se o evento seleccionado entra em conflicto com outro evento dentro da Disponibilidade_Formador, Sundays_Holidays ou Disponibilidade_Sala
                         if (isEventConflict(info, Disponibilidade_Formador) || isEventConflict(info, Sundays_Holidays) || isEventConflict(info, Disponibilidade_Sala)) {
-                            // Show error message in lbl_mensagem
+                            // Mostrar mensagem de erro
                             $('#lbl_mensagem').text("O evento escolhido entra em conflito com outro evento.");
-                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').addClass('alert alert-danger');
                             $('#lbl_mensagem').fadeIn();
 
-                            // Fade out the error message after 3 seconds
                             setTimeout(function () {
                                 $('#lbl_mensagem').fadeOut(function () {
-                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    $(this).removeClass('alert alert-danger');
                                 });
                             }, 3000);
 
                             return;
                         }
 
-                        // Calculate the total hours of the selected modulo
-                        var totalHoursOfModulo = calculateTotalHoursOfModulo(selectedModuloValue);
+                        // Calcular o total de horas do módulo seleccionado
+                        var total_horas_modulo = calcular_total_horas_modulo(ddl_cod_modulo);
 
-                        // Get the duration of the selected event
-                        var eventDuration = Math.abs(new Date(info.end) - new Date(info.start)) / 36e5;
+                        // Duração do evento seleccionado
+                        var duracao_evento_seleccionado = Math.abs(new Date(info.end) - new Date(info.start)) / 36e5;
 
-                        // Check if adding the event will surpass the total hours allowed for the modulo
-                        if (totalHoursOfModulo + eventDuration > totalHoursAllowed) {
-                            // Show error message in lbl_mensagem
+                        // Check se o total de horas inseridas nas aulas mais a duração do evento seleccionado se ultrapassa o máximo de horas do módulo
+                        if (total_horas_modulo + duracao_evento_seleccionado > total_max_horas_modulo) {
+                            // Mostrar mensagem de erro
                             $('#lbl_mensagem').text("Adicionar este evento excederá o total de horas permitidas para o módulo selecionado.");
-                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').addClass('alert alert-danger');
                             $('#lbl_mensagem').fadeIn();
 
-                            // Fade out the error message after 3 seconds
                             setTimeout(function () {
                                 $('#lbl_mensagem').fadeOut(function () {
-                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    $(this).removeClass('alert alert-danger');
                                 });
                             }, 3000);
 
                             return;
                         }
 
-                        // Get the selected color from the color picker
+                        // Guardar a cor seleccionada pelo utilizador
                         var selectedColor = $('#colorPicker').val();
 
-                        // Create the event title by concatenating the selected values
-                        var eventTitle = nomeTurma + " | " + selectedModulo + " | " + selectedFormador + " | " + selectedSala;
+                        // Titulo do evento criado que consiste no nome da turma, nome do modulo, nome do formador e o nome da sala
+                        var titulo_aula = nome_turma + " | " + nome_modulo + " | " + nome_formador + " | " + nome_sala;
 
                         var eventToAdd = {
-                            title: eventTitle,
-                            start: formatDateToISOString(info.start),
-                            end: formatDateToISOString(info.end),
+                            title: titulo_aula,
+                            start: formatar_data_iso_string(info.start),
+                            end: formatar_data_iso_string(info.end),
                             rendering: 'background',
-                            cod_modulo: selectedModuloValue,
-                            cod_formador: selectedFormadorValue,
-                            cod_sala: selectedSalaValue,
+                            cod_modulo: ddl_cod_modulo,
+                            cod_formador: ddl_cod_formador,
+                            cod_sala: ddl_cod_sala,
                             color: selectedColor,
-                            cod_turma: codTurma,
+                            cod_turma: ddl_cod_turma,
                             dataType: 'unselectable'
                         };
 
-                        // Push the event object to selectedSlots array
-                        selectedSlots.push(eventToAdd);
+                        // Adicionar o eventToAdd ao array das aulas da turma
+                        Aulas_Turma.push(eventToAdd);
 
-                        // Add the event to the calendar
+                        // Adicionar o eventToAdd ao calendário
                         calendar.addEvent(eventToAdd);
 
-                        // Ensure selectedSlots array is properly structured
-                        var formattedSlots = selectedSlots.map(function (slot) {
+                        // Assegurar que cada var dentro do array Aulas_Turma tem os dados necessários antes de guardar.
+                        var formattedSlots = Aulas_Turma.map(function (slot) {
                             return {
                                 title: slot.title,
                                 start: slot.start,
@@ -532,39 +523,34 @@
                             };
                         });
 
-                        // Call the server-side method using AJAX
+                        // Chamada á base de dados para ir buscar os dados do horário da turma
                         $.ajax({
                             type: "POST",
                             url: "editar_horario.aspx/Gravar_Horario_Turma",
-                            data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue, cod_formador: selectedFormadorValue, cod_sala: selectedSalaValue }), // Pass formattedSlots with all properties
+                            data: JSON.stringify({ Aulas_Turma: formattedSlots, cod_turma: cod_turma_valor, cod_formador: ddl_cod_formador, cod_sala: ddl_cod_sala }),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (response) {
-                                // Handle success response if needed
                                 if (response.d) {
-                                    // Show error message in lbl_mensagem
                                     $('#lbl_mensagem').text("Aula inserida com sucesso!");
-                                    $('#lbl_mensagem').addClass('alert alert-success'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').addClass('alert alert-success');
                                     $('#lbl_mensagem').fadeIn();
 
-                                    // Fade out the error message after 3 seconds
                                     setTimeout(function () {
                                         $('#lbl_mensagem').fadeOut(function () {
-                                            $(this).removeClass('alert alert-success'); // Remove CSS class from lbl_mensagem after fadeOut
+                                            $(this).removeClass('alert alert-success');
                                         });
                                     }, 3000);
 
                                     return;
                                 } else {
-                                    // Show error message in lbl_mensagem
                                     $('#lbl_mensagem').text("Ocorreu um erro ao guardar a aula inserida.");
-                                    $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').addClass('alert alert-danger');
                                     $('#lbl_mensagem').fadeIn();
 
-                                    // Fade out the error message after 3 seconds
                                     setTimeout(function () {
                                         $('#lbl_mensagem').fadeOut(function () {
-                                            $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                            $(this).removeClass('alert alert-danger');
                                         });
                                     }, 3000);
 
@@ -572,15 +558,13 @@
                                 }
                             },
                             error: function (xhr, textStatus, errorThrown) {
-                                // Show error message in lbl_mensagem
                                 $('#lbl_mensagem').text("Ocorreu um erro ao enviar os dados para a base de dados.");
-                                $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').addClass('alert alert-danger');
                                 $('#lbl_mensagem').fadeIn();
 
-                                // Fade out the error message after 3 seconds
                                 setTimeout(function () {
                                     $('#lbl_mensagem').fadeOut(function () {
-                                        $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        $(this).removeClass('alert alert-danger');
                                     });
                                 }, 3000);
 
@@ -588,35 +572,35 @@
                             }
                         });
 
-                        updateHorasModulo();
+                        update_horas_modulo();
 
                         calendar.unselect();
                     },
                     contentHeight: 'auto',
                     aspectRatio: 1.5,
-                    initialDate: currentDate,
+                    initialDate: dia_atual,
                     validRange: {
-                        start: currentYear + '-01-01',
-                        end: (currentYear + 2) + '-01-01'
+                        start: ano_atual + '-01-01',
+                        end: (ano_atual + 2) + '-01-01'
                     }
                 });
 
-                // Function to check if there is a conflict between the selected event and existing events
+                // Função para determinar se há conflicto entre um evento seleccionado e os eventos dentro de um array
                 function isEventConflict(selectedEvent, eventsArray) {
                     for (var i = 0; i < eventsArray.length; i++) {
                         var event = eventsArray[i];
-                        var selectedEventStartString = selectedEvent.start.toISOString().slice(0, -5); // Trim milliseconds
-                        var selectedEventEndString = selectedEvent.end.toISOString().slice(0, -5); // Trim milliseconds
+                        var selectedEventStartString = selectedEvent.start.toISOString().slice(0, -5);
+                        var selectedEventEndString = selectedEvent.end.toISOString().slice(0, -5);
                         if ((selectedEventStartString >= event.start && selectedEventStartString < event.end) ||
                             (selectedEventEndString > event.start && selectedEventEndString < event.end) ||
                             (selectedEventStartString <= event.start && selectedEventEndString > event.start)) {
-                            return true; // Conflict found
+                            return true; // Conflicto encontrado
                         }
                     }
-                    return false; // No conflict
+                    return false; // Não foi encontrado conflicto
                 }
 
-                // Function to update slotMinTime and slotMaxTime based on hf_regime value
+                // Função para dar update ao calendário de acordo com o valor dos hf_regime
                 function updateSlotTimes(regime) {
                     if (regime === 'Laboral') {
                         calendar.setOption('slotMinTime', '08:00:00');
@@ -627,47 +611,45 @@
                     }
                 }
 
-                // Initial call to update slot times based on hf_regime value
                 updateSlotTimes($('#<%= hf_regime.ClientID %>').val());
 
-                // Event listener to update slot times when hf_regime value changes
                 $('#<%= hf_regime.ClientID %>').change(function () {
                     updateSlotTimes($(this).val());
                 });
 
+                // EventListener para quando o utilizador clicar num evento (neste caso para o remover do calendário)
                 calendar.setOption('eventClick', function (info) {
-                    // Check if the clicked event is unselectable
+                    // Checkar se o DataType do evento seleccionado é unselectable
                     if (info.event.extendedProps.dataType === 'unselectable') {
-                        // Get the start time components of the clicked event
+
                         var start = info.event.start;
                         var startString = start.getUTCFullYear() + '-' + ('0' + (start.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + start.getUTCDate()).slice(-2) + 'T' +
                             ('0' + start.getUTCHours()).slice(-2) + ':' + ('0' + start.getUTCMinutes()).slice(-2) + ':' + ('0' + start.getUTCSeconds()).slice(-2);
 
-                        // Get the end time components of the clicked event
                         var end = info.event.end;
                         var endString = end.getUTCFullYear() + '-' + ('0' + (end.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + end.getUTCDate()).slice(-2) + 'T' +
                             ('0' + end.getUTCHours()).slice(-2) + ':' + ('0' + end.getUTCMinutes()).slice(-2) + ':' + ('0' + end.getUTCSeconds()).slice(-2);
 
-                        // Remove the event from the selectedSlots array
-                        selectedSlots = selectedSlots.filter(function (slot) {
+                        // Remover o evento do array Aulas_Turma
+                        Aulas_Turma = Aulas_Turma.filter(function (slot) {
                             return !(slot.start === startString && slot.end === endString);
                         });
 
-                        // Remove the event from Disponibilidade_Formador array
+                        // Remover o evento do array Disponibilidade_Formador
                         Disponibilidade_Formador = Disponibilidade_Formador.filter(function (event) {
                             return !(event.start === startString && event.end === endString);
                         });
 
-                        // Remove the event from Disponibilidade_Sala array
+                        // Remover o evento do array Disponibilidade_Salas
                         Disponibilidade_Sala = Disponibilidade_Sala.filter(function (event) {
                             return !(event.start === startString && event.end === endString);
                         });
 
-                        // Remove the event from the calendar
+                        // Remover o evento do calendário
                         info.event.remove();
 
-                        // Ensure selectedSlots array is properly structured
-                        var formattedSlots = selectedSlots.map(function (slot) {
+                        // Assegurar que o Aulas_Turma está bem estruturado
+                        var formattedSlots = Aulas_Turma.map(function (slot) {
                             return {
                                 title: slot.title,
                                 start: slot.start,
@@ -679,39 +661,33 @@
                             };
                         });
 
-                        // Call the server-side method using AJAX
                         $.ajax({
                             type: "POST",
                             url: "editar_horario.aspx/Gravar_Horario_Turma",
-                            data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue, cod_formador: selectedFormadorValue, cod_sala: selectedSalaValue }), // Pass formattedSlots with all properties
+                            data: JSON.stringify({ Aulas_Turma: formattedSlots, cod_turma: cod_turma_valor, cod_formador: ddl_cod_formador, cod_sala: ddl_cod_sala }), 
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (response) {
-                                // Handle success response if needed
                                 if (response.d) {
-                                    // Show error message in lbl_mensagem
                                     $('#lbl_mensagem').text("Aula removida e horário guardado com sucesso.");
-                                    $('#lbl_mensagem').addClass('alert alert-success'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').addClass('alert alert-success');
                                     $('#lbl_mensagem').fadeIn();
 
-                                    // Fade out the error message after 3 seconds
                                     setTimeout(function () {
                                         $('#lbl_mensagem').fadeOut(function () {
-                                            $(this).removeClass('alert alert-success'); // Remove CSS class from lbl_mensagem after fadeOut
+                                            $(this).removeClass('alert alert-success');
                                         });
                                     }, 3000);
 
                                     return;
                                 } else {
-                                    // Show error message in lbl_mensagem
                                     $('#lbl_mensagem').text("Erro ao guardar o horário na base de dados.");
-                                    $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                    $('#lbl_mensagem').addClass('alert alert-danger');
                                     $('#lbl_mensagem').fadeIn();
 
-                                    // Fade out the error message after 3 seconds
                                     setTimeout(function () {
                                         $('#lbl_mensagem').fadeOut(function () {
-                                            $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                            $(this).removeClass('alert alert-danger');
                                         });
                                     }, 3000);
 
@@ -719,15 +695,13 @@
                                 }
                             },
                             error: function (xhr, textStatus, errorThrown) {
-                                // Show error message in lbl_mensagem
                                 $('#lbl_mensagem').text("Erro ao enviar os dados para a base de dados.");
-                                $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').addClass('alert alert-danger');
                                 $('#lbl_mensagem').fadeIn();
 
-                                // Fade out the error message after 3 seconds
                                 setTimeout(function () {
                                     $('#lbl_mensagem').fadeOut(function () {
-                                        $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        $(this).removeClass('alert alert-danger');
                                     });
                                 }, 3000);
 
@@ -735,18 +709,16 @@
                             }
                         });
 
-                        updateHorasModulo();
+                        update_horas_modulo();
 
                     } else {
-                        // Show error message in lbl_mensagem
                         $('#lbl_mensagem').text("Não pode remover este evento.");
-                        $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                        $('#lbl_mensagem').addClass('alert alert-danger');
                         $('#lbl_mensagem').fadeIn();
 
-                        // Fade out the error message after 3 seconds
                         setTimeout(function () {
                             $('#lbl_mensagem').fadeOut(function () {
-                                $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                $(this).removeClass('alert alert-danger');
                             });
                         }, 3000);
 
@@ -754,7 +726,8 @@
                     }
                 });
 
-                selectedSlots.forEach(function (slot) {
+                // Inserir todos os eventos dentro do array Aulas_Turma ao calendário
+                Aulas_Turma.forEach(function (slot) {
                     calendar.addEvent({
                         title: slot.title,
                         start: slot.start,
@@ -765,9 +738,10 @@
                     });
                 });
 
+                // Inserir todos os eventos dentro do array Disponibilidade_Formador ao calendário dando primeiro check a ver se já existe uma aula da turma inserida primeiro
                 Disponibilidade_Formador.forEach(function (slot) {
                     const existingEvent = calendar.getEvents().find(event => {
-                        return formatDateToISOString(event.start) == slot.start && formatDateToISOString(event.end) == slot.end;
+                        return formatar_data_iso_string(event.start) == slot.start && formatar_data_iso_string(event.end) == slot.end;
                     });
 
                     if (!existingEvent) {
@@ -782,9 +756,10 @@
                     }
                 });
 
+                // Inserir todos os eventos dentro do array Disponibilidade_Salas ao calendário dando primeiro check a ver se já existe uma aula da turma inserida primeiro
                 Disponibilidade_Sala.forEach(function (slot) {
                     const existingEvent = calendar.getEvents().find(event => {
-                        return formatDateToISOString(event.start) == slot.start && formatDateToISOString(event.end) == slot.end;
+                        return formatar_data_iso_string(event.start) == slot.start && formatar_data_iso_string(event.end) == slot.end;
                     });
 
                     if (!existingEvent) {
@@ -799,6 +774,7 @@
                     }
                 });
 
+                // Inserir os feriados no calendário
                 Sundays_Holidays.forEach(function (slot) {
                     calendar.addEvent({
                         title: slot.title,
@@ -812,9 +788,9 @@
 
                 calendar.render();
 
+                // EventListener do botão btn_saveselectedslots
                 document.getElementById('btn_SaveSelectedSlots').addEventListener('click', function (event) {
-                    // Ensure selectedSlots array is properly structured
-                    var formattedSlots = selectedSlots.map(function (slot) {
+                    var formattedSlots = Aulas_Turma.map(function (slot) {
                         return {
                             title: slot.title,
                             start: slot.start,
@@ -826,39 +802,33 @@
                         };
                     });
 
-                    // Call the server-side method using AJAX
                     $.ajax({
                         type: "POST",
                         url: "editar_horario.aspx/Gravar_Horario_Turma",
-                        data: JSON.stringify({ selectedSlots: formattedSlots, cod_turma: codTurmaValue, cod_formador: selectedFormadorValue, cod_sala: selectedSalaValue }), // Pass formattedSlots with all properties
+                        data: JSON.stringify({ Aulas_Turma: formattedSlots, cod_turma: cod_turma_valor, cod_formador: ddl_cod_formador, cod_sala: ddl_cod_sala }),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (response) {
-                            // Handle success response if needed
                             if (response.d) {
-                                // Show error message in lbl_mensagem
                                 $('#lbl_mensagem').text("Horário guardado com sucesso!");
-                                $('#lbl_mensagem').addClass('alert alert-success'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').addClass('alert alert-success');
                                 $('#lbl_mensagem').fadeIn();
 
-                                // Fade out the error message after 3 seconds
                                 setTimeout(function () {
                                     $('#lbl_mensagem').fadeOut(function () {
-                                        $(this).removeClass('alert alert-success'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        $(this).removeClass('alert alert-success');
                                     });
                                 }, 3000);
 
                                 return;
                             } else {
-                                // Show error message in lbl_mensagem
                                 $('#lbl_mensagem').text("Erro ao guardar o horário da turma.");
-                                $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').addClass('alert alert-danger');
                                 $('#lbl_mensagem').fadeIn();
 
-                                // Fade out the error message after 3 seconds
                                 setTimeout(function () {
                                     $('#lbl_mensagem').fadeOut(function () {
-                                        $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                        $(this).removeClass('alert alert-danger');
                                     });
                                 }, 3000);
 
@@ -866,22 +836,20 @@
                             }
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            // Show error message in lbl_mensagem
                             $('#lbl_mensagem').text("Erro ao enviar os dados para a base de dados.");
-                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').addClass('alert alert-danger');
                             $('#lbl_mensagem').fadeIn();
 
-                            // Fade out the error message after 3 seconds
                             setTimeout(function () {
                                 $('#lbl_mensagem').fadeOut(function () {
-                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    $(this).removeClass('alert alert-danger');
                                 });
                             }, 3000);
 
                             return;
                         }
                     });
-                    event.preventDefault(); // Prevent default button behavior
+                    event.preventDefault();
                 });
 
             }
