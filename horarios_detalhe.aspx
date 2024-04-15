@@ -49,6 +49,7 @@
             var Sundays_Holidays = []; // Array to store holidays and sundays
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
             var currentYear = new Date().getFullYear(); // Get the current year
+            var currentDate = new Date();
 
             // Function to check if the selected slot duration meets the minimum requirement and starts and ends on the hour
             function isSlotDurationValid(info) {
@@ -238,7 +239,7 @@
                     },
                     contentHeight: 'auto',
                     aspectRatio: 1.5,
-                    initialDate: currentYear + '-01-01',
+                    initialDate: currentDate,
                     validRange: {
                         start: currentYear + '-01-01',
                         end: (currentYear + 3) + '-01-01'

@@ -45,7 +45,7 @@ namespace Projeto_Final
                             ddl_sala.DataBind();
                             ddl_modulo.DataBind();
                             List<Turmas> turma = Turmas.Ler_Turma(cod_turma);
-                            hf_data_inicio.Value = turma[0].data_inicio.ToString();
+                            hf_data_inicio.Value = turma[0].data_inicio.ToString("yyyy-MM-dd");
                         }
 
                         List<Formadores> formador = Formadores.Check_Formador_Modulo(cod_turma, Convert.ToInt32(ddl_modulo.SelectedValue));

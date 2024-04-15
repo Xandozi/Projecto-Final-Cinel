@@ -9,40 +9,43 @@
                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Disponibilidade Formador</h2>
             </div>
             <div class="card-body">
-                    <div id='calendar' class="bg-light border-dark" style="padding:10px; margin-top: 30px; margin-bottom: 10px;"></div>
-                    <div class="row justify-content-between">
-                        <div class="form-group" style="margin: 10px;">
-                            <asp:Label ID="lbl_sabados" runat="server" Text="Selecionar como Indisponível"></asp:Label>
-                            <div class="row">
-                                <div class="col-md-12" style="margin-top: 10px;">
-                                    <button id="btn_SelecionarSabados" class="btn btn-dark">Sábados</button>
-                                    <button id="btn_SelecionarSabadosManha" class="btn btn-dark">Sábados de manhã</button>
-                                    <button id="btn_SelecionarSabadosTarde" class="btn btn-dark">Sábados de tarde</button>
-                                </div>
+                <div class="row">
+                    <label id="lbl_mensagem" style="margin-top: 20px; margin-left: 20px;"></label>
+                </div>
+                <div id='calendar' class="bg-light border-dark" style="padding: 10px; margin-top: 30px; margin-bottom: 10px;"></div>
+                <div class="row justify-content-between">
+                    <div class="form-group" style="margin: 10px;">
+                        <asp:Label ID="lbl_sabados" runat="server" Text="Selecionar como Indisponível"></asp:Label>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <button id="btn_SelecionarSabados" class="btn btn-dark">Sábados</button>
+                                <button id="btn_SelecionarSabadosManha" class="btn btn-dark">Sábados de manhã</button>
+                                <button id="btn_SelecionarSabadosTarde" class="btn btn-dark">Sábados de tarde</button>
                             </div>
                         </div>
-                        <div class="form-group" style="margin: 10px;">
-                            <asp:Label ID="lbl_dias_semana" runat="server" Text="Selecionar como Indisponível"></asp:Label>
-                            <div class="row">
-                                <div class="col-md-12" style="margin-top: 10px;">
-                                    <button id="btn_SelecionarDiasSemanaManha" class="btn btn-dark">Dias de semana manhã</button>
-                                    <button id="btn_SelecionarDiasSemanaTarde" class="btn btn-dark">Dias de semana de tarde</button>
-                                </div>
+                    </div>
+                    <div class="form-group" style="margin: 10px;">
+                        <asp:Label ID="lbl_dias_semana" runat="server" Text="Selecionar como Indisponível"></asp:Label>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <button id="btn_SelecionarDiasSemanaManha" class="btn btn-dark">Dias de semana manhã</button>
+                                <button id="btn_SelecionarDiasSemanaTarde" class="btn btn-dark">Dias de semana de tarde</button>
                             </div>
                         </div>
-                        <div class="form-group" style="margin: 10px;">
-                            <asp:Label ID="lbl_limpar" runat="server" Text="Limpar"></asp:Label>
-                            <div class="row">
-                                <div class="col-md-12" style="margin-top: 10px;">
-                                    <button id="btn_limpar" class="btn btn-dark">Limpar Tudo</button>
-                                    <button id="btn_limpar_manhas" class="btn btn-dark">Limpar Manhãs</button>
-                                    <button id="btn_limpar_tardes" class="btn btn-dark">Limpar Tardes</button>
-                                    <button id="btn_limpar_sabados" class="btn btn-dark">Limpar Sabados</button>
-                                </div>
+                    </div>
+                    <div class="form-group" style="margin: 10px;">
+                        <asp:Label ID="lbl_limpar" runat="server" Text="Limpar"></asp:Label>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <button id="btn_limpar" class="btn btn-dark">Limpar Tudo</button>
+                                <button id="btn_limpar_manhas" class="btn btn-dark">Limpar Manhãs</button>
+                                <button id="btn_limpar_tardes" class="btn btn-dark">Limpar Tardes</button>
+                                <button id="btn_limpar_sabados" class="btn btn-dark">Limpar Sabados</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
         <div class="row justify-content-between" style="margin: 10px;">
             <button class="btn btn-success" id="btn_SaveSelectedSlots">Submeter Disponibilidade</button>
@@ -81,6 +84,10 @@
             var Sundays_Holidays = [];
             var MIN_SLOT_DURATION = 60 * 60 * 1000; // Minimum slot duration in milliseconds (1 hour)
             var currentYear = new Date().getFullYear(); // Get the current year
+            var currentDate = new Date();
+
+            // Extract the year, month, and day
+            var currentYear = currentDate.getFullYear();
 
             // Function to check if the selected slot duration meets the minimum requirement and starts and ends on the hour
             function isSlotDurationValid(info) {
@@ -185,9 +192,6 @@
             // Function to add events to the selectedSlots array
             function addEventsToSelectedSlots(eventData) {
                 eventData.forEach(function (event) {
-                    console.log(event.start)
-                    console.log(event.cod_turma)
-                    console.log(event.cod_turma == 0)
                     if (event.cod_turma == 0) {
                         selectedSlots.push({
                             title: event.title,
@@ -238,7 +242,7 @@
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     locale: 'pt',
-                    initialView: 'dayGridMonth',
+                    initialView: 'timeGridWeek',
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
@@ -282,13 +286,35 @@
                         }
 
                         if (!isSlotDurationValid(info)) {
-                            alert("Please select a slot of at least 1 hour starting at hour:00.");
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("Por favor introduza um evento de pelo menos 1h e que comece á hora certa.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
                             return;
                         }
 
                         // Check if the selected event conflicts with any existing events
                         if (isEventConflict(info, selectedSlots) || isEventConflict(info, Sundays_Holidays)) {
-                            alert("Selected time conflicts with existing events.");
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("O evento escolhido entra em conflito com outro evento.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
                             return;
                         }
 
@@ -312,7 +338,7 @@
                     },
                     contentHeight: 'auto',
                     aspectRatio: 1.5,
-                    initialDate: currentYear + '-01-01',
+                    initialDate: currentDate,
                     validRange: {
                         start: currentYear + '-01-01',
                         end: (currentYear + 1) + '-01-01'
@@ -325,6 +351,8 @@
                         var event = eventsArray[i];
                         var selectedEventStartString = selectedEvent.start.toISOString().slice(0, -5); // Trim milliseconds
                         var selectedEventEndString = selectedEvent.end.toISOString().slice(0, -5); // Trim milliseconds
+                        console.log(selectedEventStartString)
+                        console.log(event.start)
                         if ((selectedEventStartString >= event.start && selectedEventStartString < event.end) ||
                             (selectedEventEndString > event.start && selectedEventEndString < event.end) ||
                             (selectedEventStartString <= event.start && selectedEventEndString > event.start)) {
@@ -336,7 +364,6 @@
 
                 calendar.setOption('eventClick', function (info) {
                     // Check if the clicked event is unselectable
-                    console.log(info.event.extendedProps.dataType)
                     if (info.event.extendedProps.dataType === 'unselectable') {
                         // Get the start time components of the clicked event
                         var start = info.event.start;
@@ -350,20 +377,25 @@
 
                         // Remove the event from the selectedSlots array
                         selectedSlots = selectedSlots.filter(function (slot) {
-                            console.log(slot.start)
-                            console.log(slot.end)
-                            console.log('---')
-                            console.log(startString)
-                            console.log(endString)
-                            console.log(!(slot.start === startString && slot.end === endString))
                             return !(slot.start === startString && slot.end === endString);
                         });
 
                         // Remove the event from the calendar
                         info.event.remove();
                     } else {
-                        // If the event is non-unselectable, show an alert or handle it accordingly
-                        alert("Não pode remover este evento.");
+                        // Show error message in lbl_mensagem
+                        $('#lbl_mensagem').text("Não pode remover este evento.");
+                        $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                        $('#lbl_mensagem').fadeIn();
+
+                        // Fade out the error message after 3 seconds
+                        setTimeout(function () {
+                            $('#lbl_mensagem').fadeOut(function () {
+                                $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                            });
+                        }, 3000);
+
+                        return;
                     }
                 });
 
@@ -478,60 +510,86 @@
                     while (currentDate.getFullYear() === currentYear) {
                         // Check if the current day is not Saturday or Sunday and not in Sundays_Holidays array
                         if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6 && !isDateInArray(currentDate, Sundays_Holidays)) {
-                            console.log("Marking:", currentDate);
-                            // Add the time slot from 8:00 to 16:00 as "Não Disponível"
-                            calendar.addEvent({
-                                title: 'Manhã Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
-                                end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
-                                rendering: 'background',
-                                color: '#ff0000'
-                            });
-                            selectedSlots.push({
-                                title: 'Manhã Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                                end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
-                                color: '#ff0000',
-                                cod_turma: 0
-                            });
+                            // Create the selected event object
+                            var selectedEvent = {
+                                start: new Date(currentDate), // Start time
+                                end: new Date(currentDate) // End time
+                            };
+                            selectedEvent.start.setHours(8, 0, 0, 0); // Set end time to 4:00 PM
+                            selectedEvent.end.setHours(16, 0, 0, 0); // Set end time to 4:00 PM
+
+                            if (!isEventConflict(selectedEvent, selectedSlots)) { // Check for conflicts
+                                console.log("Marking:", currentDate);
+                                // Add the time slot from 8:00 to 16:00 as "Não Disponível"
+                                calendar.addEvent({
+                                    title: 'Manhã Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
+                                    end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
+                                    rendering: 'background',
+                                    color: '#ff0000',
+                                    dataType: 'unselectable'
+                                });
+                                selectedSlots.push({
+                                    title: 'Manhã Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
+                                    end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                                    color: '#ff0000',
+                                    cod_turma: 0,
+                                    dataType: 'unselectable'
+                                });
+                            }
                         }
                         // Move to the next day
                         currentDate.setDate(currentDate.getDate() + 1);
                     }
                 }
+
 
                 function SelecionarDiasSemanaTarde() {
                     var currentDate = new Date();
                     var currentYear = currentDate.getFullYear(); // Get the current year
 
                     // Set the time to 8:00 AM
-                    currentDate.setHours(8, 0, 0, 0);
+                    currentDate.setHours(16, 0, 0, 0);
 
                     // Loop through each day of the current year
                     while (currentDate.getFullYear() === currentYear) {
                         // Check if the current day is not Saturday or Sunday and not in Sundays_Holidays array
                         if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6 && !isDateInArray(currentDate, Sundays_Holidays)) {
-                            console.log("Marking:", currentDate);
-                            // Add the time slot from 8:00 to 16:00 as "Não Disponível"
-                            calendar.addEvent({
-                                title: 'Tarde Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
-                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
-                                rendering: 'background',
-                                color: '#ff0000'
-                            });
-                            selectedSlots.push({
-                                title: 'Tarde Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
-                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
-                                color: '#ff0000',
-                                cod_turma: 0
-                            });
+                            // Create the selected event object
+                            var selectedEvent = {
+                                start: new Date(currentDate), // Start time
+                                end: new Date(currentDate) // End time
+                            };
+                            selectedEvent.start.setHours(16, 0, 0, 0); // Set start time to 4:00 PM
+                            selectedEvent.end.setHours(23, 0, 0, 0); // Set end time to 11:00 PM
+
+                            if (!isEventConflict(selectedEvent, selectedSlots)) { // Check for conflicts
+                                console.log("Marking:", currentDate);
+                                // Add the time slot from 16:00 to 23:00 as "Não Disponível"
+                                calendar.addEvent({
+                                    title: 'Tarde Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
+                                    end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
+                                    rendering: 'background',
+                                    color: '#ff0000',
+                                    dataType: 'unselectable'
+                                });
+                                selectedSlots.push({
+                                    title: 'Tarde Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
+                                    end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                                    color: '#ff0000',
+                                    cod_turma: 0,
+                                    dataType: 'unselectable'
+                                });
+                            }
                         }
                         // Move to the next day
                         currentDate.setDate(currentDate.getDate() + 1);
                     }
                 }
+
 
                 function SelecionarSabados() {
                     var currentDate = new Date();
@@ -541,25 +599,38 @@
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
                         // Check if the current day is not in Sundays_Holidays array
                         if (!isDateInArray(currentDate, Sundays_Holidays)) {
-                            console.log("Marking:", currentDate);
-                            calendar.addEvent({
-                                title: 'Sábado Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
-                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
-                                rendering: 'background',
-                                color: '#ff0000'
-                            });
-                            selectedSlots.push({
-                                title: 'Sábado Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
-                                color: '#ff0000',
-                                cod_turma: 0
-                            });
+                            // Create the selected event object
+                            var selectedEvent = {
+                                start: new Date(currentDate), // Start time
+                                end: new Date(currentDate) // End time
+                            };
+                            selectedEvent.start.setHours(8, 0, 0, 0); // Set end time to 11:00 PM
+                            selectedEvent.end.setHours(23, 0, 0, 0); // Set end time to 11:00 PM
+
+                            if (!isEventConflict(selectedEvent, selectedSlots)) { // Check for conflicts
+                                console.log("Marking:", currentDate);
+                                calendar.addEvent({
+                                    title: 'Sábado Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
+                                    end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
+                                    rendering: 'background',
+                                    color: '#ff0000',
+                                    dataType: 'unselectable'
+                                });
+                                selectedSlots.push({
+                                    title: 'Sábado Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                                    end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                                    color: '#ff0000',
+                                    cod_turma: 0,
+                                    dataType: 'unselectable'
+                                });
+                            }
                         }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
                 }
+
 
 
                 function SelecionarSabadosManha() {
@@ -570,25 +641,39 @@
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
                         // Check if the current day is not in Sundays_Holidays array
                         if (!isDateInArray(currentDate, Sundays_Holidays)) {
-                            console.log("Marking:", currentDate);
-                            calendar.addEvent({
-                                title: 'Manhã Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
-                                end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
-                                rendering: 'background',
-                                color: '#ff0000'
-                            });
-                            selectedSlots.push({
-                                title: 'Manhã Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
-                                end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
-                                color: '#ff0000',
-                                cod_turma: 0
-                            });
+                            // Create the selected event object
+                            var selectedEvent = {
+                                start: new Date(currentDate), // Start time
+                                end: new Date(currentDate) // End time
+                            };
+                            selectedEvent.end.setHours(8, 0, 0, 0); // Set end time to 4:00 PM
+                            selectedEvent.end.setHours(16, 0, 0, 0); // Set end time to 4:00 PM
+
+                            if (!isEventConflict(selectedEvent, selectedSlots)) { // Check for conflicts
+                                console.log("Marking:", currentDate);
+                                // Add the time slot from 8:00 to 16:00 as "Manhã Não Disponível"
+                                calendar.addEvent({
+                                    title: 'Manhã Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T08:00:00',
+                                    end: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
+                                    rendering: 'background',
+                                    color: '#ff0000',
+                                    dataType: 'unselectable'
+                                });
+                                selectedSlots.push({
+                                    title: 'Manhã Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T08:00:00', // Start time
+                                    end: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // End time
+                                    color: '#ff0000',
+                                    cod_turma: 0,
+                                    dataType: 'unselectable'
+                                });
+                            }
                         }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
                 }
+
 
                 function SelecionarSabadosTarde() {
                     var currentDate = new Date();
@@ -598,25 +683,39 @@
                     while (currentDate.getFullYear() === currentYear && currentDate.getDay() === 6) {
                         // Check if the current day is not in Sundays_Holidays array
                         if (!isDateInArray(currentDate, Sundays_Holidays)) {
-                            console.log("Marking:", currentDate);
-                            calendar.addEvent({
-                                title: 'Tarde Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
-                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
-                                rendering: 'background',
-                                color: '#ff0000'
-                            });
-                            selectedSlots.push({
-                                title: 'Tarde Não Disponível',
-                                start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
-                                end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
-                                color: '#ff0000',
-                                cod_turma: 0
-                            });
+                            // Create the selected event object
+                            var selectedEvent = {
+                                start: new Date(currentDate), // Start time
+                                end: new Date(currentDate) // End time
+                            };
+                            selectedEvent.start.setHours(16, 0, 0, 0); // Set start time to 4:00 PM
+                            selectedEvent.end.setHours(23, 0, 0, 0); // Set end time to 11:00 PM
+
+                            if (!isEventConflict(selectedEvent, selectedSlots)) { // Check for conflicts
+                                console.log("Marking:", currentDate);
+                                // Add the time slot from 16:00 to 23:00 as "Tarde Não Disponível"
+                                calendar.addEvent({
+                                    title: 'Tarde Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T16:00:00',
+                                    end: currentDate.toISOString().slice(0, 10) + 'T23:00:00',
+                                    rendering: 'background',
+                                    color: '#ff0000',
+                                    dataType: 'unselectable'
+                                });
+                                selectedSlots.push({
+                                    title: 'Tarde Não Disponível',
+                                    start: currentDate.toISOString().slice(0, 10) + 'T16:00:00', // Start time
+                                    end: currentDate.toISOString().slice(0, 10) + 'T23:00:00', // End time
+                                    color: '#ff0000',
+                                    cod_turma: 0,
+                                    dataType: 'unselectable'
+                                });
+                            }
                         }
                         currentDate.setDate(currentDate.getDate() + 7); // Move to the next Saturday
                     }
                 }
+
 
                 // Function to check if a date exists in the given array
                 function isDateInArray(date, array) {
@@ -706,18 +805,49 @@
                         success: function (response) {
                             // Handle success response if needed
                             if (response.d) {
-                                // Show success message
-                                alert("Disponibilidade de Formador atualizada com sucesso! Será redirecionado para outra página.");
-                                // Redirect to another page
-                                window.location.href = "personal_zone_inscricoes.aspx"; // Change "new_page.aspx" to the desired page
+                                // Show error message in lbl_mensagem
+                                $('#lbl_mensagem').text("Disponibilidade guardada com sucesso!");
+                                $('#lbl_mensagem').addClass('alert alert-success'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').fadeIn();
+
+                                // Fade out the error message after 3 seconds
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-success'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    });
+                                }, 3000);
+
+                                return;
                             } else {
-                                // Show error message
-                                alert("Ocorreu um erro ao atualizar a disponibilidade do formador.");
+                                // Show error message in lbl_mensagem
+                                $('#lbl_mensagem').text("Erro ao guardar a disponibilidade.");
+                                $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                                $('#lbl_mensagem').fadeIn();
+
+                                // Fade out the error message after 3 seconds
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                    });
+                                }, 3000);
+
+                                return;
                             }
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            // Handle error
-                            console.error("Error occurred while sending data to server.");
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("Erro ao enviar os dados para a base de dados.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
+                            return;
                         }
                     });
                     event.preventDefault(); // Prevent default button behavior

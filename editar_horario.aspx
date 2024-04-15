@@ -181,7 +181,6 @@
                         totalHours += Math.abs(new Date(event.end) - new Date(event.start)) / 36e5;
                     }
                 });
-                console.log(totalHours)
                 return totalHours;
             }
 
@@ -373,7 +372,7 @@
                     timeZone: 'UTC',
                     select: function (info) {
                         var isAllDay = info.allDay;
-                        var currentDate = new Date(); // Get the current date
+                        var currentDate = new Date(); // Get the current date                       
 
                         // Check if the selected date is before the current date
                         if (info.start < currentDate) {
@@ -390,6 +389,36 @@
                             }, 3000);
 
                               return;
+                        }
+
+                        // Assuming info.start contains the date string "Wed Apr 17 2024 09:00:00 GMT+0100 (Western European Summer Time)"
+                        var selectedEventDate = new Date(info.start);
+
+                        // Extract year, month, and day
+                        var year = selectedEventDate.getFullYear();
+                        var month = ('0' + (selectedEventDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
+                        var day = ('0' + selectedEventDate.getDate()).slice(-2); // Add leading zero if needed
+
+                        // Form the formatted date string
+                        var formattedDate = year + '-' + month + '-' + day;
+
+                        // Retrieve the date stored in the hidden field
+                        var hiddenFieldDateStr = document.getElementById('<%= hf_data_inicio.ClientID %>').value;
+
+                        if (formattedDate < hiddenFieldDateStr) {
+                            // Show error message in lbl_mensagem
+                            $('#lbl_mensagem').text("Só pode criar eventos a partir da data de início da turma.");
+                            $('#lbl_mensagem').addClass('alert alert-danger'); // Add CSS class to lbl_mensagem
+                            $('#lbl_mensagem').fadeIn();
+
+                            // Fade out the error message after 3 seconds
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger'); // Remove CSS class from lbl_mensagem after fadeOut
+                                });
+                            }, 3000);
+
+                            return;
                         }
 
                         // Determine start and end times based on regime
