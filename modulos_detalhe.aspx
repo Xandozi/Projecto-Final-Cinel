@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="modulos_detalhe.aspx.cs" Inherits="Projeto_Final.modulos_detalhe" %>
+﻿<%@ Page Title="CINEL - Detalhes do Módulo" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="modulos_detalhe.aspx.cs" Inherits="Projeto_Final.modulos_detalhe" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

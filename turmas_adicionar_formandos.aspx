@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="turmas_adicionar_formandos.aspx.cs" Inherits="Projeto_Final.turmas_adicionar_formandos" %>
+﻿<%@ Page Title="CINEL - Adicionar Formandos à Turma" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="turmas_adicionar_formandos.aspx.cs" Inherits="Projeto_Final.turmas_adicionar_formandos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

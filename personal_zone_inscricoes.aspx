@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="personal_zone_inscricoes.aspx.cs" Inherits="Projeto_Final.personal_zone_inscricoes" %>
+﻿<%@ Page Title="CINEL - Minhas Inscrições" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="personal_zone_inscricoes.aspx.cs" Inherits="Projeto_Final.personal_zone_inscricoes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

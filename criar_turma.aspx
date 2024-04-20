@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="criar_turma.aspx.cs" Inherits="Projeto_Final.criar_turma" %>
+﻿<%@ Page Title="CINEL - Criar Turma" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="criar_turma.aspx.cs" Inherits="Projeto_Final.criar_turma" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

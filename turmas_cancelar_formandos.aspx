@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="turmas_cancelar_formandos.aspx.cs" Inherits="Projeto_Final.turmas_cancelar_formandos" %>
+﻿<%@ Page Title="CINEL - Alterar Estado dos Formandos da Turma" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="turmas_cancelar_formandos.aspx.cs" Inherits="Projeto_Final.turmas_cancelar_formandos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="editar_horario.aspx.cs" Inherits="Projeto_Final.editar_horario" %>
+﻿<%@ Page Title="CINEL - Editar Horário" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="editar_horario.aspx.cs" Inherits="Projeto_Final.editar_horario" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
