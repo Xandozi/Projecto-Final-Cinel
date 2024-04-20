@@ -9,19 +9,19 @@
             <!-- Sidebar -->
             <div class="col-md-2 bg-light" style="margin-top: 10px;">
                 <div class="list-group">
-                    <a href="personal_zone_inscricoes.aspx" class="list-group-item list-group-item-action active">Minhas Inscrições</a>
-                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
+                    <a href="personal_zone_inscricoes.aspx" class="list-group-item list-group-item-action active"><i class="fas fa-clipboard-list"></i> Minhas Inscrições</a>
+                    <a href="personal_zone.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-cog"></i> Área Pessoal</a>
                     <% if (Session["perfil"].ToString().Contains("Formador"))
                      { %>
-                    <a href="formador_disponibilidade.aspx?cod_user=<%= Session["cod_user"].ToString() %>" class="list-group-item list-group-item-action">Disponibilidade Formador</a>
+                    <a href="formador_disponibilidade.aspx?cod_user=<%= Session["cod_user"].ToString() %>" class="list-group-item list-group-item-action"><i class="fas fa-calendar"></i> Disponibilidade Formador</a>
                     <% } %>
-                    <asp:Button ID="btn_logout2" class="list-group-item list-group-item-action" runat="server" Text="Terminar Sessão" OnClick="btn_logout2_Click" />
+                    <asp:LinkButton ID="lb_logout2" class="list-group-item list-group-item-action" runat="server" OnClick="btn_logout2_Click"><i class="fas fa-power-off"></i> Terminar Sessão</asp:LinkButton>
                 </div>
             </div>
             <div class="container">
                 <div class="row">
                     <div id="div_inscricoes" class="col-md-10" runat="server">
-                        <div id="card_formadores" class="card" style="border-color: #333; background-color: antiquewhite; margin-top: 10px;" runat="server">
+                        <div id="card_formadores" class="card bg-secondary" style="border-color: #333; color:black; margin-top: 10px;" runat="server">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Módulos como Formador</h2>
                             </div>

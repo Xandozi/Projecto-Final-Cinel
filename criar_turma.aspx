@@ -11,14 +11,14 @@
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-top: 10px;">
                         <div class="list-group">
-                            <a href="criar_turma.aspx" class="list-group-item list-group-item-action active">Criar Turma</a>
-                            <a href="gestao.aspx" class="list-group-item list-group-item-action">Gestão</a>
-                            <a href="turmas.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="criar_turma.aspx" class="list-group-item list-group-item-action active"><i class="fas fa-users"></i> Criar Turma</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="turmas.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                     </div>
                     <!-- Form to create a new course -->
                     <div class="col-md-10" style="margin-top: 10px;">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Criar Nova Turma</h2>
                             </div>

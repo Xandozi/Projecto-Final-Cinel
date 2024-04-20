@@ -10,7 +10,7 @@
             <div class="container mt-5 justify-content-center">
                 <div class="row justify-content-center" style=" margin-bottom: 20px;">
                     <div class="col-md-6">
-                        <div class="card border-primary" style="background-color:antiquewhite;">
+                        <div class="card border-primary bg-secondary" style="color:black;">
                             <div class="card-header bg-primary text-white text-center">
                                 <h4 class="mb-0" style="color: white;">Login</h4>
                             </div>

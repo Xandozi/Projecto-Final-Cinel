@@ -11,20 +11,20 @@
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-top: 10px;">
                         <div class="list-group">
-                            <a href="gestao.aspx" class="list-group-item list-group-item-action active">Gestão</a>
-                            <a href="cursos.aspx" class="list-group-item list-group-item-action">Cursos</a>
-                            <a href="formadores.aspx" class="list-group-item list-group-item-action">Formadores</a>
-                            <a href="formandos.aspx" class="list-group-item list-group-item-action">Formandos</a>
-                            <a href="horarios.aspx" class="list-group-item list-group-item-action">Horários</a>
-                            <a href="modulos.aspx" class="list-group-item list-group-item-action">Módulos</a>
-                            <a href="salas.aspx" class="list-group-item list-group-item-action">Salas</a>
-                            <a href="turmas.aspx" class="list-group-item list-group-item-action">Turmas</a>
-                            <a href="utilizadores.aspx" class="list-group-item list-group-item-action">Utilizadores</a>
-                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action active"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="cursos.aspx" class="list-group-item list-group-item-action"><i class="fas fa-chalkboard"></i> Cursos</a>
+                            <a href="formadores.aspx" class="list-group-item list-group-item-action"><i class="fas fa-chalkboard-teacher"></i> Formadores</a>
+                            <a href="formandos.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-graduate"></i> Formandos</a>
+                            <a href="horarios.aspx" class="list-group-item list-group-item-action"><i class="fas fa-calendar"></i> Horários</a>
+                            <a href="modulos.aspx" class="list-group-item list-group-item-action"><i class="fas fa-table"></i> Módulos</a>
+                            <a href="salas.aspx" class="list-group-item list-group-item-action"><i class="fas fa-chair"></i> Salas</a>
+                            <a href="turmas.aspx" class="list-group-item list-group-item-action"><i class="fas fa-users"></i> Turmas</a>
+                            <a href="utilizadores.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user"></i> Utilizadores</a>
+                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                     </div>
                     <div id="div_validacoes" class="col-md-10" runat="server">
-                        <div id="card_formadores" class="card" style="border-color: #333; background-color:antiquewhite; margin-top: 10px;" runat="server">
+                        <div id="card_formadores" class="card bg-secondary" style="border-color: #333; color:black; margin-top: 10px;" runat="server">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Formadores por Validar Inscrição</h2>
                             </div>
@@ -77,7 +77,7 @@
                                 </asp:LinkButton>
                             </div>
                         </div>
-                        <div id="card_formandos" class="card" style="border-color: #333; background-color:antiquewhite; margin-top: 10px;" runat="server">
+                        <div id="card_formandos" class="card bg-secondary" style="border-color: #333; color:black; margin-top: 10px;" runat="server">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Formandos por Validar Inscrição</h2>
                             </div>

@@ -10,16 +10,16 @@
                     <!-- Sidebar -->
                     <div class="col-md-3 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action active">Editar Sala <%= lbl_cod_sala.Text %> - <%= tb_designacao.Text %></a>
-                            <a href="criar_sala.aspx" class="list-group-item list-group-item-action">Criar Sala</a>
-                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
-                            <a href="salas.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="#" class="list-group-item list-group-item-action active"><i class="fas fa-chair"></i> Editar Sala <%= lbl_cod_sala.Text %> - <%= tb_designacao.Text %></a>
+                            <a href="criar_sala.aspx" class="list-group-item list-group-item-action"><i class="fas fa-plus-circle"></i> Criar Sala</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="salas.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
-                                <h2 class="display-4" style="font-size: 40px; color: white;">Sala <%= lbl_cod_sala.Text %></h2>
+                                <h2 class="display-4" style="font-size: 30px; color: white;">Sala <%= lbl_cod_sala.Text %></h2>
                             </div>
                             <div class="card-body">
                                 <div class="row">

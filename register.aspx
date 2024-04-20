@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="register.aspx.cs" Inherits="Projeto_Final.register" %>
+﻿<%@ Page Title="CINEL - Registo" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="register.aspx.cs" Inherits="Projeto_Final.register" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -10,7 +10,7 @@
             <div class="container mt-5" style="margin-bottom:40px;">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <div class="card border-primary" style="background-color: antiquewhite;">
+                        <div class="card border-primary bg-secondary" style="color:black;">
                             <div class="card-header bg-primary text-white text-center">
                                 <h4 class="mb-0" style="color: white;">Formulário de Registo</h4>
                             </div>

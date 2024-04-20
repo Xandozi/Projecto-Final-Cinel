@@ -11,14 +11,14 @@
                     <!-- Sidebar -->
                     <div class="col-md-3 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action active">Editar Módulo <%= tb_cod_ufcd.Text %> - <%= tb_designacao.Text %></a>
-                            <a href="criar_modulo.aspx" class="list-group-item list-group-item-action">Criar Módulo</a>
-                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
-                            <a href="modulos.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="#" class="list-group-item list-group-item-action active"><i class="fas fa-table"></i> Editar Módulo <%= tb_cod_ufcd.Text %> - <%= tb_designacao.Text %></a>
+                            <a href="criar_modulo.aspx" class="list-group-item list-group-item-action"><i class="fas fa-plus-circle"></i> Criar Módulo</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="modulos.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4" style="font-size: 40px; color: white;">Módulo <%= tb_cod_ufcd.Text %></h2>
                             </div>

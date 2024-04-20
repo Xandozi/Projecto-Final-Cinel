@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="container-fluid">
-        <div class="card" style="border-color: #333; background-color: antiquewhite; margin-top: 30px; margin-bottom: 30px;">
+        <div class="card bg-secondary" style="border-color: #333; color:black; margin-top: 30px; margin-bottom: 30px;">
             <div class="card-header bg-dark text-white">
                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Horário da Turma
                     <asp:Label ID="lbl_nome_turma" runat="server" Text=""></asp:Label></h2>
@@ -23,7 +23,7 @@
                         <label class="col-form-label">Horas do Módulo Alocadas</label>
                         <label id="lbl_horas_modulo" class="form-control">Alocação de horas do módulo</label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <label class="col-form-label">Formador</label>
                         <asp:Label ID="lbl_nome_formador" CssClass="form-control" runat="server" Text=""></asp:Label>
                         <asp:HiddenField ID="hf_cod_formador" runat="server" />
@@ -41,7 +41,7 @@
                         <label class="col-form-label">Cor do Evento</label>
                         <input class="form-control" type="color" id="colorPicker" value="000000">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label id="lbl_mensagem" style="margin-top: 20px;"></label>
                     </div>
                 </div>

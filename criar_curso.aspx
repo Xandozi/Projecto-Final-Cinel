@@ -7,19 +7,19 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div class="row" style="margin-top: 30px;">
+                <div class="row" style="margin-top: 30px; margin-bottom: 30px;">
                     <!-- Sidebar -->
                     <div class="col-md-3 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="criar_curso.aspx" class="list-group-item list-group-item-action active">Criar Curso</a>
-                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
-                            <a href="cursos.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="criar_curso.aspx" class="list-group-item list-group-item-action active"><i class="fas fa-plus-circle"></i> Criar Curso</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="cursos.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
-                                <h2 class="display-4" style="font-size: 40px; color: white;">Criação de Curso</h2>
+                                <h2 class="display-4" style="font-size: 30px; color: white;">Criação de Curso</h2>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -30,7 +30,7 @@
                                                     <p class="font-weight-bold">Área do Curso</p>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:DropDownList ID="ddl_area" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="areas" DataTextField="area" DataValueField="cod_area"></asp:DropDownList>
+                                                    <asp:DropDownList ID="ddl_area" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="areas" DataTextField="area" DataValueField="cod_area" style="width: 90%;"></asp:DropDownList>
                                                     <asp:SqlDataSource runat="server" ID="areas" ConnectionString='<%$ ConnectionStrings:CinelConnectionString %>' SelectCommand="SELECT * FROM [Areas]"></asp:SqlDataSource>
                                                 </div>
                                             </div>
