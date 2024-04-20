@@ -9,19 +9,20 @@
             <!-- Sidebar -->
             <div class="col-md-2 bg-light" style="margin-top: 10px;">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">Informações da Turma <%= lbl_nome_turma.Text %></a>
+                    <a href="#" class="list-group-item list-group-item-action active"><i class="fas fa-users"></i> Informações da Turma <%= lbl_nome_turma.Text %></a>
                     <% if (lbl_estado.Text != "Terminada" && lbl_estado.Text != "Cancelada")
                         { %>
-                    <a href="turmas_adicionar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Adicionar Formandos à Turma</a>
-                    <a href="turmas_cancelar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Alterar Estado dos Formandos da Turma</a>
+                    <a href="turmas_adicionar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action"><i class="fas fa-plus-circle"></i> Adicionar Formandos à Turma</a>
+                    <a href="turmas_cancelar_formandos.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action"><i class="fas fa-wrench"></i> Alterar Estado dos Formandos da Turma</a>
                     <% } %>
-                    <a href="horarios_detalhe.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Consultar Horário</a>
-                    <a href="turmas.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                    <a href="horarios_detalhe.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action"><i class="fas fa-calendar"></i> Consultar Horário</a>
+                    <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                    <a href="turmas.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                 </div>
             </div>
             <!-- Main Content -->
             <div class="col-md-7" style="margin-top: 10px;">
-                <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                <div class="card bg-secondary" style="border-color: #333; color:black;">
                     <div class="card-header bg-dark text-white">
                         <h2 class="display-4" style="font-size: 40px; color: white;">Informação da Turma <%= lbl_nome_turma.Text %></h2>
                     </div>

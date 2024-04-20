@@ -9,13 +9,14 @@
             <!-- Sidebar -->
             <div class="col-md-2 bg-light" style="margin-top: 10px;">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">Informações da Turma <%= lbl_nome_turma.Text %></a>
-                    <a href="turmas_detalhe.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action">Voltar</a>
+                    <a href="#" class="list-group-item list-group-item-action active"><i class="fas fa-users"></i> Informações da Turma <%= lbl_nome_turma.Text %></a>
+                    <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                    <a href="turmas_detalhe.aspx?cod_turma=<%= lbl_cod_turma.Text %>" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                 </div>
             </div>
             <!-- Main Content -->
             <div class="col-md-4" style="margin-top: 10px;">
-                <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                <div class="card bg-secondary" style="border-color: #333; color:black;">
                     <div class="card-header bg-dark text-white">
                         <h2 class="display-4" style="font-size: 40px; color: white;">Informação da Turma <%= lbl_nome_turma.Text %></h2>
                     </div>

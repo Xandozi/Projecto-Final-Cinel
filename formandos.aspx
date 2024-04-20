@@ -7,7 +7,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div id="filterForm" runat="server" class="border-dark" style="display: none; margin-bottom: 10px; margin-top: 10px; background-color:antiquewhite; border: 1px solid #ccc; padding: 10px;">
+                <div id="filterForm" runat="server" class="border-dark bg-secondary" style="display: none; margin-bottom: 10px; margin-top: 10px; color:black; border: 1px solid #ccc; padding: 10px;">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -76,9 +76,9 @@
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="formandos.aspx" class="list-group-item list-group-item-action active">Formandos</a>
-                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
-                            <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="formandos.aspx" class="list-group-item list-group-item-action active"><i class="fas fa-user-graduate"></i> Formandos</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                         <asp:LinkButton ID="btn_filtros" runat="server" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;">
                                 <i class="fas fa-filter">Filtros</i> 
@@ -95,7 +95,7 @@
                         </script>
                     </div>
                     <div class="col-md-10">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consulta de Formandos</h2>
                             </div>
@@ -113,7 +113,7 @@
                                         <ItemTemplate>
                                             <div class="col-md-4">
                                                 <div class="card border-dark" style="margin: 5px;">
-                                                    <a href="formandos_detalhe.aspx?cod_user=<%# Eval("cod_user") %>" style="text-decoration: none;">
+                                                    <a href="utilizadores_detalhe.aspx?cod_user=<%# Eval("cod_user") %>" style="text-decoration: none;">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><b><%# Eval("nome_proprio") + " " + Eval("apelido") %></b></h5>
                                                             <p class="card-text" style="color: black;">Turma: <span style="color: orangered"><%# Eval("nome_turma") %></span></p>

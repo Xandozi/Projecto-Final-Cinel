@@ -4,7 +4,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container-fluid">
-        <div class="card" style="border-color: #333; background-color: antiquewhite; margin-top: 30px; margin-bottom: 30px;">
+        <div class="card bg-secondary" style="border-color: #333; color:black; margin-top: 30px; margin-bottom: 30px;">
             <div class="card-header bg-dark text-white">
                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Disponibilidade Formador</h2>
             </div>

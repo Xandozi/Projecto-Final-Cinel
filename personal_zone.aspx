@@ -27,9 +27,9 @@
             </div>
             <!-- Main Content -->
             <div class="col-md-10" style=" margin-top: 10px;">
-                <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                <div class="card bg-secondary" style="border-color: #333; color:black;">
                     <div class="card-header bg-dark text-white">
-                        <h2 class="display-4" style="font-size: 40px; color: white;">Bem-vindo à sua zona pessoal, <%= lbl_nome_completo.Text %></h2>
+                        <h2 class="display-4" style="font-size: 30px; color: white;">Bem-vindo à sua zona pessoal, <%= lbl_nome_completo.Text %></h2>
                     </div>
                     <div class="card-body">
                         <div class="row">

@@ -24,13 +24,13 @@ namespace Projeto_Final
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// btn_logout2 control.
+        /// lb_logout2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_logout2;
+        protected global::System.Web.UI.WebControls.LinkButton lb_logout2;
 
         /// <summary>
         /// div_inscricoes control.

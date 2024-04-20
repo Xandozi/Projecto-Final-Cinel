@@ -16,7 +16,9 @@ namespace Projeto_Final
             Response.Cache.SetNoStore();
 
             if (!Page.IsPostBack)
+            {
                 this.DataBind();
+            }
         }
         protected string DetermineColumnClass()
         {

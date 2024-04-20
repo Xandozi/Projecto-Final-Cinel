@@ -24,7 +24,7 @@
                         }
                     }
                 </script>
-                <div id="filterForm" class="border-dark" runat="server" style="display: none; margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc; background-color:antiquewhite; padding: 10px;">
+                <div id="filterForm" class="border-dark bg-secondary" runat="server" style="display: none; margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc; color:black; padding: 10px;">
                     <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
@@ -97,7 +97,7 @@
 
                 <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
                     <div class="col-md-12">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Lista de Cursos do Cinel</h2>
                             </div>

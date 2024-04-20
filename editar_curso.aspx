@@ -9,16 +9,16 @@
             <div class="container-fluid">
                 <div class="row" style="margin-top: 30px;">
                     <!-- Sidebar -->
-                    <div class="col-md-3 bg-light" style="margin-bottom: 10px;">
+                    <div class="col-md-2 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action active">Editar Curso <%= tb_cod_qualificacao.Text %> - <%= tb_designacao.Text %></a>
-                            <a href="criar_curso.aspx" class="list-group-item list-group-item-action">Criar Curso</a>
-                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
-                            <a href="cursos.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="#" class="list-group-item list-group-item-action active"><i class="fas fa-chalkboard"></i> Editar Curso <%= tb_cod_qualificacao.Text %> - <%= tb_designacao.Text %></a>
+                            <a href="criar_curso.aspx" class="list-group-item list-group-item-action"><i class="fas fa-plus-circle"></i> Criar Curso</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="cursos.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-5 col-xl-4">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4" style="font-size: 40px; color: white;">Curso <%= tb_cod_qualificacao.Text %></h2>
                             </div>

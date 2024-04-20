@@ -9,7 +9,7 @@
             <div class="container-fluid" style="margin-bottom: 10px;">
                 <div class="row" style="margin-top: 30px;">
                     <div class="col-12">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4" style="font-size: 40px; color: white;"><%= lbl_cod_qualificacao.Text %> - <%= lbl_nome_curso.Text %></h2>
                             </div>

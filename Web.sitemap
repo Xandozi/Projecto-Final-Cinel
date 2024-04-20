@@ -11,32 +11,45 @@
 		<siteMapNode url="~/formadores_lista.aspx" title="Lista de Formadores" description="Lista de Formadores"/>
 		<siteMapNode url="~/contactos.aspx" title="Contactos" description="Contactos"/>
 		<siteMapNode url="~/personal_zone.aspx" title="Área Pessoal" description="Área Pessoal">
+			<siteMapNode url="~/personal_zone_editar.aspx" title="Editar Informação Pessoal" description="Editar Informação Pessoal"/>
 			<siteMapNode url="~/personal_zone_inscricoes.aspx" title="Minhas Inscrições" description="Minhas Inscrições"/>
 			<siteMapNode url="~/dados_estatisticos.aspx" title="Dashboard Estatística" description="Dashboard Estatística"/>
 			<siteMapNode url="~/gestao.aspx" title="Gestão" description="Gestão">
 				<siteMapNode url="~/cursos.aspx" title="Cursos" description="Cursos">
-
+					<siteMapNode url="~/criar_curso.aspx" title="Criar Curso" description="Criar Curso"/>
+					<siteMapNode url="~/cursos_detalhe.aspx" title="Detalhes Curso" description="Detalhes do Curso"/>
+					<siteMapNode url="~/editar_curso.aspx" title="Editar Curso" description="Editar Curso"/>
 				</siteMapNode>
 				<siteMapNode url="~/formadores.aspx" title="Formadores" description="Formadores">
-
+					
 				</siteMapNode>
 				<siteMapNode url="~/formandos.aspx" title="Formandos" description="Formandos">
-
+					
 				</siteMapNode>
 				<siteMapNode url="~/horarios.aspx" title="Horários" description="Horarios">
-
+					<siteMapNode url="~/horarios_detalhe.aspx" title="Detalhes Horário" description="Detalhes Horário"/>
+					<siteMapNode url="~/editar_horario.aspx" title="Editar Horário" description="Editar Horário"/>
 				</siteMapNode>
 				<siteMapNode url="~/modulos.aspx" title="Módulos" description="Módulos">
-
+					<siteMapNode url="~/criar_modulo.aspx" title="Criar Módulo" description="Criar Módulo"/>
+					<siteMapNode url="~/modulos_detalhe.aspx" title="Detalhes Módulo" description="Detalhes Módulo"/>
+					<siteMapNode url="~/editar_modulo.aspx" title="Editar Módulo" description="Editar Módulo"/>
 				</siteMapNode>
 				<siteMapNode url="~/salas.aspx" title="Salas" description="Salas">
-
+					<siteMapNode url="~/criar_sala.aspx" title="Criar Sala" description="Criar Sala"/>
+					<siteMapNode url="~/salas_detalhe.aspx" title="Detalhes Sala" description="Detalhes Sala"/>
+					<siteMapNode url="~/editar_sala.aspx" title="Editar Sala" description="Editar Sala"/>
 				</siteMapNode>
 				<siteMapNode url="~/turmas.aspx" title="Turmas" description="Turmas">
-
+					<siteMapNode url="~/criar_turma.aspx" title="Criar Turma" description="Criar Turma"/>
+					<siteMapNode url="~/turmas_detalhe.aspx" title="Detalhes Turma" description="Detalhes Turma"/>
+					<siteMapNode url="~/editar_turma.aspx" title="Editar Turma" description="Editar Turma"/>
+					<siteMapNode url="~/turmas_adicionar_formandos.aspx" title="Adicionar Formandos" description="Adicionar Formandos"/>
+					<siteMapNode url="~/turmas_cancelar_formandos.aspx" title="Alterar Estado Formandos" description="Alterar Estado Formandos"/>
 				</siteMapNode>
 				<siteMapNode url="~/utilizadores.aspx" title="Utilizadores" description="Utilizadores">
-
+					<siteMapNode url="~/utilizadores_detalhe.aspx" title="Detalhes Utilizador" description="Detalhes Utilizador"/>
+					<siteMapNode url="~/editar_utilizador.aspx" title="Editar Utilizador" description="Editar Utilizador"/>
 				</siteMapNode>
 			</siteMapNode>
 		</siteMapNode>

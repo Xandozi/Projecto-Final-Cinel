@@ -7,7 +7,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div id="filterForm" runat="server" class="border-dark" style="display: none; margin-bottom: 10px; margin-top: 10px; background-color:antiquewhite; border: 1px solid #ccc; padding: 10px;">
+                <div id="filterForm" runat="server" class="border-dark bg-secondary" style="display: none; margin-bottom: 10px; margin-top: 10px; color:black; border: 1px solid #ccc; padding: 10px;">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -126,9 +126,10 @@
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-top: 10px;">
                         <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action active">Turmas</a>
-                            <a href="criar_turma.aspx" class="list-group-item list-group-item-action">Criar Turma</a>
-                            <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="#" class="list-group-item list-group-item-action active"><i class="fas fa-users"></i> Turmas</a>
+                            <a href="criar_turma.aspx" class="list-group-item list-group-item-action"><i class="fas fa-plus-circle"></i> Criar Turma</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                         <asp:LinkButton ID="btn_filtros" runat="server" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;">
                                 <i class="fas fa-filter">Filtros</i> 
@@ -145,7 +146,7 @@
                         </script>
                     </div>
                     <div id="div_turmas" class="col-md-10" runat="server">
-                        <div id="card_turmas" class="card" style="border-color: #333; background-color:antiquewhite; margin-top: 10px;" runat="server">
+                        <div id="card_turmas" class="card bg-secondary" style="border-color: #333; color:black; margin-top: 10px;" runat="server">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consultar Turmas</h2>
                             </div>

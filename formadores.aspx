@@ -7,7 +7,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
-                <div id="filterForm" runat="server" class="border-dark" style="display: none; margin-bottom: 10px; background-color:antiquewhite; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
+                <div id="filterForm" runat="server" class="border-dark bg-secondary" style="display: none; margin-bottom: 10px; color:black; margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -83,9 +83,9 @@
                     <!-- Sidebar -->
                     <div class="col-md-2 bg-light" style="margin-bottom: 10px;">
                         <div class="list-group">
-                            <a href="formadores.aspx" class="list-group-item list-group-item-action active">Formadores</a>
-                            <a href="personal_zone.aspx" class="list-group-item list-group-item-action">Área Pessoal</a>
-                            <a href="gestao.aspx" class="list-group-item list-group-item-action">Voltar</a>
+                            <a href="formadores.aspx" class="list-group-item list-group-item-action active"><i class="fas fa-user-graduate"></i> Formadores</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-user-shield"></i> Gestão</a>
+                            <a href="gestao.aspx" class="list-group-item list-group-item-action"><i class="fas fa-arrow-alt-circle-left"></i> Voltar</a>
                         </div>
                         <asp:LinkButton ID="btn_filtros" runat="server" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="toggleFilters(); return false;" Style="margin-top: 10px;">
                                 <i class="fas fa-filter">Filtros</i> 
@@ -102,7 +102,7 @@
                         </script>
                     </div>
                     <div class="col-md-10">
-                        <div class="card" style="border-color: #333; background-color:antiquewhite;">
+                        <div class="card bg-secondary" style="border-color: #333; color:black;">
                             <div class="card-header bg-dark text-white">
                                 <h2 class="display-4 text-center" style="font-size: 30px; color: white;">Consulta de Formadores</h2>
                             </div>
