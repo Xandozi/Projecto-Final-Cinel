@@ -9,9 +9,11 @@ namespace Projeto_Final.Classes
 {
     public class Formadores_Modulos
     {
+        public int cod_user { get; set; }
         public int cod_formador { get; set; }
         public int cod_modulo { get; set; }
         public int cod_ufcd { get; set; }
+        public int ordem { get; set; }
         public int cod_turma { get; set; }
         public string nome_completo { get; set; }
         public string nome_modulo { get; set; }
@@ -22,13 +24,16 @@ namespace Projeto_Final.Classes
         {
             List<Formadores_Modulos> lst_formadores_modulos = new List<Formadores_Modulos>();
 
-            string query = $"select Modulos.cod_modulo, Modulos.nome_modulo, Modulos.cod_ufcd, Formadores.cod_formador, Users.nome_proprio, Users.apelido from Modulos " +
+            string query = $"select distinct Modulos.cod_modulo, Modulos.nome_modulo, Modulos.cod_ufcd, Users.cod_user, Cursos_Modulos.ordem, Formadores.cod_formador, Users.nome_proprio, Users.apelido from Modulos " +
                            $"join Modulos_Turmas_Formadores on Modulos_Turmas_Formadores.cod_modulo = Modulos.cod_modulo " +
+                           $"join Cursos_Modulos on Cursos_Modulos.cod_modulo = Modulos.cod_modulo " +
+                           $"join Cursos on Cursos.cod_curso = Cursos_Modulos.cod_curso " +
                            $"join Formadores on Formadores.cod_formador = Modulos_Turmas_Formadores.cod_formador " +
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formadores.cod_inscricao " +
                            $"join Users on Users.cod_user = Inscricoes.cod_user " +
                            $"join Turmas on Turmas.cod_turma = Modulos_Turmas_Formadores.cod_turma " +
-                           $"where Turmas.cod_turma = {cod_turma}";
+                           $"where Turmas.cod_turma = {cod_turma} " +
+                           $"order by Cursos_Modulos.ordem asc";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 
@@ -44,8 +49,10 @@ namespace Projeto_Final.Classes
                 informacao.cod_modulo = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
                 informacao.nome_modulo = !dr.IsDBNull(1) ? dr.GetString(1) : null;
                 informacao.cod_ufcd = !dr.IsDBNull(2) ? dr.GetInt32(2) : 000;
-                informacao.cod_formador = !dr.IsDBNull(3) ? dr.GetInt32(3) : 000;
-                informacao.nome_completo = (!dr.IsDBNull(4) ? dr.GetString(4) : null) + " " + (!dr.IsDBNull(5) ? dr.GetString(5) : null);
+                informacao.cod_user = !dr.IsDBNull(3) ? dr.GetInt32(3) : 000;
+                informacao.ordem = !dr.IsDBNull(4) ? dr.GetInt32(4) : 000;
+                informacao.cod_formador = !dr.IsDBNull(5) ? dr.GetInt32(5) : 000;
+                informacao.nome_completo = (!dr.IsDBNull(6) ? dr.GetString(6) : null) + " " + (!dr.IsDBNull(7) ? dr.GetString(7) : null);
 
                 lst_formadores_modulos.Add(informacao);
             }

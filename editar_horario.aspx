@@ -109,7 +109,7 @@
             // Inicializar array para colocar os feriados manualmente
             var feriados = [];
 
-            // Loop through each year
+            // Loop para cada ano
             for (var i = 0; i < total_anos_calendario; i++) {
                 // Ano a inserir baseado no ano atual
                 var year = ano_atual + i;

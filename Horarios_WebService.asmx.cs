@@ -180,5 +180,25 @@ namespace Projeto_Final
 
             return lst_disponibilidade_sala;
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetHorarioAutomatico_JSON(int cod_turma)
+        {
+            List<FullCalendarData> Horario = Gerador_Horario_Automatico(cod_turma);
+
+            string json = JsonConvert.SerializeObject(Horario, Formatting.None);
+
+            return json;
+        }
+
+        public List<FullCalendarData> Gerador_Horario_Automatico(int cod_turma)
+        {
+            List<FullCalendarData> Horario_Turma = new List<FullCalendarData>();
+            List<Formadores_Modulos> lst_formadores_modulos = Formadores_Modulos.Ler_Formadores_Modulos_Turma(cod_turma);
+            List<Horarios_WebService> lst_disponibilidade_formador = new List<Horarios_WebService>();
+
+            return Horario_Turma;
+        }
     }
 }
