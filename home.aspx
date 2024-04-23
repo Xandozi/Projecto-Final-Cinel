@@ -88,7 +88,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                     <div class="rounded overflow-hidden mb-2">
                         <img class="img-fluid" src="img/programacao.png" alt="">
                         <div class="bg-secondary p-4">
-                            <a class="h5" href="cursos.aspx?curso=programacao">Programação</a>
+                            <a class="h5" href="cursos_lista.aspx?curso=programacao">Programação</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="m-0">200€</h5>
@@ -101,7 +101,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                     <div class="rounded overflow-hidden mb-2">
                         <img class="img-fluid" src="img/multimedia.jpg" alt="">
                         <div class="bg-secondary p-4">
-                            <a class="h5" href="cursos.aspx?curso=multimedia">Multimédia</a>
+                            <a class="h5" href="cursos_lista.aspx?curso=multimedia">Multimédia</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="m-0">200€</h5>
@@ -114,7 +114,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                     <div class="rounded overflow-hidden mb-2">
                         <img class="img-fluid" src="img/robotica.jpg" alt="">
                         <div class="bg-secondary p-4">
-                            <a class="h5" href="cursos.aspx?curso=robotica">Robótica</a>
+                            <a class="h5" href="cursos_lista.aspx?curso=robotica">Robótica</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="m-0">200€</h5>
@@ -127,7 +127,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                     <div class="rounded overflow-hidden mb-2">
                         <img class="img-fluid" src="img/redes.jpg" alt="">
                         <div class="bg-secondary p-4">
-                            <a class="h5" href="cursos.aspx?curso=redes">Redes</a>
+                            <a class="h5" href="cursos_lista.aspx?curso=redes">Redes</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="m-0">200€</h5>
@@ -140,7 +140,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                     <div class="rounded overflow-hidden mb-2">
                         <img class="img-fluid" src="img/ciberseguranca.jpg" alt="">
                         <div class="bg-secondary p-4">
-                            <a class="h5" href="cursos.aspx?curso=ciberseguranca">Cibersegurança</a>
+                            <a class="h5" href="cursos_lista.aspx?curso=ciberseguranca">Cibersegurança</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="m-0">200€</h5>
@@ -153,7 +153,7 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
                     <div class="rounded overflow-hidden mb-2">
                         <img class="img-fluid" src="img/oferta-formativa.jpg" alt="">
                         <div class="bg-secondary p-4">
-                            <a class="h5" href="cursos.aspx">Lista de Cursos</a>
+                            <a class="h5" href="cursos_lista.aspx">Lista de Cursos</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="m-0">Oferta Formativa</h5>
@@ -166,82 +166,4 @@ Coloca à disposição dos interessados 22 laboratórios equipados com a mais mo
         </div>
     </div>
     <!-- Courses End -->
-
-    <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-5">
-                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Formadores</h5>
-                <h1>Conheça a nossa equipa</h1>
-            </div>
-            <asp:Repeater ID="rpt_formadores" runat="server">
-                <HeaderTemplate>
-                    <div class="row">
-                </HeaderTemplate>
-                <ItemTemplate>
-                    <div class="col-md-6 col-lg-3 text-center team mb-4">
-                        <div class="team-item rounded overflow-hidden mb-2">
-                            <div class="team-img position-relative">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="">
-                            </div>
-                            <div class="bg-secondary p-4">
-                                <h5>Jhon Doe</h5>
-                                <p class="m-0">Web Designer</p>
-                            </div>
-                        </div>
-                    </div>
-                </ItemTemplate>
-                <FooterTemplate>
-                    </div>
-                </FooterTemplate>
-            </asp:Repeater>
-            <div class="row">
-                <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                        </div>
-                        <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
-                        </div>
-                        <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
-                        </div>
-                        <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
-                        </div>
-                        <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Team End -->
 </asp:Content>

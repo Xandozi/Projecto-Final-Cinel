@@ -61,7 +61,6 @@ namespace Projeto_Final
             }
         }
 
-        // Method to receive data from client-side
         [WebMethod]
         public static bool Gravar_Horario_Turma(SlotData[] Aulas_Turma, int cod_turma, int cod_formador, int cod_sala)
         {
@@ -73,7 +72,6 @@ namespace Projeto_Final
 
                 foreach (var slot in Aulas_Turma)
                 {
-                    // Access the title property for each slot
                     string titulo = slot.title;
                     string inicio_data_str = slot.start;
                     string fim_data_str = slot.end;
@@ -82,7 +80,6 @@ namespace Projeto_Final
                     int cod_sala_slot = slot.cod_sala;
                     string color = slot.color;
 
-                    // Append default times if only date is provided
                     if (!inicio_data_str.Contains("T"))
                         inicio_data_str += "T08:00:00";
                     else if (inicio_data_str.EndsWith("Z"))
@@ -93,7 +90,6 @@ namespace Projeto_Final
                     else if (fim_data_str.EndsWith("Z"))
                         fim_data_str = fim_data_str.Remove(fim_data_str.Length - 1);
 
-                    // Parse start and end date-time strings into DateTime objects
                     DateTime inicio_data_slot = DateTime.Parse(inicio_data_str);
                     DateTime fim_data_slot = DateTime.Parse(fim_data_str);
 
@@ -101,7 +97,6 @@ namespace Projeto_Final
 
                     int diferença = diferença_tempo.Hours;
 
-                    // Extract date and time components
                     string data_inicio = inicio_data_slot.ToString("yyyy-MM-dd");
                     string slot_inicio = inicio_data_slot.ToString("HH:mm:ss");
                     string data_fim = fim_data_slot.ToString("yyyy-MM-dd");
@@ -133,7 +128,6 @@ namespace Projeto_Final
             }
         }
 
-        // Define a class to represent the structure of each slot object
         public class SlotData
         {
             public string title { get; set; }

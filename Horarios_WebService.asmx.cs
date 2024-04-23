@@ -216,19 +216,25 @@ namespace Projeto_Final
                 int total_horas_modulo = duracao_modulo;
 
                 List<FullCalendarData> lst_disponibilidade_formador = GetDisponibilidade_DB(cod_user);
-                //DateTime data = DateTime.Parse(lst_disponibilidade_formador[0].start);
 
                 int cont_sala = 0;
 
                 while (total_horas_modulo > 0)
                 {
+                    List<DateTime> feriados = ObterFeriados(comeco_aula.Year);
+
+                    if (feriados.Contains(comeco_aula.Date))
+                    {
+                        comeco_aula = comeco_aula.AddDays(1).Date;
+                        comeco_aula = comeco_aula.AddHours(hora_inicio);
+                    }
 
                     if (comeco_aula.DayOfWeek == DayOfWeek.Sunday)
                     {
                         comeco_aula = comeco_aula.AddDays(1);
                     }
                     
-                    if (comeco_aula.AddHours(Math.Min(total_horas_modulo, 4)).Hour < hora_final && comeco_aula.AddHours(Math.Min(total_horas_modulo, 4)).Hour != 0)
+                    if (comeco_aula.AddHours(Math.Min(total_horas_modulo, 4)).Hour < hora_final && comeco_aula.AddHours(Math.Min(total_horas_modulo, 4)).Hour != 0 && comeco_aula.AddHours(Math.Min(total_horas_modulo, 4)).Hour > hora_inicio)
                         fim_aula = comeco_aula.AddHours(Math.Min(total_horas_modulo, 4));
                     else
                         fim_aula = comeco_aula.Date.AddHours(hora_final);
@@ -361,6 +367,25 @@ namespace Projeto_Final
             }
 
             return conflito;
+        }
+
+        private static List<DateTime> ObterFeriados(int ano)
+        {
+            List<DateTime> feriados = new List<DateTime>();
+
+            // Adiciona os feriados fixos
+            feriados.Add(new DateTime(ano, 1, 1)); // Ano Novo
+            feriados.Add(new DateTime(ano, 4, 25)); // Dia da Liberdade
+            feriados.Add(new DateTime(ano, 5, 1)); // Dia do Trabalhador
+            feriados.Add(new DateTime(ano, 6, 10)); // Dia de Portugal
+            feriados.Add(new DateTime(ano, 8, 15)); // Assunção de Nossa Senhora
+            feriados.Add(new DateTime(ano, 10, 5)); // Implantação da República
+            feriados.Add(new DateTime(ano, 11, 1)); // Dia de Todos os Santos
+            feriados.Add(new DateTime(ano, 12, 1)); // Restauração da Independência
+            feriados.Add(new DateTime(ano, 12, 25)); // Natal
+            feriados.Add(new DateTime(ano, 12, 24)); // Véspera de Natal
+
+            return feriados;
         }
     }
 }

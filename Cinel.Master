@@ -30,6 +30,21 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/65d504768d261e1b5f62dbc0/1hn41iri6';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <style>
@@ -156,8 +171,7 @@
                                     <a href="home.aspx" class="nav-item nav-link <%= IsActivePage("home.aspx") %>">Home</a>
                                     <a href="sobre_nos.aspx" class="nav-item nav-link <%= IsActivePage("sobre_nos.aspx") %>">Sobre Nós</a>
                                     <a href="cursos_lista.aspx" class="nav-item nav-link <%= IsActivePage("cursos_lista.aspx") %>">Cursos</a>
-                                    <a href="formadores_lista.aspx" class="nav-item nav-link <%= IsActivePage("formadores_lista.aspx") %>">Formadores</a>
-                                    <a href="contactos.aspx" class="nav-item nav-link <%= IsActivePage("contactos.aspx") %>">Contactos</a>
+                                    <a href="horarios_lista.aspx" class="nav-item nav-link <%= IsActivePage("contactos.aspx") %>">Horários</a>
                                 </div>
 
                                 <div class="navbar-nav ml-auto">

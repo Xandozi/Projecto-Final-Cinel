@@ -10,7 +10,7 @@
 
 namespace Projeto_Final
 {
-    public partial class formadores_lista
+    public partial class notas
     {
     }
 }
