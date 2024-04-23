@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="editar_horario.aspx.cs" Inherits="Projeto_Final.editar_horario" %>
+﻿<%@ Page Title="CINEL - Editar Horário" Language="C#" MasterPageFile="~/Cinel.Master" AutoEventWireup="true" CodeBehind="editar_horario.aspx.cs" Inherits="Projeto_Final.editar_horario" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -50,6 +50,7 @@
         </div>
         <div class="row justify-content-between" style="margin: 10px;">
             <button class="btn btn-success" id="btn_SaveSelectedSlots">Submeter Horário</button>
+            <button class="btn btn-dark" id="btn_gerar_horario">Gerar Horário Automaticamente</button>
             <a href="horarios.aspx" class="btn btn-info">Voltar para a página Horários</a>
         </div>
     </div>
@@ -97,6 +98,9 @@
             var nome_turma = $('#<%= lbl_nome_turma.ClientID %>').text();
             var ddl_cod_turma = $('#<%= hf_cod_turma.ClientID %>').val();
 
+            // Variável para o botão de gerar automatico
+            var btnGerarHorario = document.getElementById('btn_gerar_horario');
+
             // Função para determinar se o event seleccionado tem a duração mínima da aula
             function isDuracao_Valida(info) {
                 var duracao_slot = info.end.getTime() - info.start.getTime();
@@ -109,7 +113,7 @@
             // Inicializar array para colocar os feriados manualmente
             var feriados = [];
 
-            // Loop through each year
+            // Loop para cada ano
             for (var i = 0; i < total_anos_calendario; i++) {
                 // Ano a inserir baseado no ano atual
                 var year = ano_atual + i;
@@ -277,17 +281,11 @@
                     var eventData = JSON.parse(response.d); // Extração do array baseado no ficheiro JSON
 
                     add_disponibilidadeDB_Disponibilidade_Formador(eventData); // Execução da função para inserir os dados do eventData para dentro de um array utilizado na renderização do calendário
-
-                    // Renderizar o calendário
-                    Render_Calendario();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Erro ao extrair dados da BD. WebService");
                     // Se a chamada á BD falhar, adicionar á mesma os domingos e feriados ao array Sundays_Holidays
                     add_feriados_sundays_holidays();
-
-                    // Renderizar o calendário
-                    Render_Calendario();
                 }
             });
 
@@ -302,17 +300,11 @@
                     var eventData = JSON.parse(response.d); // Extração do array baseado no ficheiro JSON
 
                     add_disponibilidadeSalasDB_Disponibilidade_Salas(eventData); // Execução da função para inserir os dados do eventData para dentro de um array utilizado na renderização do calendário
-
-                    // Renderizar o calendário
-                    Render_Calendario();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error("Erro ao extrair dados da BD. WebService");
                     // Se a chamada á BD falhar, adicionar á mesma os domingos e feriados ao array Sundays_Holidays
                     add_feriados_sundays_holidays();
-
-                    // Renderizar o calendário
-                    Render_Calendario();
                 }
             });
 
@@ -585,6 +577,17 @@
                     }
                 });
 
+                console.log(Aulas_Turma.length);
+                console.log(Aulas_Turma);
+                // Verificar se o array Aulas_Turma está vazio
+                if (Aulas_Turma.length > 0) {
+                    // Desativar o botão caso não esteja vazio
+                    btnGerarHorario.disabled = true;
+                } else {
+                    // Ativar caso esteja vazio
+                    btnGerarHorario.disabled = false;
+                }
+
                 // Função para determinar se há conflicto entre um evento seleccionado e os eventos dentro de um array
                 function isEventConflict(selectedEvent, eventsArray) {
                     for (var i = 0; i < eventsArray.length; i++) {
@@ -852,6 +855,63 @@
                     event.preventDefault();
                 });
 
+                // EventListener do botão btn_saveselectedslots
+                document.getElementById('btn_gerar_horario').addEventListener('click', function (event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "Horarios_WebService.asmx/GetHorarioAutomatico_JSON",
+                        data: JSON.stringify({ cod_turma: cod_turma_valor }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.d) {
+                                var eventData = JSON.parse(response.d); // Extração do array baseado no ficheiro JSON
+
+                                add_aulasDB_Aulas_Turma(eventData);
+
+                                Render_Calendario();
+
+                                $('#lbl_mensagem').text("Horário gerado com sucesso!");
+                                $('#lbl_mensagem').addClass('alert alert-success');
+                                $('#lbl_mensagem').fadeIn();
+
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-success');
+                                    });
+                                }, 3000);
+
+                                return;
+                            } else {
+                                $('#lbl_mensagem').text("Erro ao gerar o horário da turma.");
+                                $('#lbl_mensagem').addClass('alert alert-danger');
+                                $('#lbl_mensagem').fadeIn();
+
+                                setTimeout(function () {
+                                    $('#lbl_mensagem').fadeOut(function () {
+                                        $(this).removeClass('alert alert-danger');
+                                    });
+                                }, 3000);
+
+                                return;
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            $('#lbl_mensagem').text("Erro ao extrair os dados da base de dados.");
+                            $('#lbl_mensagem').addClass('alert alert-danger');
+                            $('#lbl_mensagem').fadeIn();
+
+                            setTimeout(function () {
+                                $('#lbl_mensagem').fadeOut(function () {
+                                    $(this).removeClass('alert alert-danger');
+                                });
+                            }, 3000);
+
+                            return;
+                        }
+                    });
+                    event.preventDefault();
+                });
             }
         });
 

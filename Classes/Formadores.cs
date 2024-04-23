@@ -63,8 +63,9 @@ namespace Projeto_Final.Classes
 
             string query = $"select Formadores.cod_formador, Formadores.cod_inscricao, Users.nome_proprio, Users.apelido from Formadores " +
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formadores.cod_inscricao " +
+                           $"join Inscricoes_Situacao on Inscricoes_Situacao.cod_inscricao = Inscricoes.cod_inscricao " +
                            $"join Users on Users.cod_user = Inscricoes.cod_user " +
-                           $"where Inscricoes.cod_curso = {cod_curso}";
+                           $"where Inscricoes.cod_curso = {cod_curso} and Inscricoes_Situacao.cod_situacao = 7";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
 

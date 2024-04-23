@@ -238,7 +238,7 @@ namespace Projeto_Final.Classes
                 informacao.cod_turmas_estado = !dr.IsDBNull(9) ? dr.GetInt32(9) : 000;
                 informacao.estado = !dr.IsDBNull(10) ? dr.GetString(10) : null;
                 informacao.nome_curso = !dr.IsDBNull(11) ? dr.GetString(11) : null;
-                informacao.formadores_modulos = Formadores_Modulos.Ler_Formadores_Modulos_Turma(cod_turma);
+                informacao.formadores_modulos = Formadores_Modulos.Ler_Formadores_Modulos_Turma(cod_turma, dr.GetInt32(1));
                 informacao.formandos = Formandos.Ler_Formandos_Turma(cod_turma);
 
                 lst_turma.Add(informacao);
@@ -262,6 +262,34 @@ namespace Projeto_Final.Classes
                 myConn.Open();
                 myCommand.ExecuteNonQuery();
                 myConn.Close();
+            }
+        }
+
+        public static int Extract_Cod_Curso_Turma(int cod_turma)
+        {
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            using (SqlCommand myCommand = new SqlCommand())
+            {
+                myCommand.Parameters.AddWithValue("@cod_turma", cod_turma);
+
+                SqlParameter cod_curso = new SqlParameter();
+                cod_curso.ParameterName = "@cod_curso";
+                cod_curso.Direction = ParameterDirection.Output;
+                cod_curso.SqlDbType = SqlDbType.Int;
+                myCommand.Parameters.Add(cod_curso);
+
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.CommandText = "Extract_Cod_Curso_Turma";
+
+                myCommand.Connection = myConn;
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                int resposta_cod_curso = Convert.ToInt32(myCommand.Parameters["@cod_curso"].Value);
+                myConn.Close();
+                myCommand.Parameters.Clear();
+
+                return resposta_cod_curso;
             }
         }
 

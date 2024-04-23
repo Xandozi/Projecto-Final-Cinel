@@ -207,7 +207,10 @@ namespace Projeto_Final.Classes
                 lst_info_modulo.Add(informacao);
             }
 
-            string info_modulo = lst_info_modulo[0].cod_ufcd + " - " + lst_info_modulo[0].nome_modulo;
+            string info_modulo = "";
+
+            if (lst_info_modulo.Count != 0)
+                info_modulo = lst_info_modulo[0].cod_ufcd + " - " + lst_info_modulo[0].nome_modulo;
 
             myConn.Close();
 
