@@ -8,8 +8,9 @@
 		<siteMapNode url="~/cursos_lista.aspx" title="Lista de Cursos" description="Lista de Cursos">
 			<siteMapNode url="~/cursos_lista_detalhe.aspx" title="Detalhes Curso" description="Detalhes do Curso"/>
 		</siteMapNode>
-		<siteMapNode url="~/formadores_lista.aspx" title="Lista de Formadores" description="Lista de Formadores"/>
-		<siteMapNode url="~/contactos.aspx" title="Contactos" description="Contactos"/>
+		<siteMapNode url="~/horarios_lista.aspx" title="Horários" description="Horários">
+			<siteMapNode url="~/horarios_detalhe_lista.aspx" title="Horário da Turma" description="Horário da Turma"/>
+		</siteMapNode>
 		<siteMapNode url="~/personal_zone.aspx" title="Área Pessoal" description="Área Pessoal">
 			<siteMapNode url="~/personal_zone_editar.aspx" title="Editar Informação Pessoal" description="Editar Informação Pessoal"/>
 			<siteMapNode url="~/personal_zone_inscricoes.aspx" title="Minhas Inscrições" description="Minhas Inscrições"/>

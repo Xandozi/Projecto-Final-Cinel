@@ -70,7 +70,7 @@ namespace Projeto_Final
             int cod_inscricao = 0;
             int cod_turma = 0;
 
-            Response.Redirect($"avaliacoes.aspx?cod_inscricao={cod_inscricao}&cod_turma={cod_turma}");
+            Response.Redirect($"notas.aspx?cod_inscricao={cod_inscricao}&cod_turma={cod_turma}");
         }
 
         protected void lb_horario_Click(object sender, EventArgs e)

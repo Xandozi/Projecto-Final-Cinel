@@ -90,6 +90,7 @@
     <Content Include="cursos_detalhe.aspx" />
     <Content Include="cursos_lista.aspx" />
     <Content Include="cursos_lista_detalhe.aspx" />
+    <Content Include="dados_estatisticos.aspx" />
     <Content Include="editar_curso.aspx" />
     <Content Include="editar_horario.aspx" />
     <Content Include="editar_modulo.aspx" />
@@ -101,13 +102,14 @@
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="formadores.aspx" />
-    <Content Include="formadores_lista.aspx" />
     <Content Include="formador_disponibilidade.aspx" />
     <Content Include="formandos.aspx" />
     <Content Include="gestao.aspx" />
     <Content Include="home.aspx" />
     <Content Include="horarios.aspx" />
     <Content Include="horarios_detalhe.aspx" />
+    <Content Include="horarios_detalhe_lista.aspx" />
+    <Content Include="horarios_lista.aspx" />
     <Content Include="Horarios_WebService.asmx" />
     <Content Include="img\ciberseguranca.jpg" />
     <Content Include="img\cinel_logo_horizontal.png" />
@@ -165,6 +167,7 @@
     <Content Include="mail\jqBootstrapValidation.min.js" />
     <Content Include="modulos.aspx" />
     <Content Include="modulos_detalhe.aspx" />
+    <Content Include="notas.aspx" />
     <Content Include="personal_zone.aspx" />
     <Content Include="personal_zone_editar.aspx" />
     <Content Include="personal_zone_inscricoes.aspx" />
@@ -197,6 +200,7 @@
     </Compile>
     <Compile Include="Classes\Cursos.cs" />
     <Compile Include="Classes\Email.cs" />
+    <Compile Include="Classes\Estatistica.cs" />
     <Compile Include="Classes\ExportPDF.cs" />
     <Compile Include="Classes\Extract.cs" />
     <Compile Include="Classes\Formadores_Modulos.cs" />
@@ -266,6 +270,13 @@
     <Compile Include="cursos_lista_detalhe.aspx.designer.cs">
       <DependentUpon>cursos_lista_detalhe.aspx</DependentUpon>
     </Compile>
+    <Compile Include="dados_estatisticos.aspx.cs">
+      <DependentUpon>dados_estatisticos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dados_estatisticos.aspx.designer.cs">
+      <DependentUpon>dados_estatisticos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_curso.aspx.cs">
       <DependentUpon>editar_curso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -315,13 +326,6 @@
     <Compile Include="formadores.aspx.designer.cs">
       <DependentUpon>formadores.aspx</DependentUpon>
     </Compile>
-    <Compile Include="formadores_lista.aspx.cs">
-      <DependentUpon>formadores_lista.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="formadores_lista.aspx.designer.cs">
-      <DependentUpon>formadores_lista.aspx</DependentUpon>
-    </Compile>
     <Compile Include="formador_disponibilidade.aspx.cs">
       <DependentUpon>formador_disponibilidade.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -364,6 +368,20 @@
     <Compile Include="horarios_detalhe.aspx.designer.cs">
       <DependentUpon>horarios_detalhe.aspx</DependentUpon>
     </Compile>
+    <Compile Include="horarios_detalhe_lista.aspx.cs">
+      <DependentUpon>horarios_detalhe_lista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="horarios_detalhe_lista.aspx.designer.cs">
+      <DependentUpon>horarios_detalhe_lista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="horarios_lista.aspx.cs">
+      <DependentUpon>horarios_lista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="horarios_lista.aspx.designer.cs">
+      <DependentUpon>horarios_lista.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Horarios_WebService.asmx.cs">
       <DependentUpon>Horarios_WebService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -395,6 +413,13 @@
     </Compile>
     <Compile Include="modulos_detalhe.aspx.designer.cs">
       <DependentUpon>modulos_detalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="notas.aspx.cs">
+      <DependentUpon>notas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="notas.aspx.designer.cs">
+      <DependentUpon>notas.aspx</DependentUpon>
     </Compile>
     <Compile Include="personal_zone.aspx.cs">
       <DependentUpon>personal_zone.aspx</DependentUpon>
