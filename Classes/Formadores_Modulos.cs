@@ -20,7 +20,7 @@ namespace Projeto_Final.Classes
         public string formador_modulo { get { return $"{nome_completo} | {cod_ufcd} | {nome_modulo}"; } }
         public string cod_formador_modulo { get { return $"{cod_formador}|{cod_modulo}"; } }
 
-        public static List<Formadores_Modulos> Ler_Formadores_Modulos_Turma(int cod_turma)
+        public static List<Formadores_Modulos> Ler_Formadores_Modulos_Turma(int cod_turma, int cod_curso)
         {
             List<Formadores_Modulos> lst_formadores_modulos = new List<Formadores_Modulos>();
 
@@ -32,7 +32,7 @@ namespace Projeto_Final.Classes
                            $"join Inscricoes on Inscricoes.cod_inscricao = Formadores.cod_inscricao " +
                            $"join Users on Users.cod_user = Inscricoes.cod_user " +
                            $"join Turmas on Turmas.cod_turma = Modulos_Turmas_Formadores.cod_turma " +
-                           $"where Turmas.cod_turma = {cod_turma} " +
+                           $"where Turmas.cod_turma = {cod_turma} and Cursos.cod_curso = {cod_curso} " +
                            $"order by Cursos_Modulos.ordem asc";
 
             SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);

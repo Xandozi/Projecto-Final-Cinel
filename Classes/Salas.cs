@@ -46,6 +46,37 @@ namespace Projeto_Final.Classes
             }
         }
 
+        public static List<Salas> Extract_Salas()
+        {
+            List<Salas> lst_sala = new List<Salas>();
+
+            string query = $"select cod_sala, nome_sala, data_criacao, ultimo_update, ativo from Salas where ativo = 1";
+
+            SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CinelConnectionString"].ConnectionString);
+
+            SqlCommand myCommand = new SqlCommand(query, myConn);
+
+            myConn.Open();
+
+            SqlDataReader dr = myCommand.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Salas informacao = new Salas();
+                informacao.cod_sala = !dr.IsDBNull(0) ? dr.GetInt32(0) : 000;
+                informacao.nome_sala = !dr.IsDBNull(1) ? dr.GetString(1) : null;
+                informacao.data_criacao = !dr.IsDBNull(2) ? dr.GetDateTime(2) : default(DateTime);
+                informacao.ultimo_update = !dr.IsDBNull(3) ? dr.GetDateTime(3) : default(DateTime);
+                informacao.ativo = !dr.IsDBNull(4) ? dr.GetBoolean(4) : default(Boolean);
+
+                lst_sala.Add(informacao);
+            }
+
+            myConn.Close();
+
+            return lst_sala;
+        }
+
         public static List<Salas> Ler_SalasAll(string search_designacao, string data_inicio, string data_fim, int search_cod_sala, string sort_order, int estado)
         {
             List<Salas> lst_salas = new List<Salas>();
